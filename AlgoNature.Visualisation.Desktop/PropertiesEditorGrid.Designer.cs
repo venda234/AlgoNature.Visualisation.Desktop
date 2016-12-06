@@ -1,6 +1,6 @@
 ﻿namespace AlgoNature.Visualisation.Desktop
 {
-    partial class PropertiesEditorTable
+    partial class PropertiesEditorGrid
     {
         /// <summary> 
         /// Required designer variable.

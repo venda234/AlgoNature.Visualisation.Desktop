@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.splitViewPanel = new System.Windows.Forms.Panel();
-            this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.propertiesSplitContainer = new System.Windows.Forms.SplitContainer();
             this.propertiesDataGridView = new System.Windows.Forms.DataGridView();
             this.propertiesDataGridViewPropertyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,6 +38,8 @@
             this.iGrowablePropertiesDataGridView = new System.Windows.Forms.DataGridView();
             this.iGrowablePropertiesDataGridViewPropertyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iGrowablePropertiesDataGridViewValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitViewPanel = new System.Windows.Forms.Panel();
+            this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.controlsComboBox = new System.Windows.Forms.ComboBox();
             this.exportButton = new System.Windows.Forms.Button();
             this.panelGrowableContrtols = new System.Windows.Forms.Panel();
@@ -48,40 +48,18 @@
             this.startGrowingButton = new System.Windows.Forms.Button();
             this.resetButton = new System.Windows.Forms.Button();
             this.exportImageDialog = new System.Windows.Forms.SaveFileDialog();
-            this.splitViewPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
-            this.mainSplitContainer.Panel1.SuspendLayout();
-            this.mainSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertiesSplitContainer)).BeginInit();
             this.propertiesSplitContainer.Panel1.SuspendLayout();
             this.propertiesSplitContainer.Panel2.SuspendLayout();
             this.propertiesSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertiesDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iGrowablePropertiesDataGridView)).BeginInit();
+            this.splitViewPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).BeginInit();
+            this.mainSplitContainer.Panel1.SuspendLayout();
+            this.mainSplitContainer.SuspendLayout();
             this.panelGrowableContrtols.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // splitViewPanel
-            // 
-            resources.ApplyResources(this.splitViewPanel, "splitViewPanel");
-            this.splitViewPanel.Controls.Add(this.mainSplitContainer);
-            this.splitViewPanel.Name = "splitViewPanel";
-            // 
-            // mainSplitContainer
-            // 
-            this.mainSplitContainer.BackColor = System.Drawing.Color.Silver;
-            resources.ApplyResources(this.mainSplitContainer, "mainSplitContainer");
-            this.mainSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.mainSplitContainer.Name = "mainSplitContainer";
-            // 
-            // mainSplitContainer.Panel1
-            // 
-            this.mainSplitContainer.Panel1.Controls.Add(this.propertiesSplitContainer);
-            // 
-            // mainSplitContainer.Panel2
-            // 
-            this.mainSplitContainer.Panel2.BackColor = System.Drawing.Color.White;
-            this.mainSplitContainer.Panel2.Cursor = System.Windows.Forms.Cursors.Cross;
             // 
             // propertiesSplitContainer
             // 
@@ -148,6 +126,28 @@
             // 
             resources.ApplyResources(this.iGrowablePropertiesDataGridViewValueColumn, "iGrowablePropertiesDataGridViewValueColumn");
             this.iGrowablePropertiesDataGridViewValueColumn.Name = "iGrowablePropertiesDataGridViewValueColumn";
+            // 
+            // splitViewPanel
+            // 
+            resources.ApplyResources(this.splitViewPanel, "splitViewPanel");
+            this.splitViewPanel.Controls.Add(this.mainSplitContainer);
+            this.splitViewPanel.Name = "splitViewPanel";
+            // 
+            // mainSplitContainer
+            // 
+            this.mainSplitContainer.BackColor = System.Drawing.Color.Silver;
+            resources.ApplyResources(this.mainSplitContainer, "mainSplitContainer");
+            this.mainSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.mainSplitContainer.Name = "mainSplitContainer";
+            // 
+            // mainSplitContainer.Panel1
+            // 
+            this.mainSplitContainer.Panel1.Controls.Add(this.propertiesSplitContainer);
+            // 
+            // mainSplitContainer.Panel2
+            // 
+            this.mainSplitContainer.Panel2.BackColor = System.Drawing.Color.White;
+            this.mainSplitContainer.Panel2.Cursor = System.Windows.Forms.Cursors.Cross;
             // 
             // controlsComboBox
             // 
@@ -218,16 +218,16 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "mainForm";
             this.Resize += new System.EventHandler(this.mainForm_Resize);
-            this.splitViewPanel.ResumeLayout(false);
-            this.mainSplitContainer.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
-            this.mainSplitContainer.ResumeLayout(false);
             this.propertiesSplitContainer.Panel1.ResumeLayout(false);
             this.propertiesSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertiesSplitContainer)).EndInit();
             this.propertiesSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.propertiesDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iGrowablePropertiesDataGridView)).EndInit();
+            this.splitViewPanel.ResumeLayout(false);
+            this.mainSplitContainer.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.mainSplitContainer)).EndInit();
+            this.mainSplitContainer.ResumeLayout(false);
             this.panelGrowableContrtols.ResumeLayout(false);
             this.panelGrowableContrtols.PerformLayout();
             this.ResumeLayout(false);

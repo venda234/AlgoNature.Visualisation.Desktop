@@ -32,7 +32,7 @@ namespace AlgoNature.Visualisation.Desktop
         /// <returns></returns>
         public static PropertyInfo[] FilterPropertiesBasedOnOtherTypes(this PropertyInfo[] properties, Type[] filterTypes, bool includeOnlyTypesPropsOrExcludeThemFromGeneral)
         {
-
+            throw new NotImplementedException();
         }
     }
 }

@@ -11,16 +11,16 @@ using System.Reflection;
 
 namespace AlgoNature.Visualisation.Desktop
 {
-    public partial class PropertiesEditorTable : DataGridView
+    public partial class PropertiesEditorGrid : DataGridView
     {
-        public PropertiesEditorTable(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay)
+        public PropertiesEditorGrid(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay)
         {
             InitializeComponent();
             Properties = propertiesToDisplay;
 
         }
 
-        public PropertiesEditorTable(object objWhosePropertiesToDisplay) : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties()) { }
+        public PropertiesEditorGrid(object objWhosePropertiesToDisplay) : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties()) { }
 
         /// <summary>
         /// Constructor based on given object, filtering params based on given interfaces (either includes only given interfaces properties or excludes them from all object's properties) 
@@ -29,7 +29,7 @@ namespace AlgoNature.Visualisation.Desktop
         /// <param name="filterTypes">Types used for filtering properties</param>
         /// <param name="includeOnlyTypesPropsOrExcludeThemFromGeneral">If <code>true</code>, will display only properties contained in <paramref name="filterTypes"/> types (if has them), 
         /// otherwise will display all properties except those contained in <paramref name="filterTypes"/> types</param>
-        public PropertiesEditorTable(object objWhosePropertiesToDisplay, Type[] filterTypes, bool includeOnlyTypesPropsOrExcludeThemFromGeneral)
+        public PropertiesEditorGrid(object objWhosePropertiesToDisplay, Type[] filterTypes, bool includeOnlyTypesPropsOrExcludeThemFromGeneral)
             : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties().FilterPropertiesBasedOnOtherTypes(filterTypes, includeOnlyTypesPropsOrExcludeThemFromGeneral))
         {
 

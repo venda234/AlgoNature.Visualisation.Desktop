@@ -65,11 +65,11 @@
     <Compile Include="PropertiesEditFlyOut.Designer.cs">
       <DependentUpon>PropertiesEditFlyOut.cs</DependentUpon>
     </Compile>
-    <Compile Include="PropertiesEditorTable.cs">
+    <Compile Include="PropertiesEditorGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PropertiesEditorTable.Designer.cs">
-      <DependentUpon>PropertiesEditorTable.cs</DependentUpon>
+    <Compile Include="PropertiesEditorGrid.Designer.cs">
+      <DependentUpon>PropertiesEditorGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="mainForm.resx">
