@@ -40,30 +40,61 @@ namespace AlgoNature.Visualisation.Desktop
             : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties().FilterPropertiesBasedOnOtherTypes(filterTypes, includeOnlyTypesPropsOrExcludeThemFromGeneral))
         { }
 
-        public new DialogResult Show() { return this.ShowDialog(); }
+        public new DialogResult Show()
+        {
+            _result = DialogResult.None;
+            try
+            {
+                DialogResult tempRes = this.ShowDialog();
+                return _result;
+            }
+            catch
+            {
+                return DialogResult.None;
+            }
+        }
         public DialogResult Show(PropertiesEditorGrid grid)
         {
             PropertiesGrid = grid;
-            return this.ShowDialog();
+            return this.Show();
         }
+
+        private DialogResult _result;
 
         public object EditedObject
         {
             get { return PropertiesGrid.EditedObject; }
         }
 
+        public bool EditedObjectChanged
+        {
+            get { return PropertiesGrid.AnythingChanged; }
+        }
+
         public PropertiesEditorGrid PropertiesGrid
         {
             get
             {
-                return (PropertiesEditorGrid)Controls[0];
+                return (PropertiesEditorGrid)gridViewPanel.Controls[0];
             }
             set
             {
-                Controls.Clear();
-                Controls.Add(value);
-                Controls[0].Dock = DockStyle.Fill;
+                gridViewPanel.Controls.Clear();
+                gridViewPanel.Controls.Add(value);
+                gridViewPanel.Controls[0].Dock = DockStyle.Fill;
             }
+        }
+
+        private void okButton_Click(object sender, EventArgs e)
+        {
+            _result = DialogResult.OK;
+            this.Close();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            _result = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

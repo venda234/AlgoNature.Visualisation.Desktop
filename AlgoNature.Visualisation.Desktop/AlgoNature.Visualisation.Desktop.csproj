@@ -78,6 +78,9 @@
     <EmbeddedResource Include="PropertiesEditFlyOut.resx">
       <DependentUpon>PropertiesEditFlyOut.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesEditorGrid.resx">
+      <DependentUpon>PropertiesEditorGrid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

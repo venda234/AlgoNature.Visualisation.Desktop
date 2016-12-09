@@ -156,7 +156,10 @@ namespace AlgoNature.Visualisation.Desktop
             {
                 this.propertiesDataGridView[0, i].Value = OwnNotIGrowableProperties[i];
                 this.propertiesDataGridView[1, i].Value = drawnUserControl.GetType().GetProperty(OwnNotIGrowableProperties[i]).GetValue(drawnUserControl);
-                this.propertiesDataGridView[1, i].ValueType = drawnUserControl.GetType().GetProperty(OwnNotIGrowableProperties[i]).GetType();
+                this.propertiesDataGridView[1, i].ValueType = this.propertiesDataGridView[1, i].Value.GetType();
+                Console.WriteLine(this.propertiesDataGridView[1, i].Value.GetType().Name);
+                //PropertyInfo b;
+                
             }
 
             // Initializing IGrowable properties
@@ -167,7 +170,7 @@ namespace AlgoNature.Visualisation.Desktop
                 {
                     this.iGrowablePropertiesDataGridView[0, i].Value = IGrowableProperties[i];
                     this.iGrowablePropertiesDataGridView[1, i].Value = drawnUserControl.GetType().GetProperty(IGrowableProperties[i]).GetValue(drawnUserControl);
-                    this.iGrowablePropertiesDataGridView[1, i].ValueType = drawnUserControl.GetType().GetProperty(IGrowableProperties[i]).GetType();
+                    this.iGrowablePropertiesDataGridView[1, i].ValueType = this.iGrowablePropertiesDataGridView[1, i].Value.GetType();
                 }
             }
 

@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace AlgoNature.Visualisation.Desktop
 {
-    internal static class Extensions
+    internal static partial class Extensions
     {
         public static bool ImplementsInterface(this Type type, Type ifaceType)
         {
@@ -32,7 +32,50 @@ namespace AlgoNature.Visualisation.Desktop
         /// <returns></returns>
         public static PropertyInfo[] FilterPropertiesBasedOnOtherTypes(this PropertyInfo[] properties, Type[] filterTypes, bool includeOnlyTypesPropsOrExcludeThemFromGeneral)
         {
-            throw new NotImplementedException();
+            
+            List<PropertyInfo> propertiesToDisplay = new List<PropertyInfo>();
+            if (includeOnlyTypesPropsOrExcludeThemFromGeneral)
+            {
+                string[] allProperties = properties.Cast<string>().ToArray();
+                // pokud nebude fungovat, užít
+                //properties.MapFunct<PropertyInfo, string>(new Func<PropertyInfo, string>((property) => (property.ToString())));
+
+                foreach (Type type in filterTypes)
+                {
+                    propertiesToDisplay.AddRange(type.GetProperties().Where(new Func<PropertyInfo, bool>((property) => (allProperties.Contains(property.Name)))));
+                }
+            }
+            else
+            {
+                propertiesToDisplay = properties.ToList();
+                foreach (Type type in filterTypes)
+                {
+                    propertiesToDisplay = propertiesToDisplay.ToArray().Except(type.GetProperties()).ToList();
+                }
+            }
+            return propertiesToDisplay.ToArray();
         }
+
+        public static IEnumerable<TResult> MapFunct<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> mapFunction)
+        {
+            int length = source.Count();
+            List<TResult> result = new List<TResult>();
+            foreach (TSource item in source)
+            {
+                result.Add(mapFunction(item));
+            }
+            return result.ToArray().AsEnumerable();
+        }
+        // identical with .Where()
+        /*public static IEnumerable<T> Filter<T>(this IEnumerable<T> source, Func<T, bool> filterFunction)
+        {
+            int length = source.Count();
+            List<T> result = new List<T>();
+            foreach (T item in source)
+            {
+                if (filterFunction(item)) result.Add(item);
+            }
+            return result.ToArray().AsEnumerable();
+        }*/
     }
 }
