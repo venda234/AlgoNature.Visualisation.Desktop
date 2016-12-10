@@ -36,7 +36,7 @@ namespace AlgoNature.Visualisation.Desktop
             List<PropertyInfo> propertiesToDisplay = new List<PropertyInfo>();
             if (includeOnlyTypesPropsOrExcludeThemFromGeneral)
             {
-                string[] allProperties = properties.Cast<string>().ToArray();
+                string[] allProperties = properties.ToPropertiesNamesArray();
                 // pokud nebude fungovat, užít
                 //properties.MapFunct<PropertyInfo, string>(new Func<PropertyInfo, string>((property) => (property.ToString())));
 
@@ -50,11 +50,17 @@ namespace AlgoNature.Visualisation.Desktop
                 propertiesToDisplay = properties.ToList();
                 foreach (Type type in filterTypes)
                 {
-                    propertiesToDisplay = propertiesToDisplay.ToArray().Except(type.GetProperties()).ToList();
+                    string[] props = type.GetProperties().ToPropertiesNamesArray();
+                    propertiesToDisplay = propertiesToDisplay.Where(new Func<PropertyInfo, bool>((property) => (!props.Contains(property.Name)))).ToList();
                 }
             }
             return propertiesToDisplay.ToArray();
         }
+
+        public static List<string> ToPropertiesNamesList(this IEnumerable<PropertyInfo> properties)
+            => properties.MapFunct<PropertyInfo, string>(new Func<PropertyInfo, string>((property) => property.Name)).ToList();
+        public static string[] ToPropertiesNamesArray(this IEnumerable<PropertyInfo> properties)
+            => properties.MapFunct<PropertyInfo, string>(new Func<PropertyInfo, string>((property) => property.Name)).ToArray();
 
         public static IEnumerable<TResult> MapFunct<TSource, TResult>(this IEnumerable<TSource> source, Func<TSource, TResult> mapFunction)
         {

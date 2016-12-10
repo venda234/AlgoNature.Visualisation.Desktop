@@ -14,12 +14,13 @@ namespace AlgoNature.Visualisation.Desktop
     public partial class PropertiesEditorGrid : DataGridView
     {
         // Boolean will be displayed other way
-        private const string DIRECTLY_EDITABLE_TYPES_STR = "SByteCharDateTimeDecimalDoubleUInt16UInt32UInt64SingleString";
+        internal const string DIRECTLY_EDITABLE_TYPES_STR = "SByteCharDateTimeDecimalDoubleUInt16UInt32UInt64SingleString";
 
         public PropertiesEditorGrid(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay)
         {
             InitializeComponent();
-            Properties = propertiesToDisplay;
+            _editedObject = objWhosePropertiesToDisplay;
+            _properties = propertiesToDisplay;
             initializeGrid();
         }
 
@@ -36,23 +37,39 @@ namespace AlgoNature.Visualisation.Desktop
             : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties().FilterPropertiesBasedOnOtherTypes(filterTypes, includeOnlyTypesPropsOrExcludeThemFromGeneral))
         { }
 
+        public delegate void PropertiesEditorGridLoadedEventHandler(object sender);
+        public event PropertiesEditorGridLoadedEventHandler PropertiesEditorGridLoaded;
+
         private void initializeGrid()
         {
+            allRowsInitialized = false;
             if (_editedObject.GetType().IsArray) // Edited object is an array
             {
                 initializeArrayObject();
             }
             else // Edited object is a regular object
             {
-                propertiesDataGridView.Rows.Clear();
-                propertiesDataGridView.RowCount = _properties.Length;
+                this.Rows.Clear();
+                this.RowCount = _properties.Length;
                 for (int i = 0; i < _properties.Length; i++)
                 {
-                    initializeEditedObjectPropertyRow(i, _properties[i]);
+                    try // kdyby nešla načíst vlastnost
+                    {
+                        initializeEditedObjectPropertyRow(i, _properties[i]);
+                    }
+                    catch // neřešit řádek, odebrat vlastnost ze seznamu
+                    {
+                        List<PropertyInfo> props = _properties.ToList();
+                        props.RemoveAt(i);
+                        _properties = props.ToArray();
+                        i--;
+                    }
                 }
+                this.RowCount = _properties.Length; // Again if any property was omitted
             }
-
+            allRowsInitialized = true;
         }
+        bool allRowsInitialized;
 
         /// <summary>
         /// Method that initializes an array
@@ -83,22 +100,14 @@ namespace AlgoNature.Visualisation.Desktop
         private void initializePropertyRowWithPropertyName(int rowIndex, string propertyName)
         {
             // testing whether a row with this index exists
-            bool addRow;
-            do
+            if (rowIndex + 1 > this.RowCount)
             {
-                addRow = false;
-                try
-                {
-                    this.propertiesDataGridView[0, rowIndex].ReadOnly = true; // property name column won't be editable
-                }
-                catch
-                {
-                    addRow = true;
-                    this.propertiesDataGridView.RowCount++;
-                }
-            } while (addRow);
+                this.RowCount = rowIndex + 1;
+            }
 
-            this.propertiesDataGridView[0, rowIndex].Value = propertyName;
+            this[0, rowIndex].ReadOnly = true;
+            this[0, rowIndex].ValueType = typeof(string);
+            this[0, rowIndex].Value = propertyName;
         }
 
         /*
@@ -144,32 +153,37 @@ namespace AlgoNature.Visualisation.Desktop
         private void initializeDirectValuePropertyCell(int rowIndex, PropertyInfo valueProperty)
         {
             var value = valueProperty.GetValue(_editedObject);
-            this.propertiesDataGridView[1, rowIndex].Value = value;
-            this.propertiesDataGridView[1, rowIndex].ValueType = value.GetType();
-            // Anonymous method for changing back the value
-            this.propertiesDataGridView.CellEndEdit +=
-                (sender, e) =>
-                {
-                    if (e.RowIndex == rowIndex)
+            this[1, rowIndex].Value = value;
+            this[1, rowIndex].ValueType = value.GetType();
+
+            if ((bool)(_properties[rowIndex].SetMethod?.IsPublic))
+            {
+                // Anonymous method for changing back the value
+                this.CellEndEdit +=
+                    (sender, e) =>
                     {
-                        _properties[rowIndex].SetValue(_editedObject, this.propertiesDataGridView[1, rowIndex].Value);
-                    }
-                };
+                        if (e.RowIndex == rowIndex)
+                        {
+                            _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
+                        }
+                    };
+            }
+            else this[1, rowIndex].ReadOnly = true; // Don't allow changing the property if it is readonly
         }
 
         private void initializeDirectValueObjectOfArrayCell(int rowIndex, int arrayIndex)
         {
             object[] arr = (object[])_editedObject;
-            this.propertiesDataGridView[1, rowIndex].Value = arr[arrayIndex];
-            this.propertiesDataGridView[1, rowIndex].ValueType = arr[arrayIndex].GetType();
+            this[1, rowIndex].Value = arr[arrayIndex];
+            this[1, rowIndex].ValueType = arr[arrayIndex].GetType();
 
             // Anonymous method for changing back the value
-            this.propertiesDataGridView.CellEndEdit +=
+            this.CellEndEdit +=
                 (sender, e) =>
                 {
                     if (e.RowIndex == rowIndex)
                     {
-                        arr[arrayIndex] = this.propertiesDataGridView[1, rowIndex].Value;
+                        arr[arrayIndex] = this[1, rowIndex].Value;
                         AnythingChanged = true;
                     }
                 };
@@ -181,26 +195,27 @@ namespace AlgoNature.Visualisation.Desktop
             
             if (value is bool)
             {
-                propertiesDataGridView[1, rowIndex] = new DataGridViewCheckBoxCell(false);
-                ((DataGridViewCheckBoxCell)propertiesDataGridView[1, rowIndex]).Value = value;
+                this[1, rowIndex] = new DataGridViewCheckBoxCell(false);
+                ((DataGridViewCheckBoxCell)this[1, rowIndex]).Value = value;
                     
-                this.propertiesDataGridView.CellEndEdit +=
+                this.CellContentClick +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            _properties[rowIndex].SetValue(_editedObject, propertiesDataGridView[1, rowIndex].Value);
+                            _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
                             AnythingChanged = true;
                         }
                     };
             }
             else if (value is Color)
             {
-                propertiesDataGridView[1, rowIndex] = new DataGridViewButtonCell();
-                propertiesDataGridView[1, rowIndex].Value = value;
-                ((DataGridViewButtonCell)propertiesDataGridView[1, rowIndex]).Style.BackColor = (Color)value;
+                this[1, rowIndex] = new DataGridViewButtonCell();
+                this[1, rowIndex].Value = value;
+                ((DataGridViewButtonCell)this[1, rowIndex]).FlatStyle = FlatStyle.Popup;
+                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = (Color)value;
 
-                this.propertiesDataGridView.CellClick +=
+                this.CellContentClick +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
@@ -211,8 +226,62 @@ namespace AlgoNature.Visualisation.Desktop
                             if (result == DialogResult.OK)
                             {
                                 _properties[rowIndex].SetValue(_editedObject, colDialog.Color);
-                                propertiesDataGridView[1, rowIndex].Value = colDialog.Color;
-                                ((DataGridViewButtonCell)propertiesDataGridView[1, rowIndex]).Style.BackColor = colDialog.Color;
+                                this[1, rowIndex].Value = colDialog.Color;
+                                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = colDialog.Color;
+                                AnythingChanged = true;
+                            }
+                            // TODO zjistit jiné výsledky dialogResult
+                        }
+                    };
+            }
+            else if (value is SolidBrush)
+            {
+                this[1, rowIndex] = new DataGridViewButtonCell();
+                this[1, rowIndex].Value = value;
+                ((DataGridViewButtonCell)this[1, rowIndex]).FlatStyle = FlatStyle.Popup;
+                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((SolidBrush)value).Color;
+
+                this.CellContentClick +=
+                    (sender, e) =>
+                    {
+                        if (e.RowIndex == rowIndex)
+                        {
+                            ColorDialog colDialog = new ColorDialog();
+                            DialogResult result = colDialog.ShowDialog();
+
+                            if (result == DialogResult.OK)
+                            {
+                                SolidBrush proprt = (SolidBrush)_properties[rowIndex].GetValue(_editedObject);
+                                proprt.Color = colDialog.Color;
+                                _properties[rowIndex].SetValue(_editedObject, proprt);
+                                this[1, rowIndex].Value = colDialog.Color;
+                                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = colDialog.Color;
+                                AnythingChanged = true;
+                            }
+                                // TODO zjistit jiné výsledky dialogResult
+                        }
+                    };
+            }
+            else if (value is Pen)
+            {
+                this[1, rowIndex] = new DataGridViewButtonCell();
+                this[1, rowIndex].Value = ((Pen)value).Width;
+                ((DataGridViewButtonCell)this[1, rowIndex]).FlatStyle = FlatStyle.Popup;
+                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)value).Color;
+
+                this.CellContentClick +=
+                    (sender, e) =>
+                    {
+                        if (e.RowIndex == rowIndex)
+                        {
+                            object prop = _properties[rowIndex].GetValue(_editedObject);
+                            PropertiesEditFlyOut flyout = new PropertiesEditFlyOut(prop);
+                            DialogResult result = flyout.Show();
+
+                            if (result != DialogResult.Cancel && flyout.EditedObjectChanged)
+                            {
+                                _properties[rowIndex].SetValue(_editedObject, flyout.EditedObject);
+                                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)flyout.EditedObject).Color;
                                 AnythingChanged = true;
                             }
                             // TODO zjistit jiné výsledky dialogResult
@@ -221,43 +290,43 @@ namespace AlgoNature.Visualisation.Desktop
             }
             else if (value is DateTime)
             {
-                //propertiesDataGridView[1, rowIndex].ValueType = typeof(DateTime);
-                propertiesDataGridView[1, rowIndex].Value = value;
+                //this[1, rowIndex].ValueType = typeof(DateTime);
+                this[1, rowIndex].Value = value;
 
-                this.propertiesDataGridView.CellEndEdit +=
+                this.CellEndEdit +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            _properties[rowIndex].SetValue(_editedObject, DateTime.Parse(propertiesDataGridView[1, rowIndex].Value.ToString()));
+                            _properties[rowIndex].SetValue(_editedObject, DateTime.Parse(this[1, rowIndex].Value.ToString()));
                             AnythingChanged = true;
                         }
                     };
             }
             else if (value is Point)
             {
-                propertiesDataGridView[1, rowIndex].Value = value;
+                this[1, rowIndex].Value = value;
 
-                this.propertiesDataGridView.CellEndEdit +=
+                this.CellEndEdit +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            _properties[rowIndex].SetValue(_editedObject, propertiesDataGridView[1, rowIndex].Value);
+                            _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
                             AnythingChanged = true;
                         }
                     };
             }
             else if (value is PointF)
             {
-                propertiesDataGridView[1, rowIndex].Value = value;
+                this[1, rowIndex].Value = value;
 
-                this.propertiesDataGridView.CellEndEdit +=
+                this.CellEndEdit +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            _properties[rowIndex].SetValue(_editedObject, propertiesDataGridView[1, rowIndex].Value);
+                            _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
                             AnythingChanged = true;
                         }
                     };
@@ -267,26 +336,26 @@ namespace AlgoNature.Visualisation.Desktop
                 Type type = value.GetType();
                 if (type.IsEnum)
                 {
-                    propertiesDataGridView[1, rowIndex] = new DataGridViewComboBoxCell();
-                    ((DataGridViewComboBoxCell)propertiesDataGridView[1, rowIndex]).Items.AddRange(type.GetEnumNames());
-                    ((DataGridViewComboBoxCell)propertiesDataGridView[1, rowIndex]).Value = value.ToString();
+                    this[1, rowIndex] = new DataGridViewComboBoxCell();
+                    ((DataGridViewComboBoxCell)this[1, rowIndex]).Items.AddRange(type.GetEnumNames());
+                    ((DataGridViewComboBoxCell)this[1, rowIndex]).Value = value.ToString();
 
-                    this.propertiesDataGridView.CellValueChanged +=
+                    this.CellValueChanged +=
                         (sender, e) =>
                         {
                             if (e.RowIndex == rowIndex)
                             {
-                                _properties[rowIndex].SetValue(_editedObject, Enum.Parse(type, propertiesDataGridView[1, rowIndex].Value.ToString()));
+                                _properties[rowIndex].SetValue(_editedObject, Enum.Parse(type, this[1, rowIndex].Value.ToString()));
                                 AnythingChanged = true;
                             }
                         };
                 }
                 else
                 {
-                    propertiesDataGridView[1, rowIndex] = new DataGridViewButtonCell();
-                    ((DataGridViewButtonCell)propertiesDataGridView[1, rowIndex]).Value = value;
+                    this[1, rowIndex] = new DataGridViewButtonCell();
+                    ((DataGridViewButtonCell)this[1, rowIndex]).Value = value;
 
-                    this.propertiesDataGridView.CellClick +=
+                    this.CellClick +=
                         (sender, e) =>
                         {
                             if (e.RowIndex == rowIndex)
@@ -317,26 +386,26 @@ namespace AlgoNature.Visualisation.Desktop
             
             if (value is bool)
             {
-                propertiesDataGridView[1, rowIndex] = new DataGridViewCheckBoxCell(false);
-                ((DataGridViewCheckBoxCell)propertiesDataGridView[1, rowIndex]).Value = value;
+                this[1, rowIndex] = new DataGridViewCheckBoxCell(false);
+                ((DataGridViewCheckBoxCell)this[1, rowIndex]).Value = value;
 
-                this.propertiesDataGridView.CellEndEdit +=
+                this.CellEndEdit +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            array[arrayIndex] = propertiesDataGridView[1, rowIndex].Value;
+                            array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
                         }
                     };
             }
             else if (value is Color)
             {
-                propertiesDataGridView[1, rowIndex] = new DataGridViewButtonCell();
-                propertiesDataGridView[1, rowIndex].Value = value;
-                ((DataGridViewButtonCell)propertiesDataGridView[1, rowIndex]).Style.BackColor = (Color)value;
+                this[1, rowIndex] = new DataGridViewButtonCell();
+                this[1, rowIndex].Value = value;
+                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = (Color)value;
 
-                this.propertiesDataGridView.CellClick +=
+                this.CellClick +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
@@ -347,8 +416,8 @@ namespace AlgoNature.Visualisation.Desktop
                             if (result == DialogResult.OK)
                             {
                                 array[arrayIndex] = colDialog.Color;
-                                propertiesDataGridView[1, rowIndex].Value = colDialog.Color;
-                                ((DataGridViewButtonCell)propertiesDataGridView[1, rowIndex]).Style.BackColor = colDialog.Color;
+                                this[1, rowIndex].Value = colDialog.Color;
+                                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = colDialog.Color;
                                 AnythingChanged = true;
                             }
                             // TODO zjistit jiné výsledky dialogResult
@@ -357,43 +426,43 @@ namespace AlgoNature.Visualisation.Desktop
             }
             else if (value is DateTime)
             {
-                //propertiesDataGridView[1, rowIndex].ValueType = typeof(DateTime);
-                propertiesDataGridView[1, rowIndex].Value = value;
+                //this[1, rowIndex].ValueType = typeof(DateTime);
+                this[1, rowIndex].Value = value;
 
-                this.propertiesDataGridView.CellEndEdit +=
+                this.CellEndEdit +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            array[arrayIndex] = DateTime.Parse(propertiesDataGridView[1, rowIndex].Value.ToString());
+                            array[arrayIndex] = DateTime.Parse(this[1, rowIndex].Value.ToString());
                             AnythingChanged = true;
                         }
                     };
             }
             else if (value is Point)
             {
-                propertiesDataGridView[1, rowIndex].Value = value;
+                this[1, rowIndex].Value = value;
 
-                this.propertiesDataGridView.CellEndEdit +=
+                this.CellEndEdit +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            array[arrayIndex] = propertiesDataGridView[1, rowIndex].Value;
+                            array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
                         }
                     };
             }
             else if (value is PointF)
             {
-                propertiesDataGridView[1, rowIndex].Value = value;
+                this[1, rowIndex].Value = value;
 
-                this.propertiesDataGridView.CellEndEdit +=
+                this.CellEndEdit +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            array[arrayIndex] = propertiesDataGridView[1, rowIndex].Value;
+                            array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
                         }
                     };
@@ -403,26 +472,26 @@ namespace AlgoNature.Visualisation.Desktop
                 Type type = value.GetType();
                 if (type.IsEnum)
                 {
-                    propertiesDataGridView[1, rowIndex] = new DataGridViewComboBoxCell();
-                    ((DataGridViewComboBoxCell)propertiesDataGridView[1, rowIndex]).Items.AddRange(type.GetEnumNames());
-                    ((DataGridViewComboBoxCell)propertiesDataGridView[1, rowIndex]).Value = value.ToString();
+                    this[1, rowIndex] = new DataGridViewComboBoxCell();
+                    ((DataGridViewComboBoxCell)this[1, rowIndex]).Items.AddRange(type.GetEnumNames());
+                    ((DataGridViewComboBoxCell)this[1, rowIndex]).Value = value.ToString();
 
-                    this.propertiesDataGridView.CellValueChanged +=
+                    this.CellValueChanged +=
                         (sender, e) =>
                         {
                             if (e.RowIndex == rowIndex)
                             {
-                                array[arrayIndex] = Enum.Parse(type, propertiesDataGridView[1, rowIndex].Value.ToString());
+                                array[arrayIndex] = Enum.Parse(type, this[1, rowIndex].Value.ToString());
                                 AnythingChanged = true;
                             }
                         };
                 }
                 else
                 {
-                    propertiesDataGridView[1, rowIndex] = new DataGridViewButtonCell();
-                    ((DataGridViewButtonCell)propertiesDataGridView[1, rowIndex]).Value = value;
+                    this[1, rowIndex] = new DataGridViewButtonCell();
+                    ((DataGridViewButtonCell)this[1, rowIndex]).Value = value;
 
-                    this.propertiesDataGridView.CellClick +=
+                    this.CellClick +=
                         (sender, e) =>
                         {
                             if (e.RowIndex == rowIndex)
@@ -475,18 +544,14 @@ namespace AlgoNature.Visualisation.Desktop
             }
         }
 
-        private void propertiesDataGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        public DataGridView DisplayedDataGridView
         {
-            if (e.ColumnIndex == 1)
-            {
-                int row = e.RowIndex;
-                
-            }            
+            get { return this; }
         }
 
-        private void propertiesDataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void PropertiesEditorGrid_Paint(object sender, PaintEventArgs e)
         {
-
+            if (allRowsInitialized) PropertiesEditorGridLoaded(this); // Event showing its parent that the grid is loaded
         }
     }
 
@@ -495,7 +560,7 @@ namespace AlgoNature.Visualisation.Desktop
         public static bool IsDirectlyEditableValueByGrid(this object value)
         {
             Type type = value.GetType();
-            return type.IsValueType && type.Name != "Boolean";
+            return PropertiesEditorGrid.DIRECTLY_EDITABLE_TYPES_STR.Contains(type.Name);
         }
     }
 }

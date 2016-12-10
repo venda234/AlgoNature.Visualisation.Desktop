@@ -31,13 +31,6 @@ namespace AlgoNature.Visualisation.Desktop
 
         private bool showIGrowableSettings;
 
-        //private string[] AllProperties; // All properties of the control
-        private string[] UserControlProperties;
-        private string[] OwnNotIGrowableProperties;
-        //private Type[] OwnNotIGrowablePropertiesTypes;
-        private string[] IGrowableProperties;
-        //private Type[] IGrowablePropertiesTypes;
-
         public mainForm()
         {
             InitializeComponent();
@@ -46,8 +39,7 @@ namespace AlgoNature.Visualisation.Desktop
 
             assemblyControls = getAlgoNatureAssemblyUserControlsTypes();
 
-            initializeDefaultPropertyArrays();
-
+            
             // Assigning controls to the controlsComboBox
             string[] typeStrs = new string[assemblyControls.Length];
             for (int i = 0; i < assemblyControls.Length; i++) typeStrs[i] = assemblyControls[i].FullName;
@@ -61,56 +53,10 @@ namespace AlgoNature.Visualisation.Desktop
             ReinitializeControl();
         }
 
-        private void ReinitializeControl()
-        {
-            initializeSelectedComponentPropertyArrays();
-
-            mainSplitContainer.Panel2.Controls.Clear();
-            drawnUserControl = Activator.CreateInstance(assemblyControls[selectedAssemblyControlIndex]);
-            mainSplitContainer.Panel2.Controls.Add((Control)drawnUserControl);
-
-            reinitializePropertyTables();
-        }
-        
-
-        private void initializeDefaultPropertyArrays()
-        {
-            // IGrowable
-            PropertyInfo[] properties = typeof(AlgoNature.Components.IGrowableGraphicChild).GetProperties();
-            IGrowableProperties = new string[properties.Length];
-            for (int i = 0; i < properties.Length; i++) IGrowableProperties[i] = properties[i].Name;
-
-            // UserControl
-            properties = typeof(UserControl).GetProperties();
-            UserControlProperties = new string[properties.Length];
-            for (int i = 0; i < properties.Length; i++) UserControlProperties[i] = properties[i].Name;
-        }
-
-        private void initializeSelectedComponentPropertyArrays()
-        {
-            showIGrowableSettings = assemblyControls[selectedAssemblyControlIndex].ImplementsInterface(typeof(IGrowableGraphicChild));
-            exportButton.Visible = assemblyControls[selectedAssemblyControlIndex].ImplementsInterface(typeof(IBitmapGraphicChild));
-
-            PropertyInfo[] properties = assemblyControls[selectedAssemblyControlIndex].GetProperties();
-
-            List<string> ownProps = new List<string>();
-            string name;
-            foreach (PropertyInfo propInfo in properties)
-            {
-                name = propInfo.Name;
-                
-                if (!IGrowableProperties.Contains(name) && !UserControlProperties.Contains(name))
-                {
-                    ownProps.Add(name);
-                }
-            }
-            OwnNotIGrowableProperties = ownProps.ToArray();
-        }
-
         private Type[] getAlgoNatureAssemblyUserControlsTypes()
         {
             List<Type> result = new List<Type>();
-            
+
             Type[] types = ANC.GetTypes();
 
             foreach (Type type in types)
@@ -121,36 +67,62 @@ namespace AlgoNature.Visualisation.Desktop
                     {
                         result.Add(type);
                     }
-                } catch { }                
+                }
+                catch { }
             }
-
-            //Console.WriteLine(Assembly.GetAssembly(typeof(AlgoNature.Components.IGrowableGraphicChild)));
-            //Console.WriteLine()
             return result.ToArray();
         }
 
-        private void reinitializePropertyTables()
+        private void ReinitializeControl()
         {
-            //refreshedGridViews = false;
-            // Clearing old tables
-            // propertiesDataGridView
-            this.propertiesDataGridView.Rows.Clear();
-            // iGrowablePropertiesDataGridView
-            this.iGrowablePropertiesDataGridView.Rows.Clear();
+            initializeExportabilityAndIGrowability();
 
-            //Determining whether to show IGrowable properties table
+            mainSplitContainer.Panel2.Controls.Clear();
+            drawnUserControl = Activator.CreateInstance(assemblyControls[selectedAssemblyControlIndex]);
+            mainSplitContainer.Panel2.Controls.Add((Control)drawnUserControl);
+            redockWhenLoadingElement = true;
+            reinitializePropertyGrids();
+        }
+        
+
+        private void initializeExportabilityAndIGrowability()
+        {
+            showIGrowableSettings = assemblyControls[selectedAssemblyControlIndex].ImplementsInterface(typeof(IGrowableGraphicChild));
+            exportButton.Visible = assemblyControls[selectedAssemblyControlIndex].ImplementsInterface(typeof(IBitmapGraphicChild));
+        }
+
+        private void reinitializePropertyGrids()
+        {
+            //Clear panels' grids
+            this.propertiesSplitContainer.Panel1.Controls.Clear();
+            this.propertiesSplitContainer.Panel2.Controls.Clear();
+
+            //Determining whether to show IGrowable properties Grid
             if (showIGrowableSettings)
             {
                 this.propertiesSplitContainer.SplitterDistance = PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE;
-                this.iGrowablePropertiesDataGridView.Visible = true;
             }
             else
             {
-                this.propertiesSplitContainer.SplitterDistance = 0;
-                this.iGrowablePropertiesDataGridView.Visible = false;
+                this.propertiesSplitContainer.SplitterDistance = this.propertiesSplitContainer.Height;
             }
 
-            // Initializing own properties
+            // First this for resizing
+            if (showIGrowableSettings)
+            {
+                redockWhenLoadingElement = true;
+                PropertiesEditorGrid grid2 = new PropertiesEditorGrid(drawnUserControl, new Type[1] { typeof(IGrowableGraphicChild) }, true);
+                grid2.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
+                this.propertiesSplitContainer.Panel2.Controls.Add(grid2);
+            }
+
+            redockWhenLoadingElement = true;
+            PropertiesEditorGrid grid = new PropertiesEditorGrid(drawnUserControl,
+                new Type[3] { typeof(UserControl), typeof(IGrowableGraphicChild), typeof(IBitmapGraphicChild) }, false);
+            grid.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
+            this.propertiesSplitContainer.Panel1.Controls.Add(grid);
+            
+            /*// Initializing own properties
             propertiesDataGridView.RowCount = OwnNotIGrowableProperties.Length;
             for (int i = 0; i < OwnNotIGrowableProperties.Length; i++)
             {
@@ -172,27 +144,66 @@ namespace AlgoNature.Visualisation.Desktop
                     this.iGrowablePropertiesDataGridView[1, i].Value = drawnUserControl.GetType().GetProperty(IGrowableProperties[i]).GetValue(drawnUserControl);
                     this.iGrowablePropertiesDataGridView[1, i].ValueType = this.iGrowablePropertiesDataGridView[1, i].Value.GetType();
                 }
-            }
+            }*/
 
-            doPropertiesTablesTranslation();
+            doPropertiesGridsTranslation();
 
             setMainSplitContainerSplitterDistance();
 
+            
+        }
+
+        private void redockDrawnComponent()
+        {
             Type tt = assemblyControls[selectedAssemblyControlIndex];
             MethodInfo method = tt.GetMethod("DockOnSize");
-                             //.MakeGenericMethod(new Type[] { tt });
             method.Invoke(drawnUserControl, new object[] { mainSplitContainer.Panel2.Size });
         }
 
         //bool refreshedGridViews;
-        private delegate void ThreadStart();
-        private void setMainSplitContainerSplitterDistance()
+        //private delegate void ThreadStart();
+        bool redockWhenLoadingElement = false;
+        private void setMainSplitContainerSplitterDistance(object sender)
+        {
+            setMainSplitContainerSplitterDistance(true);
+        }
+        private void setMainSplitContainerSplitterDistance() => setMainSplitContainerSplitterDistance(false);
+        private void setMainSplitContainerSplitterDistance(bool redock)
         {
             Thread.Sleep(100);
+            DataGridView propertiesDataGridView = ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView;
             int widthToAdd = propertiesDataGridView.Columns[0].Width + propertiesDataGridView.Columns[1].Width - propertiesSplitContainer.Panel1.Width;
             int height = propertiesDataGridView.ColumnHeadersHeight + propertiesDataGridView.RowCount * propertiesDataGridView.Rows[0].Height;
             if (height > propertiesDataGridView.Height) widthToAdd += SCROLLBAR_SIZE;
-            mainSplitContainer.SplitterDistance += widthToAdd;
+
+            if (showIGrowableSettings)
+            {
+                DataGridView iGrowablePropertiesDataGridView = ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView;
+                int widthToAdd2 = iGrowablePropertiesDataGridView.Columns[0].Width + iGrowablePropertiesDataGridView.Columns[1].Width - propertiesSplitContainer.Panel2.Width;
+                height = iGrowablePropertiesDataGridView.ColumnHeadersHeight + iGrowablePropertiesDataGridView.RowCount * iGrowablePropertiesDataGridView.Rows[0].Height;
+                if (height > iGrowablePropertiesDataGridView.Height) widthToAdd += SCROLLBAR_SIZE;
+
+                if (widthToAdd2 > widthToAdd)
+                {
+                    widthToAdd = widthToAdd2;
+                }
+            }
+
+            if (widthToAdd != 0)
+            {
+                mainSplitContainer.SplitterDistance += widthToAdd;
+                propertiesDataGridView.Refresh();
+                if (redock && redockWhenLoadingElement) redockDrawnComponent();
+                //= propertiesSplitContainer.Panel1.Width - ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).Columns[0].Width - SCROLLBAR_SIZE;
+            }
+
+            if (widthToAdd == 0)
+            {
+                redockWhenLoadingElement = false;
+                //((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView.Refresh();
+                //if (showIGrowableSettings) ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView.Refresh(); ;
+            }
+            
             //Console.WriteLine(propertiesDataGridView.Height + "   " + nameof(propertiesDataGridView) + " Height");
         }
 
@@ -201,7 +212,7 @@ namespace AlgoNature.Visualisation.Desktop
 
         }
 
-        private void doPropertiesTablesTranslation()
+        private void doPropertiesGridsTranslation()
         {
 
         }

@@ -128,52 +128,6 @@
   <data name="propertiesSplitContainer.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
     <value>Horizontal</value>
   </data>
-  <metadata name="propertiesDataGridViewPropertyColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="propertiesDataGridViewPropertyColumn.HeaderText" xml:space="preserve">
-    <value>propertyColumnHeader</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="propertiesDataGridViewPropertyColumn.Width" type="System.Int32, mscorlib">
-    <value>140</value>
-  </data>
-  <metadata name="propertiesDataGridViewValueColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="propertiesDataGridViewValueColumn.HeaderText" xml:space="preserve">
-    <value>valueColumnHeader</value>
-  </data>
-  <data name="propertiesDataGridViewValueColumn.Width" type="System.Int32, mscorlib">
-    <value>128</value>
-  </data>
-  <data name="propertiesDataGridView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="propertiesDataGridView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="propertiesDataGridView.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="propertiesDataGridView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>216, 409</value>
-  </data>
-  <data name="propertiesDataGridView.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;propertiesDataGridView.Name" xml:space="preserve">
-    <value>propertiesDataGridView</value>
-  </data>
-  <data name="&gt;&gt;propertiesDataGridView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;propertiesDataGridView.Parent" xml:space="preserve">
-    <value>propertiesSplitContainer.Panel1</value>
-  </data>
-  <data name="&gt;&gt;propertiesDataGridView.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="&gt;&gt;propertiesSplitContainer.Panel1.Name" xml:space="preserve">
     <value>propertiesSplitContainer.Panel1</value>
   </data>
@@ -186,53 +140,9 @@
   <data name="&gt;&gt;propertiesSplitContainer.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="propertiesSplitContainer.Panel2.AutoScroll" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <metadata name="iGrowablePropertiesDataGridViewPropertyColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="iGrowablePropertiesDataGridViewPropertyColumn.HeaderText" xml:space="preserve">
-    <value>propertyColumnHeader</value>
-  </data>
-  <data name="iGrowablePropertiesDataGridViewPropertyColumn.Width" type="System.Int32, mscorlib">
-    <value>140</value>
-  </data>
-  <metadata name="iGrowablePropertiesDataGridViewValueColumn.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="iGrowablePropertiesDataGridViewValueColumn.HeaderText" xml:space="preserve">
-    <value>valueColumnHeader</value>
-  </data>
-  <data name="iGrowablePropertiesDataGridViewValueColumn.Width" type="System.Int32, mscorlib">
-    <value>128</value>
-  </data>
-  <data name="iGrowablePropertiesDataGridView.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="iGrowablePropertiesDataGridView.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="iGrowablePropertiesDataGridView.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
-    <value>Vertical</value>
-  </data>
-  <data name="iGrowablePropertiesDataGridView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>216, 265</value>
-  </data>
-  <data name="iGrowablePropertiesDataGridView.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;iGrowablePropertiesDataGridView.Name" xml:space="preserve">
-    <value>iGrowablePropertiesDataGridView</value>
-  </data>
-  <data name="&gt;&gt;iGrowablePropertiesDataGridView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;iGrowablePropertiesDataGridView.Parent" xml:space="preserve">
-    <value>propertiesSplitContainer.Panel2</value>
-  </data>
-  <data name="&gt;&gt;iGrowablePropertiesDataGridView.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="propertiesSplitContainer.Panel2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -560,30 +470,6 @@
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>mainFormText</value>
-  </data>
-  <data name="&gt;&gt;propertiesDataGridViewPropertyColumn.Name" xml:space="preserve">
-    <value>propertiesDataGridViewPropertyColumn</value>
-  </data>
-  <data name="&gt;&gt;propertiesDataGridViewPropertyColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;propertiesDataGridViewValueColumn.Name" xml:space="preserve">
-    <value>propertiesDataGridViewValueColumn</value>
-  </data>
-  <data name="&gt;&gt;propertiesDataGridViewValueColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;iGrowablePropertiesDataGridViewPropertyColumn.Name" xml:space="preserve">
-    <value>iGrowablePropertiesDataGridViewPropertyColumn</value>
-  </data>
-  <data name="&gt;&gt;iGrowablePropertiesDataGridViewPropertyColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;iGrowablePropertiesDataGridViewValueColumn.Name" xml:space="preserve">
-    <value>iGrowablePropertiesDataGridViewValueColumn</value>
-  </data>
-  <data name="&gt;&gt;iGrowablePropertiesDataGridViewValueColumn.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;exportImageDialog.Name" xml:space="preserve">
     <value>exportImageDialog</value>
