@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Threading;
 
 namespace AlgoNature.Visualisation.Desktop
 {
@@ -18,7 +19,7 @@ namespace AlgoNature.Visualisation.Desktop
             InitializeComponent();
         }*/
 
-        public PropertiesEditFlyOut(PropertiesEditorGrid grid)
+        public PropertiesEditFlyOut(PropertiesEditorGrid grid) : base()
         {
             InitializeComponent();
             PropertiesGrid = grid;
@@ -40,26 +41,38 @@ namespace AlgoNature.Visualisation.Desktop
             : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties().FilterPropertiesBasedOnOtherTypes(filterTypes, includeOnlyTypesPropsOrExcludeThemFromGeneral))
         { }
 
-        public new DialogResult Show()
+        /*private void showFlyout()
+        {
+            this.Show(Program.MainWindow);
+        }*/
+        /*public new DialogResult Show()
         {
             _result = DialogResult.None;
-            try
-            {
-                DialogResult tempRes = this.ShowDialog();
-                return _result;
-            }
-            catch
-            {
-                return DialogResult.None;
-            }
-        }
-        public DialogResult Show(PropertiesEditorGrid grid)
+            Thread thr = new Thread(showFlyout);
+            thr.Start();
+            while (_result == DialogResult.None) Thread.Sleep(10);
+            return _result;
+        }*/
+
+        public void Show(PropertiesEditorGrid grid)
         {
             PropertiesGrid = grid;
-            return this.Show();
+            this.Show();
+        }
+        public void Show(PropertiesEditorGrid grid, IWin32Window owner)
+        {
+            PropertiesGrid = grid;
+            this.Show(owner);
         }
 
+        public delegate void EditingFinishedEventHandler(DialogResult result);
+        public event EditingFinishedEventHandler EditingFinished;
+
         private DialogResult _result;
+        /*public DialogResult Result
+        {
+            get { return _result; }
+        }*/
 
         public object EditedObject
         {
@@ -87,7 +100,7 @@ namespace AlgoNature.Visualisation.Desktop
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            _result = DialogResult.OK;
+            _result = DialogResult.OK; 
             this.Close();
         }
 
@@ -95,6 +108,12 @@ namespace AlgoNature.Visualisation.Desktop
         {
             _result = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void PropertiesEditFlyOut_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (_result == DialogResult.None) _result = DialogResult.OK;
+            EditingFinished(_result);
         }
     }
 }

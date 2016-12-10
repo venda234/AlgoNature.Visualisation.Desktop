@@ -30,8 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PropertiesEditFlyOut));
             this.buttonsDockPanel = new System.Windows.Forms.Panel();
-            this.okButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.okButton = new System.Windows.Forms.Button();
             this.gridViewPanel = new System.Windows.Forms.Panel();
             this.buttonsDockPanel.SuspendLayout();
             this.SuspendLayout();
@@ -43,19 +43,19 @@
             resources.ApplyResources(this.buttonsDockPanel, "buttonsDockPanel");
             this.buttonsDockPanel.Name = "buttonsDockPanel";
             // 
-            // okButton
-            // 
-            resources.ApplyResources(this.okButton, "okButton");
-            this.okButton.Name = "okButton";
-            this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
-            // 
             // cancelButton
             // 
             resources.ApplyResources(this.cancelButton, "cancelButton");
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // okButton
+            // 
+            resources.ApplyResources(this.okButton, "okButton");
+            this.okButton.Name = "okButton";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // gridViewPanel
             // 
@@ -68,10 +68,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gridViewPanel);
             this.Controls.Add(this.buttonsDockPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "PropertiesEditFlyOut";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PropertiesEditFlyOut_FormClosed);
             this.buttonsDockPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

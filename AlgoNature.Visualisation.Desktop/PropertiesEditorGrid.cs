@@ -17,6 +17,12 @@ namespace AlgoNature.Visualisation.Desktop
         // Boolean will be displayed other way
         internal const string DIRECTLY_EDITABLE_TYPES_STR = "SByteCharDateTimeDecimalDoubleUInt16UInt32UInt64SingleString";
 
+
+        public PropertiesEditorGrid()
+        {
+            InitializeComponent();
+        }
+
         public PropertiesEditorGrid(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay)
         {
             InitializeComponent();
@@ -38,10 +44,11 @@ namespace AlgoNature.Visualisation.Desktop
             : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties().FilterPropertiesBasedOnOtherTypes(filterTypes, includeOnlyTypesPropsOrExcludeThemFromGeneral))
         { }
 
-        public delegate void PropertiesEditorGridLoadedEventHandler(object sender);
-        public event PropertiesEditorGridLoadedEventHandler PropertiesEditorGridLoaded;
+        //public delegate void PropertiesEditorGridLoadedEventHandler(object sender);
+        //public event PropertiesEditorGridLoadedEventHandler PropertiesEditorGridLoaded;
 
-        private PointConverter pc;
+        //public void l
+        //private PointConverter pc;
 
         private void initializeGrid()
         {
@@ -165,7 +172,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
                         }
@@ -184,7 +191,7 @@ namespace AlgoNature.Visualisation.Desktop
             this.CellEndEdit +=
                 (sender, e) =>
                 {
-                    if (e.RowIndex == rowIndex)
+                    if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                     {
                         arr[arrayIndex] = this[1, rowIndex].Value;
                         AnythingChanged = true;
@@ -204,7 +211,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
                             AnythingChanged = true;
@@ -221,7 +228,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -240,14 +247,14 @@ namespace AlgoNature.Visualisation.Desktop
             else if (value is SolidBrush)
             {
                 this[1, rowIndex] = new DataGridViewButtonCell();
-                this[1, rowIndex].Value = value;
+                this[1, rowIndex].Value = ((SolidBrush)value).Color;
                 ((DataGridViewButtonCell)this[1, rowIndex]).FlatStyle = FlatStyle.Popup;
                 ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((SolidBrush)value).Color;
 
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -272,22 +279,35 @@ namespace AlgoNature.Visualisation.Desktop
                 ((DataGridViewButtonCell)this[1, rowIndex]).FlatStyle = FlatStyle.Popup;
                 ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)value).Color;
 
+                PropertyInfo[] propsToDisplay = new PropertyInfo[2]
+                {
+                    typeof(Pen).GetProperty("Brush"),
+                    typeof(Pen).GetProperty("Width")
+                };
+
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             object prop = _properties[rowIndex].GetValue(_editedObject);
-                            propertiesFlyOuts.Add(rowIndex, new PropertiesEditFlyOut(prop));
-                            DialogResult result = propertiesFlyOuts[rowIndex].Show();
+                            PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay);
+                            //propertiesFlyOuts[rowIndex].Name = String.Format("PropertiesEditFlyOut-{0}-{1}", this.Name, rowIndex);
 
-                            if (result != DialogResult.Cancel && propertiesFlyOuts[rowIndex].EditedObjectChanged)
-                            {
-                                _properties[rowIndex].SetValue(_editedObject, propertiesFlyOuts[rowIndex].EditedObject);
-                                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)propertiesFlyOuts[rowIndex].EditedObject).Color;
-                                AnythingChanged = true;
-                            }
-                            // TODO zjistit jiné výsledky dialogResult
+                            flyout.EditingFinished +=
+                                (result) =>
+                                {
+                                    if (result != DialogResult.Cancel && flyout.EditedObjectChanged)
+                                    {
+                                        _properties[rowIndex].SetValue(_editedObject, flyout.EditedObject);
+                                        ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)flyout.EditedObject).Color;
+                                        AnythingChanged = true;
+                                    }
+                                    // TODO zjistit jiné výsledky dialogResult
+                                    flyout.Dispose();
+                                };
+
+                            flyout.Show();
                         }
                     };
             }
@@ -299,7 +319,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, DateTime.Parse(this[1, rowIndex].Value.ToString()));
                             AnythingChanged = true;
@@ -313,7 +333,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, ((string)this[1, rowIndex].Value).ToPoint());
                             AnythingChanged = true;
@@ -327,7 +347,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, ((string)this[1, rowIndex].Value).ToPointF());
                             AnythingChanged = true;
@@ -346,7 +366,7 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellValueChanged +=
                         (sender, e) =>
                         {
-                            if (e.RowIndex == rowIndex)
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 _properties[rowIndex].SetValue(_editedObject, Enum.Parse(type, this[1, rowIndex].Value.ToString()));
                                 AnythingChanged = true;
@@ -361,19 +381,25 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellClick +=
                         (sender, e) =>
                         {
-                            if (e.RowIndex == rowIndex)
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
 
-                                PropertiesEditFlyOut flyout = new PropertiesEditFlyOut(prop);
-                                DialogResult result = flyout.Show();
+                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop);
 
-                                if (result != DialogResult.Cancel && flyout.EditedObjectChanged)
-                                {
-                                    _properties[rowIndex].SetValue(_editedObject, flyout.EditedObject);
-                                    AnythingChanged = true;
-                                }
-                            // TODO zjistit jiné výsledky dialogResult
+                                flyout.EditingFinished +=
+                                    (result) =>
+                                    {
+                                        if (result != DialogResult.Cancel && flyout.EditedObjectChanged)
+                                        {
+                                            _properties[rowIndex].SetValue(_editedObject, flyout.EditedObject);
+                                            AnythingChanged = true;
+                                        }
+                                        // TODO zjistit jiné výsledky dialogResult
+                                        flyout.Dispose();
+                                    };
+
+                                flyout.Show();
                             }
                         };
                 }
@@ -392,10 +418,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this[1, rowIndex] = new DataGridViewCheckBoxCell(false);
                 ((DataGridViewCheckBoxCell)this[1, rowIndex]).Value = value;
 
-                this.CellEndEdit +=
+                this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
@@ -411,7 +437,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellClick +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -427,6 +453,74 @@ namespace AlgoNature.Visualisation.Desktop
                         }
                     };
             }
+            else if (value is SolidBrush)
+            {
+                this[1, rowIndex] = new DataGridViewButtonCell();
+                this[1, rowIndex].Value = ((SolidBrush)value).Color;
+                ((DataGridViewButtonCell)this[1, rowIndex]).FlatStyle = FlatStyle.Popup;
+                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((SolidBrush)value).Color;
+
+                this.CellContentClick +=
+                    (sender, e) =>
+                    {
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
+                        {
+                            ColorDialog colDialog = new ColorDialog();
+                            DialogResult result = colDialog.ShowDialog();
+
+                            if (result == DialogResult.OK)
+                            {
+                                SolidBrush proprt = (SolidBrush)_properties[rowIndex].GetValue(_editedObject);
+                                proprt.Color = colDialog.Color;
+                                array[arrayIndex] = proprt;
+                                this[1, rowIndex].Value = colDialog.Color;
+                                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = colDialog.Color;
+                                AnythingChanged = true;
+                            }
+                            // TODO zjistit jiné výsledky dialogResult
+                        }
+                    };
+            }
+            else if (value is Pen)
+            {
+                this[1, rowIndex] = new DataGridViewButtonCell();
+                this[1, rowIndex].Value = ((Pen)value).Width;
+                ((DataGridViewButtonCell)this[1, rowIndex]).FlatStyle = FlatStyle.Popup;
+                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)value).Color;
+
+                PropertyInfo[] propsToDisplay = new PropertyInfo[2]
+                {
+                    typeof(Pen).GetProperty("Brush"),
+                    typeof(Pen).GetProperty("Width")
+                };
+
+                this.CellContentClick +=
+                    (sender, e) =>
+                    {
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
+                        {
+                            object prop = _properties[rowIndex].GetValue(_editedObject);
+                            PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay);
+                            //propertiesFlyOuts.Add(rowIndex, (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay));
+                            //propertiesFlyOuts[rowIndex].Name = String.Format("PropertiesEditFlyOut-{0}-{1}", this.Name, rowIndex);
+
+                            flyout.EditingFinished +=
+                            (result) =>
+                                {
+                                    if (result != DialogResult.Cancel && flyout.EditedObjectChanged)
+                                    {
+                                        array[arrayIndex] = flyout.EditedObject;
+                                        ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)flyout.EditedObject).Color;
+                                        AnythingChanged = true;
+                                    }
+                                    // TODO zjistit jiné výsledky dialogResult
+                                    flyout.Dispose();
+                                };
+
+                            flyout.Show();
+                        }
+                    };
+            }
             else if (value is DateTime)
             {
                 //this[1, rowIndex].ValueType = typeof(DateTime);
@@ -435,7 +529,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = DateTime.Parse(this[1, rowIndex].Value.ToString());
                             AnythingChanged = true;
@@ -449,7 +543,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
@@ -463,7 +557,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (e.RowIndex == rowIndex)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
@@ -482,7 +576,7 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellValueChanged +=
                         (sender, e) =>
                         {
-                            if (e.RowIndex == rowIndex)
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 array[arrayIndex] = Enum.Parse(type, this[1, rowIndex].Value.ToString());
                                 AnythingChanged = true;
@@ -497,19 +591,25 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellClick +=
                         (sender, e) =>
                         {
-                            if (e.RowIndex == rowIndex)
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
+                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop);
+                                //propertiesFlyOuts.Add(rowIndex, (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop));
 
-                                propertiesFlyOuts.Add(rowIndex, new PropertiesEditFlyOut(prop));
-                                DialogResult result = propertiesFlyOuts[rowIndex].Show();
+                                flyout.EditingFinished +=
+                                    (result) =>
+                                    {
+                                        if (result != DialogResult.Cancel && flyout.EditedObjectChanged)
+                                        {
+                                            array[arrayIndex] = flyout.EditedObject;
+                                            AnythingChanged = true;
+                                        }
+                                        // TODO zjistit jiné výsledky dialogResult
+                                        flyout.Dispose();
+                                    };
 
-                                if (result != DialogResult.Cancel && propertiesFlyOuts[rowIndex].EditedObjectChanged)
-                                {
-                                    array[arrayIndex] = propertiesFlyOuts[rowIndex].EditedObject;
-                                    AnythingChanged = true;
-                                }
-                                // TODO zjistit jiné výsledky dialogResult
+                                flyout.Show();
                             }
                         };
                 }
@@ -517,7 +617,7 @@ namespace AlgoNature.Visualisation.Desktop
         }          
         
 
-        private Dictionary<int, PropertiesEditFlyOut> propertiesFlyOuts = new Dictionary<int, PropertiesEditFlyOut>();
+        //private Dictionary<int, PropertiesEditFlyOut> propertiesFlyOuts = new Dictionary<int, PropertiesEditFlyOut>();
         
         public bool AnythingChanged
         {
@@ -554,7 +654,7 @@ namespace AlgoNature.Visualisation.Desktop
 
         private void PropertiesEditorGrid_Paint(object sender, PaintEventArgs e)
         {
-            if (allRowsInitialized) PropertiesEditorGridLoaded(this); // Event showing its parent that the grid is loaded
+            //if (allRowsInitialized) PropertiesEditorGridLoaded(this); // Event showing its parent that the grid is loaded
         }
     }
 

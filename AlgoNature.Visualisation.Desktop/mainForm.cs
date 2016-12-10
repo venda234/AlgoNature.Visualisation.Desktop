@@ -51,6 +51,8 @@ namespace AlgoNature.Visualisation.Desktop
             setMainSplitContainerSplitterDistance();
             Thread.Sleep(100);
             ReinitializeControl();
+
+            Program.MainWindow = this;
         }
 
         private Type[] getAlgoNatureAssemblyUserControlsTypes()
@@ -109,12 +111,12 @@ namespace AlgoNature.Visualisation.Desktop
 
             PropertiesEditorGrid grid = new PropertiesEditorGrid(drawnUserControl,
                 new Type[3] { typeof(UserControl), typeof(IGrowableGraphicChild), typeof(IBitmapGraphicChild) }, false);
-            grid.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
+            //grid.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
             this.propertiesSplitContainer.Panel1.Controls.Add(grid);
             if (showIGrowableSettings)
             {
                 PropertiesEditorGrid grid2 = new PropertiesEditorGrid(drawnUserControl, new Type[1] { typeof(IGrowableGraphicChild) }, true);
-                grid2.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
+                //grid2.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
                 this.propertiesSplitContainer.Panel2.Controls.Add(grid2);
             }
             /*// Initializing own properties

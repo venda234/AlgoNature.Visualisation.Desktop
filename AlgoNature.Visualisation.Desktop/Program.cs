@@ -18,5 +18,7 @@ namespace AlgoNature.Visualisation.Desktop
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new mainForm());
         }
+
+        internal static IWin32Window MainWindow { get; set; }
     }
 }
