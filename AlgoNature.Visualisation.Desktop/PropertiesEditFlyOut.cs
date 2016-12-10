@@ -13,10 +13,10 @@ namespace AlgoNature.Visualisation.Desktop
 {
     public partial class PropertiesEditFlyOut : Form
     {
-        public PropertiesEditFlyOut()
+        /*public PropertiesEditFlyOut()
         {
             InitializeComponent();
-        }
+        }*/
 
         public PropertiesEditFlyOut(PropertiesEditorGrid grid)
         {

@@ -80,7 +80,7 @@ namespace AlgoNature.Visualisation.Desktop
             mainSplitContainer.Panel2.Controls.Clear();
             drawnUserControl = Activator.CreateInstance(assemblyControls[selectedAssemblyControlIndex]);
             mainSplitContainer.Panel2.Controls.Add((Control)drawnUserControl);
-            redockWhenLoadingElement = true;
+
             reinitializePropertyGrids();
         }
         
@@ -107,21 +107,16 @@ namespace AlgoNature.Visualisation.Desktop
                 this.propertiesSplitContainer.SplitterDistance = this.propertiesSplitContainer.Height;
             }
 
-            // First this for resizing
-            if (showIGrowableSettings)
-            {
-                redockWhenLoadingElement = true;
-                PropertiesEditorGrid grid2 = new PropertiesEditorGrid(drawnUserControl, new Type[1] { typeof(IGrowableGraphicChild) }, true);
-                grid2.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
-                this.propertiesSplitContainer.Panel2.Controls.Add(grid2);
-            }
-
-            redockWhenLoadingElement = true;
             PropertiesEditorGrid grid = new PropertiesEditorGrid(drawnUserControl,
                 new Type[3] { typeof(UserControl), typeof(IGrowableGraphicChild), typeof(IBitmapGraphicChild) }, false);
             grid.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
             this.propertiesSplitContainer.Panel1.Controls.Add(grid);
-            
+            if (showIGrowableSettings)
+            {
+                PropertiesEditorGrid grid2 = new PropertiesEditorGrid(drawnUserControl, new Type[1] { typeof(IGrowableGraphicChild) }, true);
+                grid2.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
+                this.propertiesSplitContainer.Panel2.Controls.Add(grid2);
+            }
             /*// Initializing own properties
             propertiesDataGridView.RowCount = OwnNotIGrowableProperties.Length;
             for (int i = 0; i < OwnNotIGrowableProperties.Length; i++)
@@ -150,11 +145,7 @@ namespace AlgoNature.Visualisation.Desktop
 
             setMainSplitContainerSplitterDistance();
 
-            
-        }
-
-        private void redockDrawnComponent()
-        {
+            // Custom docking due to resizing grids container
             Type tt = assemblyControls[selectedAssemblyControlIndex];
             MethodInfo method = tt.GetMethod("DockOnSize");
             method.Invoke(drawnUserControl, new object[] { mainSplitContainer.Panel2.Size });
@@ -162,13 +153,8 @@ namespace AlgoNature.Visualisation.Desktop
 
         //bool refreshedGridViews;
         //private delegate void ThreadStart();
-        bool redockWhenLoadingElement = false;
-        private void setMainSplitContainerSplitterDistance(object sender)
-        {
-            setMainSplitContainerSplitterDistance(true);
-        }
-        private void setMainSplitContainerSplitterDistance() => setMainSplitContainerSplitterDistance(false);
-        private void setMainSplitContainerSplitterDistance(bool redock)
+        private void setMainSplitContainerSplitterDistance(object sender) => setMainSplitContainerSplitterDistance();
+        private void setMainSplitContainerSplitterDistance()
         {
             Thread.Sleep(100);
             DataGridView propertiesDataGridView = ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView;
@@ -183,27 +169,10 @@ namespace AlgoNature.Visualisation.Desktop
                 height = iGrowablePropertiesDataGridView.ColumnHeadersHeight + iGrowablePropertiesDataGridView.RowCount * iGrowablePropertiesDataGridView.Rows[0].Height;
                 if (height > iGrowablePropertiesDataGridView.Height) widthToAdd += SCROLLBAR_SIZE;
 
-                if (widthToAdd2 > widthToAdd)
-                {
-                    widthToAdd = widthToAdd2;
-                }
+                if (widthToAdd2 > widthToAdd) widthToAdd = widthToAdd2;
             }
 
-            if (widthToAdd != 0)
-            {
-                mainSplitContainer.SplitterDistance += widthToAdd;
-                propertiesDataGridView.Refresh();
-                if (redock && redockWhenLoadingElement) redockDrawnComponent();
-                //= propertiesSplitContainer.Panel1.Width - ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).Columns[0].Width - SCROLLBAR_SIZE;
-            }
-
-            if (widthToAdd == 0)
-            {
-                redockWhenLoadingElement = false;
-                //((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView.Refresh();
-                //if (showIGrowableSettings) ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView.Refresh(); ;
-            }
-            
+            mainSplitContainer.SplitterDistance += widthToAdd;
             //Console.WriteLine(propertiesDataGridView.Height + "   " + nameof(propertiesDataGridView) + " Height");
         }
 

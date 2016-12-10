@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows;
 using System.Reflection;
 
 namespace AlgoNature.Visualisation.Desktop
@@ -40,6 +41,8 @@ namespace AlgoNature.Visualisation.Desktop
         public delegate void PropertiesEditorGridLoadedEventHandler(object sender);
         public event PropertiesEditorGridLoadedEventHandler PropertiesEditorGridLoaded;
 
+        private PointConverter pc;
+
         private void initializeGrid()
         {
             allRowsInitialized = false;
@@ -65,7 +68,7 @@ namespace AlgoNature.Visualisation.Desktop
                         i--;
                     }
                 }
-                this.RowCount = _properties.Length; // Again if any property was omitted
+                this.RowCount = (_properties.Length > 0) ? _properties.Length : 1; // Again if any property was omitted
             }
             allRowsInitialized = true;
         }
@@ -275,13 +278,13 @@ namespace AlgoNature.Visualisation.Desktop
                         if (e.RowIndex == rowIndex)
                         {
                             object prop = _properties[rowIndex].GetValue(_editedObject);
-                            PropertiesEditFlyOut flyout = new PropertiesEditFlyOut(prop);
-                            DialogResult result = flyout.Show();
+                            propertiesFlyOuts.Add(rowIndex, new PropertiesEditFlyOut(prop));
+                            DialogResult result = propertiesFlyOuts[rowIndex].Show();
 
-                            if (result != DialogResult.Cancel && flyout.EditedObjectChanged)
+                            if (result != DialogResult.Cancel && propertiesFlyOuts[rowIndex].EditedObjectChanged)
                             {
-                                _properties[rowIndex].SetValue(_editedObject, flyout.EditedObject);
-                                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)flyout.EditedObject).Color;
+                                _properties[rowIndex].SetValue(_editedObject, propertiesFlyOuts[rowIndex].EditedObject);
+                                ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)propertiesFlyOuts[rowIndex].EditedObject).Color;
                                 AnythingChanged = true;
                             }
                             // TODO zjistit jiné výsledky dialogResult
@@ -312,7 +315,7 @@ namespace AlgoNature.Visualisation.Desktop
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
+                            _properties[rowIndex].SetValue(_editedObject, ((string)this[1, rowIndex].Value).ToPoint());
                             AnythingChanged = true;
                         }
                     };
@@ -326,7 +329,7 @@ namespace AlgoNature.Visualisation.Desktop
                     {
                         if (e.RowIndex == rowIndex)
                         {
-                            _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
+                            _properties[rowIndex].SetValue(_editedObject, ((string)this[1, rowIndex].Value).ToPointF());
                             AnythingChanged = true;
                         }
                     };
@@ -498,12 +501,12 @@ namespace AlgoNature.Visualisation.Desktop
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
 
-                                PropertiesEditFlyOut flyout = new PropertiesEditFlyOut(prop);
-                                DialogResult result = flyout.Show();
+                                propertiesFlyOuts.Add(rowIndex, new PropertiesEditFlyOut(prop));
+                                DialogResult result = propertiesFlyOuts[rowIndex].Show();
 
-                                if (result != DialogResult.Cancel && flyout.EditedObjectChanged)
+                                if (result != DialogResult.Cancel && propertiesFlyOuts[rowIndex].EditedObjectChanged)
                                 {
-                                    array[arrayIndex] = flyout.EditedObject;
+                                    array[arrayIndex] = propertiesFlyOuts[rowIndex].EditedObject;
                                     AnythingChanged = true;
                                 }
                                 // TODO zjistit jiné výsledky dialogResult
@@ -514,7 +517,7 @@ namespace AlgoNature.Visualisation.Desktop
         }          
         
 
-        //private Dictionary<int, PropertiesEditFlyOut> propertiesFlyOuts = new Dictionary<int, PropertiesEditFlyOut>();
+        private Dictionary<int, PropertiesEditFlyOut> propertiesFlyOuts = new Dictionary<int, PropertiesEditFlyOut>();
         
         public bool AnythingChanged
         {

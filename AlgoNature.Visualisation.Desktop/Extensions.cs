@@ -4,11 +4,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Drawing;
 
 namespace AlgoNature.Visualisation.Desktop
 {
     internal static partial class Extensions
     {
+        public static Point ToPoint(this string value)
+        {
+            Point res = new Point();
+            string[] vals = value.Split(new char[3] { '{', '}', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string str in vals)
+            {
+                if (str.ToLower().Contains('x'))
+                {
+                    res.X = Int32.Parse(str.Remove(0, 2));
+                }
+                if (str.ToLower().Contains('y'))
+                {
+                    res.Y = Int32.Parse(str.Remove(0, 2));
+                }
+            }
+            return res;
+        }
+        public static PointF ToPointF(this string value)
+        {
+            PointF res = new PointF();
+            string[] vals = value.Split(new char[3] { '{', '}', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string str in vals)
+            {
+                if (str.ToLower().Contains('x'))
+                {
+                    res.X = Single.Parse(str.Remove(0, 2));
+                }
+                if (str.ToLower().Contains('y'))
+                {
+                    res.Y = Single.Parse(str.Remove(0, 2));
+                }
+            }
+            return res;
+        }
+
         public static bool ImplementsInterface(this Type type, Type ifaceType)
         {
             Type[] intf = type.GetInterfaces();
