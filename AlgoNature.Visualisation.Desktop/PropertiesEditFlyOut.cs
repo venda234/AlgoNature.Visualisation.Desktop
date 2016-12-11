@@ -23,6 +23,7 @@ namespace AlgoNature.Visualisation.Desktop
         {
             InitializeComponent();
             PropertiesGrid = grid;
+            PropertiesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         public PropertiesEditFlyOut(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay) 
@@ -57,15 +58,18 @@ namespace AlgoNature.Visualisation.Desktop
         public void Show(PropertiesEditorGrid grid)
         {
             PropertiesGrid = grid;
+            PropertiesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.Show();
         }
         public void Show(PropertiesEditorGrid grid, IWin32Window owner)
         {
             PropertiesGrid = grid;
+            PropertiesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.Show(owner);
         }
 
-        public delegate void EditingFinishedEventHandler(DialogResult result);
+        public delegate void EditingFinishedEventHandler(DialogResult result, bool objectChanged, object editedObject);
+        //public delegate void EditingFinishedEventHandler(DialogResult result);
         public event EditingFinishedEventHandler EditingFinished;
 
         private DialogResult _result;
@@ -74,12 +78,20 @@ namespace AlgoNature.Visualisation.Desktop
             get { return _result; }
         }*/
 
-        public object EditedObject
+        public Type editedObjectType
+        {
+            get
+            {
+                return EditedObject.GetType();
+            }
+        }
+
+        private object EditedObject
         {
             get { return PropertiesGrid.EditedObject; }
         }
 
-        public bool EditedObjectChanged
+        private bool EditedObjectChanged
         {
             get { return PropertiesGrid.AnythingChanged; }
         }
@@ -113,7 +125,7 @@ namespace AlgoNature.Visualisation.Desktop
         private void PropertiesEditFlyOut_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (_result == DialogResult.None) _result = DialogResult.OK;
-            EditingFinished(_result);
+            EditingFinished(_result, EditedObjectChanged, EditedObject);
         }
     }
 }

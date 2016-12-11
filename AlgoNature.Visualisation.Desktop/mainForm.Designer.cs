@@ -79,6 +79,8 @@
             // 
             this.mainSplitContainer.Panel2.BackColor = System.Drawing.Color.White;
             this.mainSplitContainer.Panel2.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mainSplitContainer.SplitterMoving += new System.Windows.Forms.SplitterCancelEventHandler(this.mainSplitContainer_SplitterMoving);
+            this.mainSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.mainSplitContainer_SplitterMoved);
             // 
             // controlsComboBox
             // 
@@ -148,6 +150,7 @@
             this.Controls.Add(this.splitViewPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "mainForm";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.mainForm_Paint);
             this.Resize += new System.EventHandler(this.mainForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.propertiesSplitContainer)).EndInit();
             this.propertiesSplitContainer.ResumeLayout(false);

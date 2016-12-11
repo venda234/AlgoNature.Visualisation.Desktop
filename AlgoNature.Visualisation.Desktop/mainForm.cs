@@ -75,9 +75,17 @@ namespace AlgoNature.Visualisation.Desktop
             return result.ToArray();
         }
 
+        bool initializedResizeHandler = false;
         private void ReinitializeControl()
         {
+            manuallyResized = false;
             initializeExportabilityAndIGrowability();
+
+            if (!initializedResizeHandler)
+            {
+                //this.mainSplitContainer.Panel2.Resize += new System.EventHandler(this.mainSplitContainer_Panel2_Resize);
+                initializedResizeHandler = true;
+            }
 
             mainSplitContainer.Panel2.Controls.Clear();
             drawnUserControl = Activator.CreateInstance(assemblyControls[selectedAssemblyControlIndex]);
@@ -112,13 +120,25 @@ namespace AlgoNature.Visualisation.Desktop
             PropertiesEditorGrid grid = new PropertiesEditorGrid(drawnUserControl,
                 new Type[3] { typeof(UserControl), typeof(IGrowableGraphicChild), typeof(IBitmapGraphicChild) }, false);
             //grid.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
+            //grid.Resize += setMainSplitContainerSplitterDistance;
+            //grid.ColumnWidthChanged += setMainSplitContainerSplitterDistance;
+            if (!showIGrowableSettings) grid.Paint += setMainSplitContainerSplitterDistance; // if show, this will be served in the second grid
             this.propertiesSplitContainer.Panel1.Controls.Add(grid);
+
+            PropertiesEditorGrid grid2;
             if (showIGrowableSettings)
             {
-                PropertiesEditorGrid grid2 = new PropertiesEditorGrid(drawnUserControl, new Type[1] { typeof(IGrowableGraphicChild) }, true);
+                grid2 = new PropertiesEditorGrid(drawnUserControl, new Type[1] { typeof(IGrowableGraphicChild) }, true);
                 //grid2.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
+                //grid2.Resize += setMainSplitContainerSplitterDistance;
+                //grid.ColumnWidthChanged += setMainSplitContainerSplitterDistance;
+                grid2.Paint += setMainSplitContainerSplitterDistance;
                 this.propertiesSplitContainer.Panel2.Controls.Add(grid2);
             }
+
+            // Adding resize handlers now so far because adding them before could cause nullReference to iGrowableGrid
+
+
             /*// Initializing own properties
             propertiesDataGridView.RowCount = OwnNotIGrowableProperties.Length;
             for (int i = 0; i < OwnNotIGrowableProperties.Length; i++)
@@ -143,22 +163,34 @@ namespace AlgoNature.Visualisation.Desktop
                 }
             }*/
 
-            doPropertiesGridsTranslation();
+            //doPropertiesGridsTranslation();
 
             setMainSplitContainerSplitterDistance();
 
+            // Docking will be served in view panel's Resize handler
+            dockComponent();
+        }
+
+        private void dockComponent()
+        {
             // Custom docking due to resizing grids container
             Type tt = assemblyControls[selectedAssemblyControlIndex];
             MethodInfo method = tt.GetMethod("DockOnSize");
             method.Invoke(drawnUserControl, new object[] { mainSplitContainer.Panel2.Size });
+            ((UserControl)drawnUserControl).Refresh();
         }
 
         //bool refreshedGridViews;
         //private delegate void ThreadStart();
-        private void setMainSplitContainerSplitterDistance(object sender) => setMainSplitContainerSplitterDistance();
+        private bool settingMainSplitterDistance = false;
+        private void setMainSplitContainerSplitterDistance(object sender, EventArgs e)
+        {
+            if (!manuallyResized) setMainSplitContainerSplitterDistance();
+        }
         private void setMainSplitContainerSplitterDistance()
         {
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
+            settingMainSplitterDistance = true;
             DataGridView propertiesDataGridView = ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView;
             int widthToAdd = propertiesDataGridView.Columns[0].Width + propertiesDataGridView.Columns[1].Width - propertiesSplitContainer.Panel1.Width;
             int height = propertiesDataGridView.ColumnHeadersHeight + propertiesDataGridView.RowCount * propertiesDataGridView.Rows[0].Height;
@@ -166,26 +198,37 @@ namespace AlgoNature.Visualisation.Desktop
 
             if (showIGrowableSettings)
             {
-                DataGridView iGrowablePropertiesDataGridView = ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView;
-                int widthToAdd2 = iGrowablePropertiesDataGridView.Columns[0].Width + iGrowablePropertiesDataGridView.Columns[1].Width - propertiesSplitContainer.Panel2.Width;
-                height = iGrowablePropertiesDataGridView.ColumnHeadersHeight + iGrowablePropertiesDataGridView.RowCount * iGrowablePropertiesDataGridView.Rows[0].Height;
-                if (height > iGrowablePropertiesDataGridView.Height) widthToAdd += SCROLLBAR_SIZE;
+                try // trying because if propertiesDataGridView is initialized and iGrowablePropertiesDataGridView not yet, there could be an error
+                {
+                    DataGridView iGrowablePropertiesDataGridView = ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView;
+                    int widthToAdd2 = iGrowablePropertiesDataGridView.Columns[0].Width + iGrowablePropertiesDataGridView.Columns[1].Width - propertiesSplitContainer.Panel2.Width;
+                    height = iGrowablePropertiesDataGridView.ColumnHeadersHeight + iGrowablePropertiesDataGridView.RowCount * iGrowablePropertiesDataGridView.Rows[0].Height;
+                    if (height > iGrowablePropertiesDataGridView.Height) widthToAdd += SCROLLBAR_SIZE;
 
-                if (widthToAdd2 > widthToAdd) widthToAdd = widthToAdd2;
+                    if (widthToAdd2 > widthToAdd) widthToAdd = widthToAdd2;
+
+                    //iGrowablePropertiesDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill; // Is set yet now because everything is served - all needed widths are set
+                }
+                catch { }
             }
 
             mainSplitContainer.SplitterDistance += widthToAdd;
+            settingMainSplitterDistance = false;
+
+            // Set both grids' last column resize mode to fill - first is set above
+            //propertiesDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
             //Console.WriteLine(propertiesDataGridView.Height + "   " + nameof(propertiesDataGridView) + " Height");
         }
 
         private void doFormTranslation()
         {
-
+            // TODO
         }
 
         private void doPropertiesGridsTranslation()
         {
-
+            // TODO
         }
 
         private void controlsComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -247,7 +290,39 @@ namespace AlgoNature.Visualisation.Desktop
 
         private void mainForm_Resize(object sender, EventArgs e)
         {
+            
+        }
 
+        private bool manuallyResized = false;
+        private bool secondTimeDocked = false;
+        private void mainSplitContainer_Panel2_Resize(object sender, EventArgs e)
+        {
+            if (!secondTimeDocked)
+            {
+                secondTimeDocked = true;
+            }
+            else
+            {
+                dockComponent();
+                secondTimeDocked = false;
+            }
+        }
+
+        private void mainSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            if (showIGrowableSettings)
+                ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void mainSplitContainer_SplitterMoving(object sender, SplitterCancelEventArgs e)
+        {
+            if (!settingMainSplitterDistance) manuallyResized = true;
+        }
+
+        private void mainForm_Paint(object sender, PaintEventArgs e)
+        {
+            
         }
     }
 }
