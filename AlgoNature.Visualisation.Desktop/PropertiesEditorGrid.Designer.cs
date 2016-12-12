@@ -44,6 +44,7 @@
             this.propertiesDataGridViewPropertyColumn.Name = "propertiesDataGridViewPropertyColumn";
             this.propertiesDataGridViewPropertyColumn.ReadOnly = true;
             this.propertiesDataGridViewPropertyColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.propertiesDataGridViewPropertyColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // propertiesDataGridViewValueColumn
             // 
@@ -52,6 +53,7 @@
             this.propertiesDataGridViewValueColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.propertiesDataGridViewValueColumn.HeaderText = "valueColumnHeader";
             this.propertiesDataGridViewValueColumn.Name = "propertiesDataGridViewValueColumn";
+            this.propertiesDataGridViewValueColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // PropertiesEditorGrid
             // 
