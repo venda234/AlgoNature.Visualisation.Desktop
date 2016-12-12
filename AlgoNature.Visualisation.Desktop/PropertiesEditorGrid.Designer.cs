@@ -65,6 +65,8 @@
             this.RowHeadersVisible = false;
             this.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Size = new System.Drawing.Size(216, 409);
+            this.MultiSelect = false;
+            this.AllowUserToAddRows = false;
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PropertiesEditorGrid_Paint);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);

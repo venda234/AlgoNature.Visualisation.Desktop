@@ -53,6 +53,8 @@ namespace AlgoNature.Visualisation.Desktop
 
         private void initializeGrid()
         {
+            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
+            this.SuspendLayout();
             //allRowsInitialized = false;
             if (_editedObject.GetType().IsArray) // Edited object is an array
             {
@@ -78,6 +80,8 @@ namespace AlgoNature.Visualisation.Desktop
                 }
                 this.RowCount = (_properties.Length > 0) ? _properties.Length : 1; // Again if any property was omitted
             }
+            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
+            this.ResumeLayout();
             //allRowsInitialized = true;
         }
         //bool allRowsInitialized;
@@ -250,23 +254,33 @@ namespace AlgoNature.Visualisation.Desktop
             {
                 this[1, rowIndex] = new DataGridViewCheckBoxCell(false);
                 ((DataGridViewCheckBoxCell)this[1, rowIndex]).Value = value;
-                    
+
+                // Defocus after click - then the CellValueChanged event will be thrown
                 this.CellContentClick +=
+                    (sender, e) =>
+                    {
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
+                        {
+                            this[0, rowIndex].Selected = true;
+                        }
+                    };
+                    
+                this.CellValueChanged +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             try
                             {
-                                _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
+                                _properties[e.RowIndex].SetValue(_editedObject, this[1, e.RowIndex].Value);
                             }
                             catch
                             {
                                 if (_editedObject is Pen)
                                 {
-                                    _editedObject = new Pen(((Pen)_editedObject).Color, (float)this[1, rowIndex].Value);
+                                    _editedObject = new Pen(((Pen)_editedObject).Color, (float)this[1, e.RowIndex].Value);
                                 }
-                                else showPropertyUnableToBeSetMessage(_properties[rowIndex].Name);
+                                else showPropertyUnableToBeSetMessage(_properties[e.RowIndex].Name);
                             }
 
                             AnythingChanged = true;

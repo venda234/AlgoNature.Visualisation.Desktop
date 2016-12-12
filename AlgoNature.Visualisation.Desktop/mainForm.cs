@@ -104,7 +104,17 @@ namespace AlgoNature.Visualisation.Desktop
         private void reinitializePropertyGrids()
         {
             //Clear panels' grids
+            try
+            {
+                this.propertiesSplitContainer.Panel1.Controls[0].Dispose();
+            }
+            catch { }
             this.propertiesSplitContainer.Panel1.Controls.Clear();
+            try
+            {
+                this.propertiesSplitContainer.Panel2.Controls[0].Dispose();
+            }
+            catch { }
             this.propertiesSplitContainer.Panel2.Controls.Clear();
 
             //Determining whether to show IGrowable properties Grid
@@ -165,7 +175,7 @@ namespace AlgoNature.Visualisation.Desktop
 
             //doPropertiesGridsTranslation();
 
-            setMainSplitContainerSplitterDistance();
+            //setMainSplitContainerSplitterDistance();
 
             // Docking will be served in view panel's Resize handler
             dockComponent();
@@ -219,6 +229,25 @@ namespace AlgoNature.Visualisation.Desktop
             //propertiesDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             //Console.WriteLine(propertiesDataGridView.Height + "   " + nameof(propertiesDataGridView) + " Height");
+            setAutoColumnSize();
+        }
+
+        bool firstSetAutoColumnsSize;
+        private void setAutoColumnSize()
+        {
+            /*if (firstSetAutoColumnsSize)
+            {
+                firstSetAutoColumnsSize = false;
+            }
+            else
+            {*/
+                if (showIGrowableSettings) ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).Paint -= setMainSplitContainerSplitterDistance;
+                else ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).Paint -= setMainSplitContainerSplitterDistance;
+                ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                if (showIGrowableSettings)
+                    ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //}
+            
         }
 
         private void doFormTranslation()
@@ -297,7 +326,7 @@ namespace AlgoNature.Visualisation.Desktop
         private bool secondTimeDocked = false;
         private void mainSplitContainer_Panel2_Resize(object sender, EventArgs e)
         {
-            if (!secondTimeDocked)
+            /*if (!secondTimeDocked)
             {
                 secondTimeDocked = true;
             }
@@ -305,18 +334,21 @@ namespace AlgoNature.Visualisation.Desktop
             {
                 dockComponent();
                 secondTimeDocked = false;
-            }
+            }*/
+            if (!movingSplitter) dockComponent();
         }
 
         private void mainSplitContainer_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            if (showIGrowableSettings)
-                ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            setAutoColumnSize();
+            movingSplitter = false;
+            if (manuallyResized) dockComponent();
         }
 
+        bool movingSplitter;
         private void mainSplitContainer_SplitterMoving(object sender, SplitterCancelEventArgs e)
         {
+            movingSplitter = true;
             if (!settingMainSplitterDistance) manuallyResized = true;
         }
 
