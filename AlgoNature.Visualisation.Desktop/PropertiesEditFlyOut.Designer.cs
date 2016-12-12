@@ -68,11 +68,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gridViewPanel);
             this.Controls.Add(this.buttonsDockPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "PropertiesEditFlyOut";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PropertiesEditFlyOut_FormClosed);
+            this.ResizeBegin += new System.EventHandler(this.PropertiesEditFlyOut_ResizeBegin);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PropertiesEditFlyOut_Paint);
             this.buttonsDockPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 

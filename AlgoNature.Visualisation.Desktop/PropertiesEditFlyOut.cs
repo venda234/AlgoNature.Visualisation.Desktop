@@ -55,16 +55,28 @@ namespace AlgoNature.Visualisation.Desktop
             return _result;
         }*/
 
+        public new void Show()
+        {
+            //if (PropertiesGrid.Height < gridViewPanel.Height) this.Height -= PropertiesGrid.Height - gridViewPanel.Height;
+            base.Show();
+        }
+        public new void Show(IWin32Window owner)
+        {
+            //if (PropertiesGrid.Height < gridViewPanel.Height) this.Height -= PropertiesGrid.Height - gridViewPanel.Height;
+            base.Show(owner);
+        }
         public void Show(PropertiesEditorGrid grid)
         {
             PropertiesGrid = grid;
             PropertiesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //if (grid.Height < gridViewPanel.Height) this.Height -= grid.Height - gridViewPanel.Height;
             this.Show();
         }
         public void Show(PropertiesEditorGrid grid, IWin32Window owner)
         {
             PropertiesGrid = grid;
             PropertiesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //if (grid.Height < gridViewPanel.Height) this.Height -= grid.Height - gridViewPanel.Height;
             this.Show(owner);
         }
 
@@ -126,6 +138,21 @@ namespace AlgoNature.Visualisation.Desktop
         {
             if (_result == DialogResult.None) _result = DialogResult.OK;
             EditingFinished(_result, EditedObjectChanged, EditedObject);
+        }
+
+        private bool _userResizing = false;
+        private void PropertiesEditFlyOut_Paint(object sender, PaintEventArgs e)
+        {
+            if (!_userResizing)
+            {
+                int gridHeight = PropertiesGrid.ColumnHeadersHeight + PropertiesGrid.RowCount * PropertiesGrid.RowTemplate.Height;
+                if (gridHeight < gridViewPanel.Height) this.Height -= gridViewPanel.Height - gridHeight - 2; // Cells borders
+            }
+        }
+
+        private void PropertiesEditFlyOut_ResizeBegin(object sender, EventArgs e)
+        {
+            _userResizing = true;
         }
     }
 }
