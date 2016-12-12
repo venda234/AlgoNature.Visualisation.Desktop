@@ -1,0 +1,11 @@
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Release\AlgoNature.Visualisation.Desktop.exe.config
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Release\AlgoNature.Visualisation.Desktop.exe
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Release\AlgoNature.Visualisation.Desktop.pdb
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Release\Algonature.Components.dll
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Release\Algonature.Components.pdb
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.csprojResolveAssemblyReference.cache
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.mainForm.resources
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.Properties.Resources.resources
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.csproj.GenerateResource.Cache
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.exe
+C:\Users\Vacla\Documents\Visual Studio 2015\Projects\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.pdb

@@ -165,9 +165,12 @@ namespace AlgoNature.Visualisation.Desktop
         {
             var value = valueProperty.GetValue(_editedObject);
             this[1, rowIndex].Value = value;
-            this[1, rowIndex].ValueType = value.GetType();
 
-            if ((bool)(_properties[rowIndex].SetMethod?.IsPublic))
+            Type valType = value.GetType();
+
+            this[1, rowIndex].ValueType = valType;
+
+            if (_properties[rowIndex].SetMethod?.IsPublic == true)
             {
                 // Anonymous method for changing back the value
                 this.CellEndEdit +=
@@ -175,12 +178,29 @@ namespace AlgoNature.Visualisation.Desktop
                     {
                         if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
-                            _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
+                            try
+                            {
+                                _properties[rowIndex].SetValue(_editedObject, Convert.ChangeType(this[1, rowIndex].Value, valType));
+                            }
+                            catch
+                            {
+                                if (_editedObject is Pen)
+                                {
+                                    _editedObject = new Pen(((Pen)_editedObject).Color, (float)this[1, rowIndex].Value); // Only width is displayed
+                                }
+                                else showPropertyUnableToBeSetMessage(_properties[rowIndex].Name);
+                            }
+
                             AnythingChanged = true;
                         }
                     };
             }
-            else this[1, rowIndex].ReadOnly = true; // Don't allow changing the property if it is readonly
+            else
+            {
+                this[1, rowIndex].ReadOnly = true; // Don't allow changing the property if it is readonly
+                this[0, rowIndex].Style.ForeColor = Color.Gray;
+                this[1, rowIndex].Style.ForeColor = Color.Gray;
+            }
         }
 
         private void initializeDirectValueObjectOfArrayCell(int rowIndex, int arrayIndex)
@@ -217,8 +237,15 @@ namespace AlgoNature.Visualisation.Desktop
                     value = value.CloneObject();
                 }
             }*/
-                
-            
+
+            if (_properties[rowIndex].SetMethod?.IsPublic != true)
+            {
+                this[1, rowIndex].ReadOnly = true; // Don't allow changing the property if it is readonly
+                this[0, rowIndex].Style.ForeColor = Color.Gray;
+                this[1, rowIndex].Style.ForeColor = Color.Gray;
+            }
+
+
             if (value is bool)
             {
                 this[1, rowIndex] = new DataGridViewCheckBoxCell(false);
@@ -229,7 +256,19 @@ namespace AlgoNature.Visualisation.Desktop
                     {
                         if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
-                            _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
+                            try
+                            {
+                                _properties[rowIndex].SetValue(_editedObject, this[1, rowIndex].Value);
+                            }
+                            catch
+                            {
+                                if (_editedObject is Pen)
+                                {
+                                    _editedObject = new Pen(((Pen)_editedObject).Color, (float)this[1, rowIndex].Value);
+                                }
+                                else showPropertyUnableToBeSetMessage(_properties[rowIndex].Name);
+                            }
+
                             AnythingChanged = true;
                         }
                     };
@@ -285,7 +324,11 @@ namespace AlgoNature.Visualisation.Desktop
                                 }
                                 catch
                                 {
-                                    showPropertyUnableToBeSetMessage(_properties[rowIndex].Name);
+                                    if (_editedObject is Pen)
+                                    {
+                                        _editedObject = new Pen(proprt, ((Pen)_editedObject).Width);
+                                    }
+                                    else showPropertyUnableToBeSetMessage(_properties[rowIndex].Name);
                                 }
                                 
                                 this[1, rowIndex].Value = colDialog.Color;
@@ -303,18 +346,18 @@ namespace AlgoNature.Visualisation.Desktop
                 ((DataGridViewButtonCell)this[1, rowIndex]).FlatStyle = FlatStyle.Popup;
                 ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)value).Color;
 
-                /*PropertyInfo[] propsToDisplay = new PropertyInfo[2]
+                PropertyInfo[] propsToDisplay = new PropertyInfo[2]
                 {
                     typeof(Pen).GetProperty("Brush"),
                     typeof(Pen).GetProperty("Width")
-                };*/
+                };
 
                 this.CellContentClick +=
                     (sender, e) =>
                     {
                         if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
-                            ColorDialog colDialog = new ColorDialog();
+                            /*ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
 
                             if (result == DialogResult.OK)
@@ -334,8 +377,8 @@ namespace AlgoNature.Visualisation.Desktop
                                 this[1, rowIndex].Value = colDialog.Color;
                                 ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = colDialog.Color;
                                 AnythingChanged = true;
-                            }
-                            /*object prop = _properties[rowIndex].GetValue(_editedObject);
+                            }*/
+                            object prop = _properties[rowIndex].GetValue(_editedObject);
                             PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay);
                             //propertiesFlyOuts[rowIndex].Name = String.Format("PropertiesEditFlyOut-{0}-{1}", this.Name, rowIndex);
 
@@ -352,7 +395,7 @@ namespace AlgoNature.Visualisation.Desktop
                                     flyout.Dispose();
                                 };
 
-                            flyout.Show();*/
+                            flyout.Show();
                         }
                     };
             }

@@ -177,7 +177,7 @@ namespace AlgoNature.Visualisation.Desktop
             Type tt = assemblyControls[selectedAssemblyControlIndex];
             MethodInfo method = tt.GetMethod("DockOnSize");
             method.Invoke(drawnUserControl, new object[] { mainSplitContainer.Panel2.Size });
-            ((UserControl)drawnUserControl).Refresh();
+            //((UserControl)drawnUserControl).Refresh();
         }
 
         //bool refreshedGridViews;
