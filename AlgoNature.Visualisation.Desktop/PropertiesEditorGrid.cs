@@ -80,8 +80,6 @@ namespace AlgoNature.Visualisation.Desktop
                 }
                 this.RowCount = (_properties.Length > 0) ? _properties.Length : 1; // Again if any property was omitted
             }
-            _propertyTableIndexes = new int[this.RowCount];
-            refreshPropertyTableIndexesArray();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout();
             //allRowsInitialized = true;
@@ -104,32 +102,17 @@ namespace AlgoNature.Visualisation.Desktop
         /// <param name="arrayIndex">Index of the array's item which is supposed to be displayed</param>
         private void initializeArrayRow(int rowIndex, int arrayIndex)
         {
-            initializePropertyRowWithPropertyNameAndIndex(rowIndex, String.Format("[{0}]", arrayIndex));
+            initializePropertyRowWithPropertyName(rowIndex, String.Format("[{0}]", arrayIndex));
             if (((object[])_editedObject)[arrayIndex].IsDirectlyEditableValueByGrid()) initializeDirectValueObjectOfArrayCell(rowIndex, arrayIndex);
             else initializeOtherTypeObjectOfArrayCell(rowIndex, arrayIndex);
         }
-
-        private void refreshPropertyTableIndexesArray()
-        {
-            for (int i = 0; i < this.RowCount; i++)
-            {
-                _propertyTableIndexes[i] = getPropertyIndexBasedOnSortedRowIndex(i);
-            }
-        }
-
-        private int getPropertyIndexBasedOnSortedRowIndex(int sortedRowIndex)
-        {
-            return (int)this[2, sortedRowIndex].Value;
-        }
-
-        internal int[] _propertyTableIndexes;
 
         /// <summary>
         /// Initializes a blank value row with displayed property name + adds the row if a row with the given index doesn't exist
         /// </summary>
         /// <param name="rowIndex">Index of the particular DataGridView row</param>
         /// <param name="propertyName">Name of a property to be displayed</param>
-        private void initializePropertyRowWithPropertyNameAndIndex(int rowIndex, string propertyName)
+        private void initializePropertyRowWithPropertyName(int rowIndex, string propertyName)
         {
             // testing whether a row with this index exists
             if (rowIndex + 1 > this.RowCount)
@@ -140,7 +123,6 @@ namespace AlgoNature.Visualisation.Desktop
             this[0, rowIndex].ReadOnly = true;
             this[0, rowIndex].ValueType = typeof(string);
             this[0, rowIndex].Value = propertyName;
-            this[2, rowIndex].Value = rowIndex;
         }
 
         /*
@@ -162,7 +144,7 @@ namespace AlgoNature.Visualisation.Desktop
             string propertyName = valueProperty.Name;
 
             // initialize row
-            initializePropertyRowWithPropertyNameAndIndex(rowIndex, propertyName);
+            initializePropertyRowWithPropertyName(rowIndex, propertyName);
 
             var value = valueProperty.GetValue(_editedObject);
             Type valType = value.GetType();
@@ -198,8 +180,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (((int[])typeof(PropertiesEditorGrid).GetProperty("_propertyTableIndexes").GetValue(sender))[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             try
                             {
@@ -226,33 +207,19 @@ namespace AlgoNature.Visualisation.Desktop
             }
         }
 
-        // TODO metoda getindex
-
         private void initializeDirectValueObjectOfArrayCell(int rowIndex, int arrayIndex)
         {
             object[] arr = (object[])_editedObject;
             this[1, rowIndex].Value = arr[arrayIndex];
-
-            Type valType = arr[arrayIndex].GetType();
-
-            this[1, rowIndex].ValueType = valType;
+            this[1, rowIndex].ValueType = arr[arrayIndex].GetType();
 
             // Anonymous method for changing back the value
             this.CellEndEdit +=
                 (sender, e) =>
                 {
-                    int selectedRowIndex = e.RowIndex;
-                    if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                    if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                     {
-                        try
-                        {
-                            arr[arrayIndex] = Convert.ChangeType(this[1, rowIndex].Value, valType);
-                        }
-                        catch
-                        {
-                            showPropertyUnableToBeSetMessage(_properties[rowIndex].Name);
-                        }
-
+                        arr[arrayIndex] = this[1, rowIndex].Value;
                         AnythingChanged = true;
                     }
                 };
@@ -261,6 +228,19 @@ namespace AlgoNature.Visualisation.Desktop
         private void initializeOtherObjectTypePropertyCell(int rowIndex, PropertyInfo valueProperty)
         {
             var value = valueProperty.GetValue(_editedObject);
+
+            /*if (!value.GetType().IsValueType)
+            {
+                try
+                {
+                    MethodInfo method = value.GetType().GetMethod("Clone");
+                    value = method.Invoke(value, new object[0]);
+                }
+                catch
+                {
+                    value = value.CloneObject();
+                }
+            }*/
 
             if (_properties[rowIndex].SetMethod?.IsPublic != true)
             {
@@ -279,8 +259,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             this[0, rowIndex].Selected = true;
                         }
@@ -289,8 +268,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellValueChanged +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             try
                             {
@@ -319,8 +297,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -346,8 +323,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -393,8 +369,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             /*ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -446,8 +421,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, DateTime.Parse(this[1, rowIndex].Value.ToString()));
                             AnythingChanged = true;
@@ -462,8 +436,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, TimeSpan.Parse(this[1, rowIndex].Value.ToString()));
                             AnythingChanged = true;
@@ -477,8 +450,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, ((string)this[1, rowIndex].Value).ToPoint());
                             AnythingChanged = true;
@@ -492,8 +464,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             _properties[rowIndex].SetValue(_editedObject, ((string)this[1, rowIndex].Value).ToPointF());
                             AnythingChanged = true;
@@ -512,8 +483,7 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellValueChanged +=
                         (sender, e) =>
                         {
-                            int selectedRowIndex = e.RowIndex;
-                            if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 _properties[rowIndex].SetValue(_editedObject, Enum.Parse(type, this[1, rowIndex].Value.ToString()));
                                 AnythingChanged = true;
@@ -528,8 +498,7 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellClick +=
                         (sender, e) =>
                         {
-                            int selectedRowIndex = e.RowIndex;
-                            if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
 
@@ -566,21 +535,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this[1, rowIndex] = new DataGridViewCheckBoxCell(false);
                 ((DataGridViewCheckBoxCell)this[1, rowIndex]).Value = value;
 
-				this.CellContentClick +=
+                this.CellContentClick +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
-                        {
-                            this[0, rowIndex].Selected = true;
-                        }
-                    };
-				
-                this.CellValueChanged +=
-                    (sender, e) =>
-                    {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
@@ -596,8 +554,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellClick +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -623,8 +580,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -658,8 +614,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             object prop = _properties[rowIndex].GetValue(_editedObject);
                             PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay);
@@ -691,8 +646,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = DateTime.Parse(this[1, rowIndex].Value.ToString());
                             AnythingChanged = true;
@@ -707,8 +661,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] =  TimeSpan.Parse(this[1, rowIndex].Value.ToString());
                             AnythingChanged = true;
@@ -722,8 +675,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
@@ -737,8 +689,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        int selectedRowIndex = e.RowIndex;
-                        if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                        if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
                             AnythingChanged = true;
@@ -757,8 +708,7 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellValueChanged +=
                         (sender, e) =>
                         {
-                            int selectedRowIndex = e.RowIndex;
-                            if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 array[arrayIndex] = Enum.Parse(type, this[1, rowIndex].Value.ToString());
                                 AnythingChanged = true;
@@ -773,8 +723,7 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellClick +=
                         (sender, e) =>
                         {
-                            int selectedRowIndex = e.RowIndex;
-                            if (_propertyTableIndexes[selectedRowIndex] == rowIndex && e.ColumnIndex != 0)
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
                                 PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop);
@@ -844,11 +793,6 @@ namespace AlgoNature.Visualisation.Desktop
         {
             // TODO translate
             MessageBox.Show(Program.MainWindow, "Unfotrunately, the property " + propertyName + " could not be set for an unknown reason.", "Property could not be set");
-        }
-
-        private void PropertiesEditorGrid_ColumnSortModeChanged(object sender, DataGridViewColumnEventArgs e)
-        {
-            refreshPropertyTableIndexesArray();
         }
     }
 
