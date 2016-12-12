@@ -38,14 +38,12 @@
             // 
             // propertiesDataGridViewPropertyColumn
             // 
-            
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             this.propertiesDataGridViewPropertyColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.propertiesDataGridViewPropertyColumn.HeaderText = "propertyColumnHeader";
             this.propertiesDataGridViewPropertyColumn.Name = "propertiesDataGridViewPropertyColumn";
             this.propertiesDataGridViewPropertyColumn.ReadOnly = true;
             this.propertiesDataGridViewPropertyColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            
             // 
             // propertiesDataGridViewValueColumn
             // 
@@ -57,13 +55,13 @@
             // 
             // propertyIndexColumn
             // 
+            this.propertyIndexColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.propertyIndexColumn.HeaderText = "index";
+            this.propertyIndexColumn.MinimumWidth = 2;
             this.propertyIndexColumn.Name = "propertyIndexColumn";
             this.propertyIndexColumn.ReadOnly = true;
-            this.propertyIndexColumn.MinimumWidth = 2;
-            this.propertyIndexColumn.Width = 2;
-            this.propertyIndexColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.propertyIndexColumn.Visible = false;
+            this.propertyIndexColumn.Width = 2;
             // 
             // PropertiesEditorGrid
             // 
@@ -80,6 +78,7 @@
             this.RowHeadersVisible = false;
             this.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Size = new System.Drawing.Size(216, 409);
+            this.ColumnSortModeChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.PropertiesEditorGrid_ColumnSortModeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PropertiesEditorGrid_Paint);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
