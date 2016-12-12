@@ -193,7 +193,6 @@ namespace AlgoNature.Visualisation.Desktop
         //bool refreshedGridViews;
         //private delegate void ThreadStart();
         private bool settingMainSplitterDistance = false;
-        private bool mainSplitterDistanceSetAfterInit = false;
         private void setMainSplitContainerSplitterDistance(object sender, EventArgs e)
         {
             if (!manuallyResized) setMainSplitContainerSplitterDistance();
@@ -228,18 +227,27 @@ namespace AlgoNature.Visualisation.Desktop
 
             // Set both grids' last column resize mode to fill - first is set above
             //propertiesDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            mainSplitterDistanceSetAfterInit = true;
+
             //Console.WriteLine(propertiesDataGridView.Height + "   " + nameof(propertiesDataGridView) + " Height");
             setAutoColumnSize();
         }
 
+        bool firstSetAutoColumnsSize;
         private void setAutoColumnSize()
         {
-            if (showIGrowableSettings) ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).Paint -= setMainSplitContainerSplitterDistance;
-            else ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).Paint -= setMainSplitContainerSplitterDistance;
-            ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            if (showIGrowableSettings)
-                ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            /*if (firstSetAutoColumnsSize)
+            {
+                firstSetAutoColumnsSize = false;
+            }
+            else
+            {*/
+                if (showIGrowableSettings) ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).Paint -= setMainSplitContainerSplitterDistance;
+                else ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).Paint -= setMainSplitContainerSplitterDistance;
+                ((PropertiesEditorGrid)propertiesSplitContainer.Panel1.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                if (showIGrowableSettings)
+                    ((PropertiesEditorGrid)propertiesSplitContainer.Panel2.Controls[0]).DisplayedDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //}
+            
         }
 
         private void doFormTranslation()
@@ -334,42 +342,19 @@ namespace AlgoNature.Visualisation.Desktop
         {
             setAutoColumnSize();
             movingSplitter = false;
-            if (manuallyResized || mainSplitterDistanceSetAfterInit) dockComponent();
-            /*else if (mainSplitterDistanceSetAfterInit)
-            {
-                mainSplitterDistanceSetAfterInit = false;
-            }*/
+            if (manuallyResized) dockComponent();
         }
 
         bool movingSplitter;
         private void mainSplitContainer_SplitterMoving(object sender, SplitterCancelEventArgs e)
         {
             movingSplitter = true;
-            if (!settingMainSplitterDistance)
-            {
-                manuallyResized = true;
-                mainSplitterDistanceSetAfterInit = false;
-            }
+            if (!settingMainSplitterDistance) manuallyResized = true;
         }
 
         private void mainForm_Paint(object sender, PaintEventArgs e)
         {
             
-        }
-
-        // Resizing
-        private Size tempResizeSize;
-        private void mainForm_ResizeBegin(object sender, EventArgs e)
-        {
-            this.SuspendLayout();
-            tempResizeSize = this.Size;
-        }
-        private void mainForm_ResizeEnd(object sender, EventArgs e)
-        {
-            Size diff = this.Size - tempResizeSize;
-            splitViewPanel.Size += diff;
-            this.ResumeLayout();
-            dockComponent();
         }
     }
 }

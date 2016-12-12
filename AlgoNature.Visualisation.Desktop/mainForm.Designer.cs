@@ -148,10 +148,8 @@
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.controlsComboBox);
             this.Controls.Add(this.splitViewPanel);
-            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "mainForm";
-            this.ResizeBegin += new System.EventHandler(this.mainForm_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.mainForm_ResizeEnd);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.mainForm_Paint);
             this.Resize += new System.EventHandler(this.mainForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.propertiesSplitContainer)).EndInit();
