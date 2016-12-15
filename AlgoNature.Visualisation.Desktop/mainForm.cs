@@ -10,8 +10,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Resources;
 using AlgoNature.Components;
+using System.IO;
 using static AlgoNature.Visualisation.Desktop.Extensions;
+using System.Collections;
 
 namespace AlgoNature.Visualisation.Desktop
 {
@@ -19,6 +22,7 @@ namespace AlgoNature.Visualisation.Desktop
     {
         const int PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE = 409;
         const int SCROLLBAR_SIZE = 20;
+        const string TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION = "mainForm.Translation";
 
         //private string exportFileDialogFilter;
 
@@ -35,17 +39,16 @@ namespace AlgoNature.Visualisation.Desktop
         {
             InitializeComponent();
 
+            doFormTranslation();
+
             splitViewPanel.AutoSizeMode = AutoSizeMode.GrowOnly;
 
             assemblyControls = getAlgoNatureAssemblyUserControlsTypes();
-
 
             // Assigning controls to the controlsComboBox
             string[] typeStrs = new string[assemblyControls.Length];
             for (int i = 0; i < assemblyControls.Length; i++) typeStrs[i] = assemblyControls[i].FullName;
             controlsComboBox.Items.AddRange(typeStrs);
-
-            doFormTranslation();
 
             controlsComboBox.SelectedIndex = selectedAssemblyControlIndex;
             setMainSplitContainerSplitterDistance();
@@ -244,13 +247,63 @@ namespace AlgoNature.Visualisation.Desktop
 
         private void doFormTranslation()
         {
-            // TODO
-        }
+            /*Assembly assembly = Assembly.GetExecutingAssembly();
+            string[] files = assembly.GetManifestResourceNames();
 
-        private void doPropertiesGridsTranslation()
-        {
-            // TODO
+            foreach (string fileStr in files)
+            {
+                Console.WriteLine(fileStr);
+            }*/
+
+            System.Resources.ResourceManager RM = AlgoNature.Visualisation.Desktop.mainForm_Translation.ResourceManager;
+
+            //Stream stream = assembly.GetManifestResourceStream("AlgoNature.Components.Visualisation.mainForm.Translation.Resources");
+
+            //Dictionary<string, string> translationValues = new Dictionary<string, string>();
+
+            //ResXResourceReader rsxr = new ResXResourceReader("AlgoNature.Components.Visualisation.mainForm.Translation.cs-CZ.resx");
+
+            // Iterate through the resources and display the contents to the console. 
+            /*foreach (DictionaryEntry d in rsxr)
+            {
+                Console.WriteLine(d.Key.ToString() + ":\t" + d.Value.ToString());
+            }*/
+
+            //Close the reader.
+            //rsxr.Close();
+
+
+            /*using (Stream stream = assembly.GetManifestResourceStream("AlgoNature.Visualisation.Desktop.mainForm.resources"))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                
+                string line;
+                string[] splitLine;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    if (line.Contains("System.Resources.ResourceReader") || line.Contains("\0")) continue;
+                    splitLine = line.Split(new char[6] { '=', '"', '\\', '\t', '\u0002', '\u0004' }); //cleaning firstrow mess
+                    try // throws an exception if already exists
+                    {
+                        if (splitLine[splitLine.Length - 2] == "") // empty
+                            translationValues.Add(splitLine[splitLine.Length - 4], splitLine[splitLine.Length - 4]);
+                        else
+                            translationValues.Add(splitLine[splitLine.Length - 4], splitLine[splitLine.Length - 2]);
+                    }
+                    catch { continue; }
+                }
+            }*/
+
+            
+
+            resetToDefaultButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ resetToDefaultButton.Text);
+            exportButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ exportButton.Text);
+            startGrowingButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ startGrowingButton.Text);
+            stopGrowingButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ stopGrowingButton.Text);
+            dieButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ dieButton.Text);
+            this.Text = RM.TryTranslate(this.Text);
         }
+        
 
         private void controlsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {

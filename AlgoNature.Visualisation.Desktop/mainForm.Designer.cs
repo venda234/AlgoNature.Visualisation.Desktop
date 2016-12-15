@@ -38,7 +38,7 @@
             this.dieButton = new System.Windows.Forms.Button();
             this.stopGrowingButton = new System.Windows.Forms.Button();
             this.startGrowingButton = new System.Windows.Forms.Button();
-            this.resetButton = new System.Windows.Forms.Button();
+            this.resetToDefaultButton = new System.Windows.Forms.Button();
             this.exportImageDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.propertiesSplitContainer)).BeginInit();
             this.propertiesSplitContainer.SuspendLayout();
@@ -125,12 +125,12 @@
             this.startGrowingButton.UseVisualStyleBackColor = true;
             this.startGrowingButton.Click += new System.EventHandler(this.startGrowingButton_Click);
             // 
-            // resetButton
+            // resetToDefaultButton
             // 
-            resources.ApplyResources(this.resetButton, "resetButton");
-            this.resetButton.Name = "resetButton";
-            this.resetButton.UseVisualStyleBackColor = true;
-            this.resetButton.Click += new System.EventHandler(this.resetButton_Click);
+            resources.ApplyResources(this.resetToDefaultButton, "resetToDefaultButton");
+            this.resetToDefaultButton.Name = "resetToDefaultButton";
+            this.resetToDefaultButton.UseVisualStyleBackColor = true;
+            this.resetToDefaultButton.Click += new System.EventHandler(this.resetButton_Click);
             // 
             // exportImageDialog
             // 
@@ -143,7 +143,7 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.Controls.Add(this.resetButton);
+            this.Controls.Add(this.resetToDefaultButton);
             this.Controls.Add(this.panelGrowableContrtols);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.controlsComboBox);
@@ -178,7 +178,7 @@
         private System.Windows.Forms.Button dieButton;
         private System.Windows.Forms.Button stopGrowingButton;
         private System.Windows.Forms.Button startGrowingButton;
-        private System.Windows.Forms.Button resetButton;
+        private System.Windows.Forms.Button resetToDefaultButton;
         private System.Windows.Forms.Panel splitViewPanel;
         private System.Windows.Forms.SaveFileDialog exportImageDialog;
     }

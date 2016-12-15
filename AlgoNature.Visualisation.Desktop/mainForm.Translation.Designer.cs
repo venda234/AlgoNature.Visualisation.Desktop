@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AlgoNature.Visualisation.Desktop.Properties {
+namespace AlgoNature.Visualisation.Desktop {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace AlgoNature.Visualisation.Desktop.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class mainForm_Translation {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal mainForm_Translation() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AlgoNature.Visualisation.Desktop.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlgoNature.Visualisation.Desktop.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AlgoNature.Visualisation.Desktop.mainForm.Translation", typeof(mainForm_Translation).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,34 @@ namespace AlgoNature.Visualisation.Desktop.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to die=&quot;Zemřít&quot;
+        ///export=&quot;Exportovat&quot;
+        ///resetToDefault=&quot;Resetovat na výchozí hodnoty&quot;
+        ///resetWithoutLosingSettings=&quot;Resetovat při zachování vlastností&quot;
+        ///startGrowing=&quot;Začít růst&quot;
+        ///stopGrowing=&quot;Přestat růst&quot;.
+        /// </summary>
+        internal static string mainForm_Translation_cs_CZ {
+            get {
+                return ResourceManager.GetString("mainForm_Translation_cs_CZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to die=&quot;Die&quot;
+        ///export=&quot;Export&quot;
+        ///resetToDefault=&quot;Reset to default values&quot;
+        ///resetWithoutLosingSettings=&quot;Reset without losing properties&quot;
+        ///startGrowing=&quot;Start growing&quot;
+        ///stopGrowing=&quot;Stop growing&quot;.
+        /// </summary>
+        internal static string mainForm_Translation_en_US {
+            get {
+                return ResourceManager.GetString("mainForm_Translation_en_US", resourceCulture);
             }
         }
     }

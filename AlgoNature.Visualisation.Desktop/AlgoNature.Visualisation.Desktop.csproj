@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Algonature.Components, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Algonature.Components, Version=1.1.6191.28798, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\AlgoNature.Components\AlgoNature.Components\bin\Debug\Algonature.Components.dll</HintPath>
     </Reference>
@@ -58,6 +58,21 @@
     <Compile Include="mainForm.Designer.cs">
       <DependentUpon>mainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="mainForm.Translation.cs-CZ.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mainForm.Translation.cs-CZ.resx</DependentUpon>
+    </Compile>
+    <Compile Include="mainForm.Translation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mainForm.Translation.resx</DependentUpon>
+    </Compile>
+    <Compile Include="mainForm.Translation.en-US.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>mainForm.Translation.en-US.resx</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="PropertiesEditFlyOut.cs">
       <SubType>Form</SubType>
@@ -71,9 +86,32 @@
     <Compile Include="PropertiesEditorGrid.Designer.cs">
       <DependentUpon>PropertiesEditorGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="PropertiesEditorGridAndFlyOut.Translation.en-US.Designer.cs">
+      <DependentUpon>PropertiesEditorGridAndFlyOut.Translation.en-US.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="PropertiesEditorGridAndFlyOut.Translation.cs-CZ.Designer.cs">
+      <DependentUpon>PropertiesEditorGridAndFlyOut.Translation.cs-CZ.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertiesEditorGridAndFlyOut.Translation.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PropertiesEditorGridAndFlyOut.Translation.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="mainForm.resx">
       <DependentUpon>mainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainForm.Translation.cs-CZ.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>mainForm.Translation.cs-CZ.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainForm.Translation.en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>mainForm.Translation.en-US.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="PropertiesEditFlyOut.resx">
       <DependentUpon>PropertiesEditFlyOut.cs</DependentUpon>
@@ -81,16 +119,28 @@
     <EmbeddedResource Include="PropertiesEditorGrid.resx">
       <DependentUpon>PropertiesEditorGrid.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="mainForm.Translation.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
+      <LastGenOutput>mainForm.Translation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <EmbeddedResource Include="PropertiesEditorGridAndFlyOut.Translation.en-US.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PropertiesEditorGridAndFlyOut.Translation.en-US.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesEditorGridAndFlyOut.Translation.cs-CZ.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PropertiesEditorGridAndFlyOut.Translation.cs-CZ.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertiesEditorGridAndFlyOut.Translation.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PropertiesEditorGridAndFlyOut.Translation.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Resources\mainForm.Translation.en-US.txt" />
+    <None Include="Resources\mainForm.Translation.cs-CZ.txt" />
+    <None Include="Resources\PropertiesEditorGridAndFlyOut.Translation.en-US.txt" />
+    <None Include="Resources\PropertiesEditorGridAndFlyOut.Translation.cs-CZ.txt">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -104,6 +154,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

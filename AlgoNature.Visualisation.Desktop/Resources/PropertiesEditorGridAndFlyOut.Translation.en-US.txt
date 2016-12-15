@@ -1,0 +1,5 @@
+Cancel="Cancel"
+OK="OK"
+PropertiesEditFlyOutHeader="Properties editing"
+propertyColumnHeader="Property"
+valueColumnHeader="Value"

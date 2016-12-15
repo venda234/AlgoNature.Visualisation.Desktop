@@ -19,6 +19,10 @@ namespace AlgoNature.Visualisation.Desktop
             InitializeComponent();
         }*/
 
+        public PropertiesEditFlyOut(PropertiesEditorGrid grid, string title) : this(grid)
+        {
+            this.Text = title;
+        }
         public PropertiesEditFlyOut(PropertiesEditorGrid grid) : base()
         {
             InitializeComponent();
@@ -26,11 +30,17 @@ namespace AlgoNature.Visualisation.Desktop
             PropertiesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
+        public PropertiesEditFlyOut(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay, string title)
+            : this(new PropertiesEditorGrid(objWhosePropertiesToDisplay, propertiesToDisplay), title) { }
         public PropertiesEditFlyOut(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay) 
             : this(new PropertiesEditorGrid(objWhosePropertiesToDisplay, propertiesToDisplay)) { }
 
+        public PropertiesEditFlyOut(object objWhosePropertiesToDisplay, string title) : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties(), title) { }
         public PropertiesEditFlyOut(object objWhosePropertiesToDisplay) : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties()) { }
 
+        public PropertiesEditFlyOut(object objWhosePropertiesToDisplay, Type[] filterTypes, bool includeOnlyTypesPropsOrExcludeThemFromGeneral, string title)
+            : this(objWhosePropertiesToDisplay, objWhosePropertiesToDisplay.GetType().GetProperties().FilterPropertiesBasedOnOtherTypes(filterTypes, includeOnlyTypesPropsOrExcludeThemFromGeneral), title)
+        { }
         /// <summary>
         /// Constructor based on given object, filtering params based on given interfaces (either includes only given interfaces properties or excludes them from all object's properties) 
         /// </summary>

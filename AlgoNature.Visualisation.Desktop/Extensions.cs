@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Drawing;
+using System.Threading;
+using System.Resources;
+using System.Collections;
+using System.IO;
 
 namespace AlgoNature.Visualisation.Desktop
 {
@@ -157,5 +161,97 @@ namespace AlgoNature.Visualisation.Desktop
             }
             return objTarget;
         }
+
+        /// <summary>
+        /// Tries to translate given key - if fails, returns the given key.
+        /// </summary>
+        /// <param name="RM">Resource manager</param>
+        /// <param name="key">Translation key</param>
+        /// <returns></returns>
+        public static string TryTranslate(this System.Resources.ResourceManager RM, /*Dictionary<string, string> writingDictionary, string resourceFileNameWithoutExtension,*/ string key)
+        {
+            //var rs = RM.GetResourceSet(Thread.CurrentThread.CurrentCulture, true, true);
+
+            //string value = RM.GetString(key, Thread.CurrentThread.CurrentCulture).ToString();
+
+            //if (writingDictionary.Count == 0)
+            //{
+            //    /*string[] ress = Assembly.GetExecutingAssembly().GetManifestResourceNames();
+            //    foreach (string r in ress)
+            //    {
+            //        Console.WriteLine(r);
+            //    }*/
+
+            //    //ResourceReader reader = new ResourceReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(RM.BaseName + ".resources"));
+
+            //    /*foreach (DictionaryEntry d in reader)
+            //    {
+            //        try
+            //        {
+            //            writingDictionary.Add((string)d.Key, (string)d.Value);
+            //        }
+            //        catch { }
+            //    }*/
+
+
+            //    //var assembly = Assembly.GetExecutingAssembly();
+
+            //    try
+            //    {
+            //        //ResourceManager resmgr = new ResourceManager(thisType.Namespace + ".resources", Assembly.GetExecutingAssembly());
+            //        //var strs = new ResourceReader()
+            //        //var strs = assembly.GetManifestResourceNames();
+            //        using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(RM.BaseName + ".resources"))
+            //        using (StreamReader reader = new StreamReader(stream))
+            //        {
+            //            string line;
+            //            string[] splitLine;
+            //            while ((line = reader.ReadLine()) != null)
+            //            {
+            //                //if (line.Contains("System.Resources.ResourceReader")/* || line.Contains('\0')*/) continue;
+            //                splitLine = line.Split(new char[8] { '=', '"', '\\', '\t', '\u0001', '\u0002', '\u0004', '�' }); //cleaning firstrow mess
+
+            //                writingDictionary.AddKeysFromSplitLine(splitLine);
+            //            }
+            //        }
+            //    }
+            //    catch {  }
+            //}
+
+            
+            string value = RM.GetString(key, Thread.CurrentThread.CurrentCulture);
+            //try
+            //{
+            //    value = writingDictionary[key];
+            //}
+            //catch { value = ""; }
+
+            if (value != null && value != "")
+            {
+                return value;
+            }
+            else
+            {
+                return key;
+            }
+        }
+
+        //private static void AddKeysFromSplitLine(this Dictionary<string, string> dict, string[] splitLine)
+        //{
+        //    try // throws an exception if already exists
+        //    {
+        //        if (splitLine[splitLine.Length - 2] == "") // empty
+        //            dict.Add(splitLine[splitLine.Length - 4], splitLine[splitLine.Length - 4]);
+        //        else
+        //            dict.Add(splitLine[splitLine.Length - 4], splitLine[splitLine.Length - 2]);
+        //    }
+        //    catch { }
+        //    splitLine = splitLine.Where(new Func<string, int, bool>((str, i) => (i <= splitLine.Length - 7))).ToArray();
+
+        //    if (splitLine.Length >= 4)
+        //    {
+        //        if (splitLine[splitLine.Length - 1] == "") dict.AddKeysFromSplitLine(splitLine);
+        //    }
+        //}
     }
 }

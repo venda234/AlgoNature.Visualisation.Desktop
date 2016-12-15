@@ -1,0 +1,5 @@
+Cancel="Zrušit"
+OK="OK"
+PropertiesEditFlyOutHeader="Editace vlastností
+propertyColumnHeader="Vlastnost"
+valueColumnHeader="Hodnota"

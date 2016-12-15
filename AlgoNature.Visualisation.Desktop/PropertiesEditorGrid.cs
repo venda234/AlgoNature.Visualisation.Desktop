@@ -122,7 +122,9 @@ namespace AlgoNature.Visualisation.Desktop
 
             this[0, rowIndex].ReadOnly = true;
             this[0, rowIndex].ValueType = typeof(string);
-            this[0, rowIndex].Value = propertyName;
+            if (EditedObject.GetType().ImplementsInterface(typeof(AlgoNature.Components.ITranslatable)))
+                this[0, rowIndex].Value = ((AlgoNature.Components.ITranslatable)EditedObject).TryTranslate(propertyName);
+            else this[0, rowIndex].Value = propertyName;
         }
 
         /*
@@ -393,7 +395,7 @@ namespace AlgoNature.Visualisation.Desktop
                                 AnythingChanged = true;
                             }*/
                             object prop = _properties[rowIndex].GetValue(_editedObject);
-                            PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay);
+                            PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
                             //propertiesFlyOuts[rowIndex].Name = String.Format("PropertiesEditFlyOut-{0}-{1}", this.Name, rowIndex);
 
                             flyout.EditingFinished +=
@@ -403,6 +405,7 @@ namespace AlgoNature.Visualisation.Desktop
                                     {
                                         _properties[rowIndex].SetValue(_editedObject, editedObject);
                                         ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)editedObject).Color;
+                                        ((DataGridViewButtonCell)this[1, rowIndex]).Value = ((Pen)editedObject).Width;
                                         AnythingChanged = true;
                                     }
                                     // TODO zjistit jiné výsledky dialogResult
@@ -490,6 +493,40 @@ namespace AlgoNature.Visualisation.Desktop
                             }
                         };
                 }
+                else if (type.IsAssignableFrom(typeof(UserControl)))
+                {
+                    PropertyInfo[] props = type.GetProperties().FilterPropertiesBasedOnOtherTypes(new Type[1] { typeof(UserControl) }, false);
+                    if (type.ImplementsInterface(typeof(AlgoNature.Components.IBitmapGraphicChild)))
+                        props = props.FilterPropertiesBasedOnOtherTypes(new Type[1] { typeof(AlgoNature.Components.IBitmapGraphicChild) }, false);
+
+                    this[1, rowIndex] = new DataGridViewButtonCell();
+                    ((DataGridViewButtonCell)this[1, rowIndex]).Value = value;
+
+                    this.CellClick +=
+                        (sender, e) =>
+                        {
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
+                            {
+                                object prop = _properties[rowIndex].GetValue(_editedObject);
+
+                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
+
+                                flyout.EditingFinished +=
+                                    (result, editedObjectChanged, editedObject) =>
+                                    {
+                                        if (result != DialogResult.Cancel && editedObjectChanged)
+                                        {
+                                            _properties[rowIndex].SetValue(_editedObject, editedObject);
+                                            AnythingChanged = true;
+                                        }
+                                        // TODO zjistit jiné výsledky dialogResult
+                                        flyout.Dispose();
+                                    };
+
+                                flyout.Show();
+                            }
+                        };
+                }
                 else
                 {
                     this[1, rowIndex] = new DataGridViewButtonCell();
@@ -502,7 +539,7 @@ namespace AlgoNature.Visualisation.Desktop
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
 
-                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop);
+                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
 
                                 flyout.EditingFinished +=
                                     (result, editedObjectChanged, editedObject) =>
@@ -617,7 +654,7 @@ namespace AlgoNature.Visualisation.Desktop
                         if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                         {
                             object prop = _properties[rowIndex].GetValue(_editedObject);
-                            PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay);
+                            PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
                             //propertiesFlyOuts.Add(rowIndex, (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay));
                             //propertiesFlyOuts[rowIndex].Name = String.Format("PropertiesEditFlyOut-{0}-{1}", this.Name, rowIndex);
 
@@ -628,6 +665,7 @@ namespace AlgoNature.Visualisation.Desktop
                                     {
                                         array[arrayIndex] = editedObject;
                                         ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = ((Pen)editedObject).Color;
+                                        ((DataGridViewButtonCell)this[1, rowIndex]).Value = ((Pen)editedObject).Width;
                                         AnythingChanged = true;
                                     }
                                     // TODO zjistit jiné výsledky dialogResult
@@ -715,6 +753,40 @@ namespace AlgoNature.Visualisation.Desktop
                             }
                         };
                 }
+                else if (type.IsAssignableFrom(typeof(UserControl)))
+                {
+                    PropertyInfo[] props = type.GetProperties().FilterPropertiesBasedOnOtherTypes(new Type[1] { typeof(UserControl) }, false);
+                    if (type.ImplementsInterface(typeof(AlgoNature.Components.IBitmapGraphicChild)))
+                        props = props.FilterPropertiesBasedOnOtherTypes(new Type[1] { typeof(AlgoNature.Components.IBitmapGraphicChild) }, false);
+
+                    this[1, rowIndex] = new DataGridViewButtonCell();
+                    ((DataGridViewButtonCell)this[1, rowIndex]).Value = value;
+
+                    this.CellClick +=
+                        (sender, e) =>
+                        {
+                            if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
+                            {
+                                object prop = _properties[rowIndex].GetValue(_editedObject);
+
+                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
+
+                                flyout.EditingFinished +=
+                                    (result, editedObjectChanged, editedObject) =>
+                                    {
+                                        if (result != DialogResult.Cancel && editedObjectChanged)
+                                        {
+                                            array[arrayIndex] = editedObject;
+                                            AnythingChanged = true;
+                                        }
+                                        // TODO zjistit jiné výsledky dialogResult
+                                        flyout.Dispose();
+                                    };
+
+                                flyout.Show();
+                            }
+                        };
+                }
                 else
                 {
                     this[1, rowIndex] = new DataGridViewButtonCell();
@@ -726,7 +798,7 @@ namespace AlgoNature.Visualisation.Desktop
                             if (e.RowIndex == rowIndex && e.ColumnIndex != 0)
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
-                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop);
+                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
                                 //propertiesFlyOuts.Add(rowIndex, (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop));
 
                                 flyout.EditingFinished +=

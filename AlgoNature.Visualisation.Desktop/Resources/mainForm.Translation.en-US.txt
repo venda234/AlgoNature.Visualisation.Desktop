@@ -1,0 +1,6 @@
+die="Die"
+export="Export"
+resetToDefault="Reset to default values"
+resetWithoutLosingSettings="Reset without losing properties"
+startGrowing="Start growing"
+stopGrowing="Stop growing"

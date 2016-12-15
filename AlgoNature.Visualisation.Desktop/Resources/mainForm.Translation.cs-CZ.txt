@@ -1,0 +1,6 @@
+die="Zemøít"
+export="Exportovat"
+resetToDefault="Resetovat na výchozí hodnoty"
+resetWithoutLosingSettings="Resetovat pøi zachování vlastností"
+startGrowing="Zaèít rùst"
+stopGrowing="Pøestat rùst"
