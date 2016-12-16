@@ -136,7 +136,7 @@
   <data name="propertyColumnHeader" xml:space="preserve">
     <value>Property</value>
   </data>
-  <data name="valueColumnHeaderValue" xml:space="preserve">
+  <data name="valueColumnHeader" xml:space="preserve">
     <value>Value</value>
   </data>
 </root>

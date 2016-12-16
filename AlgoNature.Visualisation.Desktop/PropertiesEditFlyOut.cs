@@ -19,15 +19,25 @@ namespace AlgoNature.Visualisation.Desktop
             InitializeComponent();
         }*/
 
-        public PropertiesEditFlyOut(PropertiesEditorGrid grid, string title) : this(grid)
+        public PropertiesEditFlyOut(PropertiesEditorGrid grid, string title) : base()
         {
+            InitializeComponent();
             this.Text = title;
+            PropertiesGrid = grid;
+            PropertiesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
         public PropertiesEditFlyOut(PropertiesEditorGrid grid) : base()
         {
             InitializeComponent();
+            this.Text = PropertiesEditorGridAndFlyOut_Translation.PropertiesEditFlyOutHeader;
             PropertiesGrid = grid;
             PropertiesGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void doButtonsTranslation()
+        {
+            okButton.Text = PropertiesEditorGridAndFlyOut_Translation.OK;
+            cancelButton.Text = PropertiesEditorGridAndFlyOut_Translation.Cancel;
         }
 
         public PropertiesEditFlyOut(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay, string title)

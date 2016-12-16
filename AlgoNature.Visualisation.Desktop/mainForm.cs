@@ -45,9 +45,22 @@ namespace AlgoNature.Visualisation.Desktop
 
             assemblyControls = getAlgoNatureAssemblyUserControlsTypes();
 
-            // Assigning controls to the controlsComboBox
+            // Assigning controls to the controlsComboBox and trying to translate them
             string[] typeStrs = new string[assemblyControls.Length];
-            for (int i = 0; i < assemblyControls.Length; i++) typeStrs[i] = assemblyControls[i].FullName;
+            for (int i = 0; i < assemblyControls.Length; i++)
+            {
+                try
+                {
+                    string trans = (string)assemblyControls[i].GetProperty("NameTranslated").GetValue(null);
+                    typeStrs[i] = (trans != null) ? trans : assemblyControls[i].FullName;
+
+                }
+                catch
+                {
+                    typeStrs[i] = assemblyControls[i].FullName;
+                }
+            }
+
             controlsComboBox.Items.AddRange(typeStrs);
 
             controlsComboBox.SelectedIndex = selectedAssemblyControlIndex;
@@ -247,55 +260,8 @@ namespace AlgoNature.Visualisation.Desktop
 
         private void doFormTranslation()
         {
-            /*Assembly assembly = Assembly.GetExecutingAssembly();
-            string[] files = assembly.GetManifestResourceNames();
-
-            foreach (string fileStr in files)
-            {
-                Console.WriteLine(fileStr);
-            }*/
-
             System.Resources.ResourceManager RM = AlgoNature.Visualisation.Desktop.mainForm_Translation.ResourceManager;
-
-            //Stream stream = assembly.GetManifestResourceStream("AlgoNature.Components.Visualisation.mainForm.Translation.Resources");
-
-            //Dictionary<string, string> translationValues = new Dictionary<string, string>();
-
-            //ResXResourceReader rsxr = new ResXResourceReader("AlgoNature.Components.Visualisation.mainForm.Translation.cs-CZ.resx");
-
-            // Iterate through the resources and display the contents to the console. 
-            /*foreach (DictionaryEntry d in rsxr)
-            {
-                Console.WriteLine(d.Key.ToString() + ":\t" + d.Value.ToString());
-            }*/
-
-            //Close the reader.
-            //rsxr.Close();
-
-
-            /*using (Stream stream = assembly.GetManifestResourceStream("AlgoNature.Visualisation.Desktop.mainForm.resources"))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                
-                string line;
-                string[] splitLine;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    if (line.Contains("System.Resources.ResourceReader") || line.Contains("\0")) continue;
-                    splitLine = line.Split(new char[6] { '=', '"', '\\', '\t', '\u0002', '\u0004' }); //cleaning firstrow mess
-                    try // throws an exception if already exists
-                    {
-                        if (splitLine[splitLine.Length - 2] == "") // empty
-                            translationValues.Add(splitLine[splitLine.Length - 4], splitLine[splitLine.Length - 4]);
-                        else
-                            translationValues.Add(splitLine[splitLine.Length - 4], splitLine[splitLine.Length - 2]);
-                    }
-                    catch { continue; }
-                }
-            }*/
-
             
-
             resetToDefaultButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ resetToDefaultButton.Text);
             exportButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ exportButton.Text);
             startGrowingButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ startGrowingButton.Text);

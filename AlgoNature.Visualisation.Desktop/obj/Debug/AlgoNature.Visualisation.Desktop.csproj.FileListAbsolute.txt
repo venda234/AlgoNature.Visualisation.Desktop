@@ -18,7 +18,6 @@ C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Deskt
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.csprojResolveAssemblyReference.cache
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.mainForm.resources
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.PropertiesEditFlyOut.resources
-C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.Properties.Resources.resources
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.csproj.GenerateResource.Cache
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Debug\AlgoNature.Visualisation.Desktop.exe
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Debug\AlgoNature.Visualisation.Desktop.pdb
@@ -28,3 +27,13 @@ C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Deskt
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Debug\cs-CZ\Algonature.Components.resources.dll
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Debug\en-GB\Algonature.Components.resources.dll
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Debug\en-US\Algonature.Components.resources.dll
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Debug\cs-CZ\AlgoNature.Visualisation.Desktop.resources.dll
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Debug\en-US\AlgoNature.Visualisation.Desktop.resources.dll
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.mainForm.Translation.resources
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.PropertiesEditorGridAndFlyOut.Translation.resources
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.mainForm.Translation.cs-CZ.resources
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.mainForm.Translation.en-US.resources
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.PropertiesEditorGridAndFlyOut.Translation.en-US.resources
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\AlgoNature.Visualisation.Desktop.PropertiesEditorGridAndFlyOut.Translation.cs-CZ.resources
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\cs-CZ\AlgoNature.Visualisation.Desktop.resources.dll
+C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Debug\en-US\AlgoNature.Visualisation.Desktop.resources.dll

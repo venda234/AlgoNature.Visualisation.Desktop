@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Storno</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="PropertiesEditFlyOutHeader" xml:space="preserve">
-    <value>Properties editing</value>
+    <value>Editace vlastností</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="PropertiesEditorGridAndFlyOut_Translation_cs_CZ" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -134,9 +134,9 @@
     <value>Resources\PropertiesEditorGridAndFlyOut.Translation.en-US.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
   </data>
   <data name="propertyColumnHeader" xml:space="preserve">
-    <value>Property</value>
+    <value>Vlastnost</value>
   </data>
-  <data name="valueColumnHeaderValue" xml:space="preserve">
-    <value>Value</value>
+  <data name="valueColumnHeader" xml:space="preserve">
+    <value>Hodnota</value>
   </data>
 </root>

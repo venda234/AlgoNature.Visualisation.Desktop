@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
 using System.Reflection;
+using System.Resources;
 
 namespace AlgoNature.Visualisation.Desktop
 {
@@ -22,11 +23,13 @@ namespace AlgoNature.Visualisation.Desktop
         public PropertiesEditorGrid()
         {
             InitializeComponent();
+            doTranslation();
         }
 
         public PropertiesEditorGrid(object objWhosePropertiesToDisplay, PropertyInfo[] propertiesToDisplay)
         {
             InitializeComponent();
+            doTranslation();
             _editedObject = objWhosePropertiesToDisplay;
             _properties = propertiesToDisplay;
             initializeGrid();
@@ -50,6 +53,14 @@ namespace AlgoNature.Visualisation.Desktop
 
         //public void l
         //private PointConverter pc;
+
+        private void doTranslation()
+        {
+            ResourceManager RM = PropertiesEditorGridAndFlyOut_Translation.ResourceManager;
+            propertiesDataGridViewPropertyColumn.HeaderText = RM.TryTranslate(propertiesDataGridViewPropertyColumn.HeaderText);
+            propertiesDataGridViewValueColumn.HeaderText = RM.TryTranslate(propertiesDataGridViewValueColumn.HeaderText);
+        }
+
 
         private void initializeGrid()
         {
