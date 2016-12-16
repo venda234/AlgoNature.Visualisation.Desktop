@@ -36,6 +36,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.propertiesDataGridViewPropertyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.propertiesDataGridViewValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.indexColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +49,7 @@
             this.propertiesDataGridViewPropertyColumn.Name = "propertiesDataGridViewPropertyColumn";
             this.propertiesDataGridViewPropertyColumn.ReadOnly = true;
             this.propertiesDataGridViewPropertyColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.propertiesDataGridViewPropertyColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            //this.propertiesDataGridViewPropertyColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // propertiesDataGridViewValueColumn
             // 
@@ -57,22 +58,31 @@
             this.propertiesDataGridViewValueColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.propertiesDataGridViewValueColumn.HeaderText = "valueColumnHeader";
             this.propertiesDataGridViewValueColumn.Name = "propertiesDataGridViewValueColumn";
-            this.propertiesDataGridViewValueColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            //this.propertiesDataGridViewValueColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // indexColumn
+            // 
+            this.indexColumn.HeaderText = "index";
+            this.indexColumn.MinimumWidth = 2;
+            this.indexColumn.Name = "indexColumn";
+            this.indexColumn.ReadOnly = true;
+            this.indexColumn.Visible = false;
             // 
             // PropertiesEditorGrid
             // 
+            this.AllowUserToAddRows = false;
             this.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.propertiesDataGridViewPropertyColumn,
-            this.propertiesDataGridViewValueColumn});
+            this.propertiesDataGridViewValueColumn,
+            this.indexColumn});
             this.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MultiSelect = false;
             this.Name = "propertiesDataGridView";
             this.RowHeadersVisible = false;
             this.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Size = new System.Drawing.Size(216, 409);
-            this.MultiSelect = false;
-            this.AllowUserToAddRows = false;
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PropertiesEditorGrid_Paint);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
@@ -81,8 +91,8 @@
 
         #endregion
 
-        //private System.Windows.Forms.DataGridView propertiesDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn propertiesDataGridViewPropertyColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn propertiesDataGridViewValueColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn indexColumn;
     }
 }

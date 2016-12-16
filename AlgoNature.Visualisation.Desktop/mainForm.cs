@@ -35,6 +35,8 @@ namespace AlgoNature.Visualisation.Desktop
 
         private bool showIGrowableSettings;
 
+
+        FormWindowState _lastWindowState;
         public mainForm()
         {
             InitializeComponent();
@@ -67,6 +69,8 @@ namespace AlgoNature.Visualisation.Desktop
             setMainSplitContainerSplitterDistance();
             Thread.Sleep(100);
             ReinitializeControl();
+
+            _lastWindowState = this.WindowState;
 
             Program.MainWindow = this;
         }
@@ -330,7 +334,15 @@ namespace AlgoNature.Visualisation.Desktop
 
         private void mainForm_Resize(object sender, EventArgs e)
         {
-
+            //Console.WriteLine("Resize");
+            if (this.WindowState != _lastWindowState)
+            {
+                this.splitViewPanel.Size = this.Size - new Size(41, 90);
+                _lastWindowState = this.WindowState;
+                this.ResumeLayout();
+                dockComponent();
+                ((UserControl)drawnUserControl).Size = ((UserControl)drawnUserControl).Size;
+            }
         }
 
         private bool manuallyResized = false;
@@ -380,14 +392,16 @@ namespace AlgoNature.Visualisation.Desktop
         private Size tempResizeSize;
         private void mainForm_ResizeBegin(object sender, EventArgs e)
         {
-            this.SuspendLayout();
+            //Console.WriteLine("ResizeBegin");
+            //this.SuspendLayout();
             tempResizeSize = this.Size;
         }
         private void mainForm_ResizeEnd(object sender, EventArgs e)
         {
+            //Console.WriteLine("ResizeEnd");
             Size diff = this.Size - tempResizeSize;
             splitViewPanel.Size += diff;
-            this.ResumeLayout();
+            //this.ResumeLayout();
             dockComponent();
         }
     }
