@@ -873,8 +873,8 @@ namespace AlgoNature.Visualisation.Desktop
 
         private void showPropertyUnableToBeSetMessage(string propertyName)
         {
-            // TODO translate
-            MessageBox.Show(Program.MainWindow, "Unfotrunately, the property " + propertyName + " could not be set for an unknown reason.", "Property could not be set");
+            MessageBox.Show(Program.MainWindow, String.Format(PropertiesEditorGridAndFlyOut_Translation.unableToEditMessageText, propertyName), 
+                PropertiesEditorGridAndFlyOut_Translation.unableToEditMessageHeader);
         }
     }
 

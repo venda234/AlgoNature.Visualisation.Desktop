@@ -136,6 +136,12 @@
   <data name="propertyColumnHeader" xml:space="preserve">
     <value>Property</value>
   </data>
+  <data name="unableToEditMessageHeader" xml:space="preserve">
+    <value>Property could not be set</value>
+  </data>
+  <data name="unableToEditMessageText" xml:space="preserve">
+    <value>Unfotrunately, the property {0} could not be set for an unknown reason.</value>
+  </data>
   <data name="valueColumnHeaderValue" xml:space="preserve">
     <value>Value</value>
   </data>

@@ -123,6 +123,24 @@ namespace AlgoNature.Visualisation.Desktop {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Property could not be set.
+        /// </summary>
+        internal static string unableToEditMessageHeader {
+            get {
+                return ResourceManager.GetString("unableToEditMessageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unfotrunately, the property {0} could not be set for an unknown reason..
+        /// </summary>
+        internal static string unableToEditMessageText {
+            get {
+                return ResourceManager.GetString("unableToEditMessageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
         internal static string valueColumnHeaderValue {

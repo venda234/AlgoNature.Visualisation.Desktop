@@ -136,6 +136,12 @@
   <data name="propertyColumnHeader" xml:space="preserve">
     <value>Vlastnost</value>
   </data>
+  <data name="unableToEditMessageHeader" xml:space="preserve">
+    <value>Hodnota vlastnosti nešla nastavit</value>
+  </data>
+  <data name="unableToEditMessageText" xml:space="preserve">
+    <value>Bohužel se nepodařilo z neznámého důvodu nastavit hodnotu vlastnosti {0}.</value>
+  </data>
   <data name="valueColumnHeader" xml:space="preserve">
     <value>Hodnota</value>
   </data>
