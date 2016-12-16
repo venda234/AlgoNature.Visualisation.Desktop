@@ -18,8 +18,6 @@ namespace AlgoNature.Visualisation.Desktop
         // Boolean will be displayed other way
         internal const string DIRECTLY_EDITABLE_TYPES_STR = "SByteCharDateTimeDecimalDoubleUInt16UInt32UInt64SingleString";
 
-        // TODO řazení po kliknutí na header
-
         public PropertiesEditorGrid()
         {
             InitializeComponent();
@@ -31,7 +29,7 @@ namespace AlgoNature.Visualisation.Desktop
             InitializeComponent();
             doTranslation();
             _editedObject = objWhosePropertiesToDisplay;
-            _properties = propertiesToDisplay.Where(new Func<PropertyInfo, bool>((property) => property.Name != "NameTranslated")).ToArray();
+            _properties = propertiesToDisplay.Where(new Func<PropertyInfo, bool>((property) => (!property.Name.Contains("Name") && !property.Name.Contains("Translated")))).ToArray();
             initializeGrid();
         }
 
@@ -103,7 +101,7 @@ namespace AlgoNature.Visualisation.Desktop
         private void initializeArrayObject()
         {
             int length = ((object[])_editedObject).Length;
-            for (int i = 0; i < length; i++) ; // TODO initializeArrayRow(i, i, ref ((object[])_editedObject)[i]);
+            for (int i = 0; i < length; i++) initializeArrayRow(i, i); 
         }
 
         /// <summary>
@@ -505,7 +503,7 @@ namespace AlgoNature.Visualisation.Desktop
                             }
                         };
                 }
-                else if (type.IsAssignableFrom(typeof(UserControl)))
+                else if (type.BaseType == typeof(UserControl) || type.BaseType.Name.Contains("UserControl"))
                 {
                     PropertyInfo[] props = type.GetProperties().FilterPropertiesBasedOnOtherTypes(new Type[1] { typeof(UserControl) }, false);
                     if (type.ImplementsInterface(typeof(AlgoNature.Components.IBitmapGraphicChild)))
@@ -521,7 +519,7 @@ namespace AlgoNature.Visualisation.Desktop
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
 
-                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
+                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, props, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
 
                                 flyout.EditingFinished +=
                                     (result, editedObjectChanged, editedObject) =>
@@ -765,7 +763,7 @@ namespace AlgoNature.Visualisation.Desktop
                             }
                         };
                 }
-                else if (type.IsAssignableFrom(typeof(UserControl)))
+                else if (type.BaseType == typeof(UserControl) || type.BaseType.Name.Contains("UserControl"))
                 {
                     PropertyInfo[] props = type.GetProperties().FilterPropertiesBasedOnOtherTypes(new Type[1] { typeof(UserControl) }, false);
                     if (type.ImplementsInterface(typeof(AlgoNature.Components.IBitmapGraphicChild)))
@@ -781,7 +779,7 @@ namespace AlgoNature.Visualisation.Desktop
                             {
                                 object prop = _properties[rowIndex].GetValue(_editedObject);
 
-                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
+                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, props, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
 
                                 flyout.EditingFinished +=
                                     (result, editedObjectChanged, editedObject) =>
