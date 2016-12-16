@@ -20,9 +20,9 @@ namespace AlgoNature.Visualisation.Desktop
 {
     public partial class mainForm : Form
     {
-        const int PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE = 409;
+        const int PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE = 387;
         const int SCROLLBAR_SIZE = 20;
-        const string TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION = "mainForm.Translation";
+        //const string TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION = "mainForm.Translation";
 
         //private string exportFileDialogFilter;
 
@@ -101,6 +101,9 @@ namespace AlgoNature.Visualisation.Desktop
             manuallyResized = false;
             initializeExportabilityAndIGrowability();
 
+            resetWithoutLosingSettingsButton.Visible = assemblyControls[selectedAssemblyControlIndex].GetMethod("ResetGraphicalAppearanceWithoutLosingSettings") != null;
+                //assemblyControls[selectedAssemblyControlIndex].ImplementsInterface(typeof(IResettableGraphicComponentWithoutLosingSettings<>));
+
             if (!initializedResizeHandler)
             {
                 //this.mainSplitContainer.Panel2.Resize += new System.EventHandler(this.mainSplitContainer_Panel2_Resize);
@@ -118,6 +121,7 @@ namespace AlgoNature.Visualisation.Desktop
         private void initializeExportabilityAndIGrowability()
         {
             showIGrowableSettings = assemblyControls[selectedAssemblyControlIndex].ImplementsInterface(typeof(IGrowableGraphicChild));
+            iGrowableButtonsTableLayoutPanel.Visible = showIGrowableSettings;
             exportButton.Visible = assemblyControls[selectedAssemblyControlIndex].ImplementsInterface(typeof(IBitmapGraphicChild));
         }
 
@@ -266,6 +270,7 @@ namespace AlgoNature.Visualisation.Desktop
         {
             System.Resources.ResourceManager RM = AlgoNature.Visualisation.Desktop.mainForm_Translation.ResourceManager;
             
+            resetWithoutLosingSettingsButton.Text = RM.TryTranslate(resetWithoutLosingSettingsButton.Text);
             resetToDefaultButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ resetToDefaultButton.Text);
             exportButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ exportButton.Text);
             startGrowingButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ startGrowingButton.Text);
@@ -403,6 +408,11 @@ namespace AlgoNature.Visualisation.Desktop
             splitViewPanel.Size += diff;
             //this.ResumeLayout();
             dockComponent();
+        }
+
+        private void resetWithoutLosingSettingsButton_Click(object sender, EventArgs e)
+        {
+            assemblyControls[selectedAssemblyControlIndex].GetMethod("ResetGraphicalAppearanceWithoutLosingSettings").Invoke(drawnUserControl, null);
         }
     }
 }

@@ -61,30 +61,65 @@ namespace AlgoNature.Visualisation.Desktop {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to die=&quot;Zemřít&quot;
-        ///export=&quot;Exportovat&quot;
-        ///resetToDefault=&quot;Resetovat na výchozí hodnoty&quot;
-        ///resetWithoutLosingSettings=&quot;Resetovat při zachování vlastností&quot;
-        ///startGrowing=&quot;Začít růst&quot;
-        ///stopGrowing=&quot;Přestat růst&quot;.
+        ///   Looks up a localized string similar to Die.
         /// </summary>
-        internal static string mainForm_Translation_cs_CZ {
+        internal static string die {
             get {
-                return ResourceManager.GetString("mainForm_Translation_cs_CZ", resourceCulture);
+                return ResourceManager.GetString("die", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to die=&quot;Die&quot;
-        ///export=&quot;Export&quot;
-        ///resetToDefault=&quot;Reset to default values&quot;
-        ///resetWithoutLosingSettings=&quot;Reset without losing properties&quot;
-        ///startGrowing=&quot;Start growing&quot;
-        ///stopGrowing=&quot;Stop growing&quot;.
+        ///   Looks up a localized string similar to Export.
         /// </summary>
-        internal static string mainForm_Translation_en_US {
+        internal static string export {
             get {
-                return ResourceManager.GetString("mainForm_Translation_en_US", resourceCulture);
+                return ResourceManager.GetString("export", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AlgoNature Visualisation.
+        /// </summary>
+        internal static string mainFormText {
+            get {
+                return ResourceManager.GetString("mainFormText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset to default values.
+        /// </summary>
+        internal static string resetToDefault {
+            get {
+                return ResourceManager.GetString("resetToDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset without losing properties.
+        /// </summary>
+        internal static string resetWithoutLosingSettings {
+            get {
+                return ResourceManager.GetString("resetWithoutLosingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start growing.
+        /// </summary>
+        internal static string startGrowing {
+            get {
+                return ResourceManager.GetString("startGrowing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop growing.
+        /// </summary>
+        internal static string stopGrowing {
+            get {
+                return ResourceManager.GetString("stopGrowing", resourceCulture);
             }
         }
     }

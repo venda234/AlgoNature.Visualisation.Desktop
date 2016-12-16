@@ -126,13 +126,6 @@
   <data name="PropertiesEditFlyOutHeader" xml:space="preserve">
     <value>Properties editing</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="PropertiesEditorGridAndFlyOut_Translation_cs_CZ" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\PropertiesEditorGridAndFlyOut.Translation.cs-CZ.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
-  </data>
-  <data name="PropertiesEditorGridAndFlyOut_Translation_en_US" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\PropertiesEditorGridAndFlyOut.Translation.en-US.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
-  </data>
   <data name="propertyColumnHeader" xml:space="preserve">
     <value>Property</value>
   </data>

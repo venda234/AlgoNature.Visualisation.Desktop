@@ -88,32 +88,6 @@ namespace AlgoNature.Visualisation.Desktop {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel=&quot;Zrušit&quot;
-        ///OK=&quot;OK&quot;
-        ///PropertiesEditFlyOutHeader=&quot;Editace vlastností
-        ///propertyColumnHeader=&quot;Vlastnost&quot;
-        ///valueColumnHeader=&quot;Hodnota&quot;.
-        /// </summary>
-        internal static string PropertiesEditorGridAndFlyOut_Translation_cs_CZ {
-            get {
-                return ResourceManager.GetString("PropertiesEditorGridAndFlyOut_Translation_cs_CZ", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cancel=&quot;Cancel&quot;
-        ///OK=&quot;OK&quot;
-        ///PropertiesEditFlyOutHeader=&quot;Properties editing&quot;
-        ///propertyColumnHeader=&quot;Property&quot;
-        ///valueColumnHeader=&quot;Value&quot;.
-        /// </summary>
-        internal static string PropertiesEditorGridAndFlyOut_Translation_en_US {
-            get {
-                return ResourceManager.GetString("PropertiesEditorGridAndFlyOut_Translation_en_US", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Property.
         /// </summary>
         internal static string propertyColumnHeader {

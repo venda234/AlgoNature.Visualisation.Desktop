@@ -217,7 +217,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;splitViewPanel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>2</value>
   </data>
   <metadata name="mainSplitContainer.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -273,212 +273,32 @@
   <data name="&gt;&gt;mainSplitContainer.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="controlsComboBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 12</value>
-  </data>
-  <data name="controlsComboBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>209, 21</value>
-  </data>
-  <data name="controlsComboBox.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;controlsComboBox.Name" xml:space="preserve">
-    <value>controlsComboBox</value>
-  </data>
-  <data name="&gt;&gt;controlsComboBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;controlsComboBox.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;controlsComboBox.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="exportButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="exportButton.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="exportButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>867, 10</value>
-  </data>
-  <data name="exportButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>129, 23</value>
-  </data>
-  <data name="exportButton.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="exportButton.Text" xml:space="preserve">
-    <value>export</value>
-  </data>
-  <data name="&gt;&gt;exportButton.Name" xml:space="preserve">
-    <value>exportButton</value>
-  </data>
-  <data name="&gt;&gt;exportButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;exportButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;exportButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;dieButton.Name" xml:space="preserve">
-    <value>dieButton</value>
-  </data>
-  <data name="&gt;&gt;dieButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dieButton.Parent" xml:space="preserve">
-    <value>panelGrowableContrtols</value>
-  </data>
-  <data name="&gt;&gt;dieButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;stopGrowingButton.Name" xml:space="preserve">
-    <value>stopGrowingButton</value>
-  </data>
-  <data name="&gt;&gt;stopGrowingButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;stopGrowingButton.Parent" xml:space="preserve">
-    <value>panelGrowableContrtols</value>
-  </data>
-  <data name="&gt;&gt;stopGrowingButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;startGrowingButton.Name" xml:space="preserve">
-    <value>startGrowingButton</value>
-  </data>
-  <data name="&gt;&gt;startGrowingButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;startGrowingButton.Parent" xml:space="preserve">
-    <value>panelGrowableContrtols</value>
-  </data>
-  <data name="&gt;&gt;startGrowingButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="panelGrowableContrtols.Location" type="System.Drawing.Point, System.Drawing">
-    <value>465, 10</value>
-  </data>
-  <data name="panelGrowableContrtols.Size" type="System.Drawing.Size, System.Drawing">
-    <value>264, 22</value>
-  </data>
-  <data name="panelGrowableContrtols.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;panelGrowableContrtols.Name" xml:space="preserve">
-    <value>panelGrowableContrtols</value>
-  </data>
-  <data name="&gt;&gt;panelGrowableContrtols.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;panelGrowableContrtols.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;panelGrowableContrtols.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="dieButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="dieButton.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="dieButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>179, 0</value>
-  </data>
-  <data name="dieButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 23</value>
-  </data>
-  <data name="dieButton.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="dieButton.Text" xml:space="preserve">
-    <value>die</value>
-  </data>
-  <data name="&gt;&gt;dieButton.Name" xml:space="preserve">
-    <value>dieButton</value>
-  </data>
-  <data name="&gt;&gt;dieButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;dieButton.Parent" xml:space="preserve">
-    <value>panelGrowableContrtols</value>
-  </data>
-  <data name="&gt;&gt;dieButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="stopGrowingButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="stopGrowingButton.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="stopGrowingButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>91, 0</value>
-  </data>
-  <data name="stopGrowingButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 23</value>
-  </data>
-  <data name="stopGrowingButton.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="stopGrowingButton.Text" xml:space="preserve">
-    <value>stopGrowing</value>
-  </data>
-  <data name="&gt;&gt;stopGrowingButton.Name" xml:space="preserve">
-    <value>stopGrowingButton</value>
-  </data>
-  <data name="&gt;&gt;stopGrowingButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;stopGrowingButton.Parent" xml:space="preserve">
-    <value>panelGrowableContrtols</value>
-  </data>
-  <data name="&gt;&gt;stopGrowingButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="startGrowingButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="startGrowingButton.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="startGrowingButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 0</value>
-  </data>
-  <data name="startGrowingButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>82, 23</value>
-  </data>
-  <data name="startGrowingButton.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="startGrowingButton.Text" xml:space="preserve">
-    <value>startGrowing</value>
-  </data>
-  <data name="&gt;&gt;startGrowingButton.Name" xml:space="preserve">
-    <value>startGrowingButton</value>
-  </data>
-  <data name="&gt;&gt;startGrowingButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;startGrowingButton.Parent" xml:space="preserve">
-    <value>panelGrowableContrtols</value>
-  </data>
-  <data name="&gt;&gt;startGrowingButton.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <metadata name="exportImageDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="exportImageDialog.Filter" xml:space="preserve">
+    <value>Portable Network Graphics|*.png|Bitmap|*.bmp|JPEG Image|*.jpg</value>
+  </data>
+  <data name="exportImageDialog.Title" xml:space="preserve">
+    <value>exportFileDialogTitle</value>
   </data>
   <data name="resetToDefaultButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="resetToDefaultButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="resetToDefaultButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="resetToDefaultButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>227, 10</value>
+    <value>188, 11</value>
+  </data>
+  <data name="resetToDefaultButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 11, 3, 3</value>
   </data>
   <data name="resetToDefaultButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 23</value>
+    <value>165, 23</value>
   </data>
   <data name="resetToDefaultButton.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -493,19 +313,289 @@
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;resetToDefaultButton.Parent" xml:space="preserve">
-    <value>$this</value>
+    <value>headerTableLayoutPanel</value>
   </data>
   <data name="&gt;&gt;resetToDefaultButton.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="controlsComboBox.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="controlsComboBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>13, 12</value>
+  </data>
+  <data name="controlsComboBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>13, 12, 3, 3</value>
+  </data>
+  <data name="controlsComboBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 21</value>
+  </data>
+  <data name="controlsComboBox.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;controlsComboBox.Name" xml:space="preserve">
+    <value>controlsComboBox</value>
+  </data>
+  <data name="&gt;&gt;controlsComboBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;controlsComboBox.Parent" xml:space="preserve">
+    <value>headerTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;controlsComboBox.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="resetWithoutLosingSettingsButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="resetWithoutLosingSettingsButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="resetWithoutLosingSettingsButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="resetWithoutLosingSettingsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>359, 11</value>
+  </data>
+  <data name="resetWithoutLosingSettingsButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 11, 13, 3</value>
+  </data>
+  <data name="resetWithoutLosingSettingsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 23</value>
+  </data>
+  <data name="resetWithoutLosingSettingsButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="resetWithoutLosingSettingsButton.Text" xml:space="preserve">
+    <value>resetWithoutLosingSettings</value>
+  </data>
+  <data name="&gt;&gt;resetWithoutLosingSettingsButton.Name" xml:space="preserve">
+    <value>resetWithoutLosingSettingsButton</value>
+  </data>
+  <data name="&gt;&gt;resetWithoutLosingSettingsButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;resetWithoutLosingSettingsButton.Parent" xml:space="preserve">
+    <value>headerTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;resetWithoutLosingSettingsButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="exportButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="exportButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="exportButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="exportButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>890, 11</value>
+  </data>
+  <data name="exportButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>13, 11, 13, 3</value>
+  </data>
+  <data name="exportButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 23</value>
+  </data>
+  <data name="exportButton.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="exportButton.Text" xml:space="preserve">
+    <value>export</value>
+  </data>
+  <data name="&gt;&gt;exportButton.Name" xml:space="preserve">
+    <value>exportButton</value>
+  </data>
+  <data name="&gt;&gt;exportButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;exportButton.Parent" xml:space="preserve">
+    <value>headerTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;exportButton.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="headerTableLayoutPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="startGrowingButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="startGrowingButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="startGrowingButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="startGrowingButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>576, 11</value>
+  </data>
+  <data name="startGrowingButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>13, 11, 3, 3</value>
+  </data>
+  <data name="startGrowingButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 23</value>
+  </data>
+  <data name="startGrowingButton.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="startGrowingButton.Text" xml:space="preserve">
+    <value>startGrowing</value>
+  </data>
+  <data name="&gt;&gt;startGrowingButton.Name" xml:space="preserve">
+    <value>startGrowingButton</value>
+  </data>
+  <data name="&gt;&gt;startGrowingButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;startGrowingButton.Parent" xml:space="preserve">
+    <value>headerTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;startGrowingButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="exportImageDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="exportImageDialog.Filter" xml:space="preserve">
-    <value>Portable Network Graphics|*.png|Bitmap|*.bmp|JPEG Image|*.jpg</value>
+  <data name="dieButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
-  <data name="exportImageDialog.Title" xml:space="preserve">
-    <value>exportFileDialogTitle</value>
+  <data name="dieButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="dieButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="dieButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>769, 11</value>
+  </data>
+  <data name="dieButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 11, 13, 3</value>
+  </data>
+  <data name="dieButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>95, 23</value>
+  </data>
+  <data name="dieButton.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="dieButton.Text" xml:space="preserve">
+    <value>die</value>
+  </data>
+  <data name="&gt;&gt;dieButton.Name" xml:space="preserve">
+    <value>dieButton</value>
+  </data>
+  <data name="&gt;&gt;dieButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;dieButton.Parent" xml:space="preserve">
+    <value>headerTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;dieButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="stopGrowingButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="stopGrowingButton.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="stopGrowingButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="stopGrowingButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>677, 11</value>
+  </data>
+  <data name="stopGrowingButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 11, 3, 3</value>
+  </data>
+  <data name="stopGrowingButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 23</value>
+  </data>
+  <data name="stopGrowingButton.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="stopGrowingButton.Text" xml:space="preserve">
+    <value>stopGrowing</value>
+  </data>
+  <data name="&gt;&gt;stopGrowingButton.Name" xml:space="preserve">
+    <value>stopGrowingButton</value>
+  </data>
+  <data name="&gt;&gt;stopGrowingButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;stopGrowingButton.Parent" xml:space="preserve">
+    <value>headerTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;stopGrowingButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="headerTableLayoutPanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="headerTableLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="headerTableLayoutPanel.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="headerTableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1008, 37</value>
+  </data>
+  <data name="headerTableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;headerTableLayoutPanel.Name" xml:space="preserve">
+    <value>headerTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;headerTableLayoutPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;headerTableLayoutPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;headerTableLayoutPanel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="headerTableLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="startGrowingButton" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="dieButton" Row="0" RowSpan="1" Column="5" ColumnSpan="1" /&gt;&lt;Control Name="stopGrowingButton" Row="0" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="resetWithoutLosingSettingsButton" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="controlsComboBox" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="resetToDefaultButton" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;Control Name="exportButton" Row="0" RowSpan="1" Column="6" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,18,38326,Percent,17,01854,Percent,20,59073,Percent,11,08102,Percent,9,181415,Percent,11,08102,Percent,12,66402" /&gt;&lt;Rows Styles="Percent,100" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.ColumnCount" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 8</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 0</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;iGrowableButtonsTableLayoutPanel.Name" xml:space="preserve">
+    <value>iGrowableButtonsTableLayoutPanel</value>
+  </data>
+  <data name="&gt;&gt;iGrowableButtonsTableLayoutPanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;iGrowableButtonsTableLayoutPanel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;iGrowableButtonsTableLayoutPanel.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="iGrowableButtonsTableLayoutPanel.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls /&gt;&lt;Columns Styles="Percent,50,Percent,50,Absolute,109" /&gt;&lt;Rows Styles="Percent,50" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
