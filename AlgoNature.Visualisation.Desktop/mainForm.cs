@@ -144,7 +144,7 @@ namespace AlgoNature.Visualisation.Desktop
             }
 
             PropertiesEditorGrid grid = new PropertiesEditorGrid(drawnUserControl,
-                new Type[3] { typeof(UserControl), typeof(IGrowableGraphicChild), typeof(IBitmapGraphicChild) }, false);
+                new Type[4] { typeof(UserControl), typeof(IGrowableGraphicChild), typeof(IBitmapGraphicChild), typeof(ITranslatable) }, false);
             //grid.PropertiesEditorGridLoaded += setMainSplitContainerSplitterDistance;
             //grid.Resize += setMainSplitContainerSplitterDistance;
             //grid.ColumnWidthChanged += setMainSplitContainerSplitterDistance;

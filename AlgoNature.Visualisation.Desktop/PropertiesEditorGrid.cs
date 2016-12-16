@@ -31,7 +31,7 @@ namespace AlgoNature.Visualisation.Desktop
             InitializeComponent();
             doTranslation();
             _editedObject = objWhosePropertiesToDisplay;
-            _properties = propertiesToDisplay;
+            _properties = propertiesToDisplay.Where(new Func<PropertyInfo, bool>((property) => property.Name != "NameTranslated")).ToArray();
             initializeGrid();
         }
 
