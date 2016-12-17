@@ -274,6 +274,7 @@ namespace AlgoNature.Visualisation.Desktop
                     {
                         if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
                         {
+                            _previouslyReloadedValue = false;
                             this[0, e.RowIndex].Selected = true;
                         }
                     };
@@ -283,20 +284,23 @@ namespace AlgoNature.Visualisation.Desktop
                     {
                         if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
                         {
-                            try
+                            if (!_previouslyReloadedValue)
                             {
-                                _properties[e.RowIndex].SetValue(_editedObject, this[1, e.RowIndex].Value);
-                            }
-                            catch
-                            {
-                                if (_editedObject is Pen)
+                                try
                                 {
-                                    _editedObject = new Pen(((Pen)_editedObject).Color, (float)this[1, e.RowIndex].Value);
+                                    _properties[rowIndex].SetValue(_editedObject, this[1, e.RowIndex].Value);
                                 }
-                                else showPropertyUnableToBeSetMessage(_properties[e.RowIndex].Name);
-                            }
+                                catch
+                                {
+                                    if (_editedObject is Pen)
+                                    {
+                                        _editedObject = new Pen(((Pen)_editedObject).Color, (float)this[1, e.RowIndex].Value);
+                                    }
+                                    else showPropertyUnableToBeSetMessage(_properties[rowIndex].Name);
+                                }
 
-                            AnythingChanged = true;
+                                AnythingChanged = true;
+                            }
                         }
                     };
             }
@@ -584,14 +588,49 @@ namespace AlgoNature.Visualisation.Desktop
                 this[1, rowIndex] = new DataGridViewCheckBoxCell(false);
                 ((DataGridViewCheckBoxCell)this[1, rowIndex]).Value = value;
 
+                /*this.CellContentClick +=
+                    (sender, e) =>
+                    {
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        {
+                            if (!_previouslyReloadedValue)
+                            {
+                                array[arrayIndex] = this[1, e.RowIndex].Value;
+                                this[0, e.RowIndex].Selected = true;
+                                AnythingChanged = true;
+                            }
+                            else _previouslyReloadedValue = false;
+                        }
+                    };*/
+                // Defocus after click - then the CellValueChanged event will be thrown
                 this.CellContentClick +=
                     (sender, e) =>
                     {
                         if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
                         {
-                            array[arrayIndex] = this[1, rowIndex].Value;
+                            _previouslyReloadedValue = false;
                             this[0, e.RowIndex].Selected = true;
-                            AnythingChanged = true;
+                        }
+                    };
+
+                this.CellValueChanged +=
+                    (sender, e) =>
+                    {
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        {
+                            if (!_previouslyReloadedValue)
+                            {
+                                try
+                                {
+                                    array[arrayIndex] = this[1, e.RowIndex].Value;
+                                }
+                                catch
+                                {
+                                    showPropertyUnableToBeSetMessage("[" + arrayIndex + "]");
+                                }
+
+                                AnythingChanged = true;
+                            }
                         }
                     };
             }
@@ -880,15 +919,12 @@ namespace AlgoNature.Visualisation.Desktop
                 PropertiesEditorGridAndFlyOut_Translation.unableToEditMessageHeader);
         }
 
-        private void PropertiesEditorGrid_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
-
+        private bool _previouslyReloadedValue = false;
         private void PropertiesEditorGrid_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.RowIndex != this.SelectedCells[0].RowIndex)
+            if (e.RowIndex != this.SelectedCells[0].RowIndex && e.RowIndex >= 0)
             {
+                _previouslyReloadedValue = true;
                 if (_editedObject.GetType().IsArray)
                 {
                     initializeArrayRow(e.RowIndex, Convert.ToInt32(this[2, e.RowIndex].Value));

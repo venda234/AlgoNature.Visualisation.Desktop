@@ -32,8 +32,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.propertiesDataGridViewPropertyColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.propertiesDataGridViewValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.indexColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,8 +43,8 @@
             // propertiesDataGridViewPropertyColumn
             // 
             this.propertiesDataGridViewPropertyColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            this.propertiesDataGridViewPropertyColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            this.propertiesDataGridViewPropertyColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.propertiesDataGridViewPropertyColumn.HeaderText = "propertyColumnHeader";
             this.propertiesDataGridViewPropertyColumn.Name = "propertiesDataGridViewPropertyColumn";
             this.propertiesDataGridViewPropertyColumn.ReadOnly = true;
@@ -53,8 +53,8 @@
             // propertiesDataGridViewValueColumn
             // 
             this.propertiesDataGridViewValueColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.propertiesDataGridViewValueColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.propertiesDataGridViewValueColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.propertiesDataGridViewValueColumn.HeaderText = "valueColumnHeader";
             this.propertiesDataGridViewValueColumn.Name = "propertiesDataGridViewValueColumn";
             // 
@@ -81,7 +81,6 @@
             this.RowHeadersVisible = false;
             this.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Size = new System.Drawing.Size(216, 409);
-            this.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.PropertiesEditorGrid_CellClick);
             this.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.PropertiesEditorGrid_CellMouseDown);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PropertiesEditorGrid_Paint);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
