@@ -136,18 +136,21 @@
             resources.ApplyResources(this.startGrowingButton, "startGrowingButton");
             this.startGrowingButton.Name = "startGrowingButton";
             this.startGrowingButton.UseVisualStyleBackColor = true;
+            this.startGrowingButton.Click += new System.EventHandler(this.startGrowingButton_Click);
             // 
             // dieButton
             // 
             resources.ApplyResources(this.dieButton, "dieButton");
             this.dieButton.Name = "dieButton";
             this.dieButton.UseVisualStyleBackColor = true;
+            this.dieButton.Click += new System.EventHandler(this.dieButton_Click);
             // 
             // stopGrowingButton
             // 
             resources.ApplyResources(this.stopGrowingButton, "stopGrowingButton");
             this.stopGrowingButton.Name = "stopGrowingButton";
             this.stopGrowingButton.UseVisualStyleBackColor = true;
+            this.stopGrowingButton.Click += new System.EventHandler(this.stopGrowingButton_Click);
             // 
             // iGrowableButtonsTableLayoutPanel
             // 
