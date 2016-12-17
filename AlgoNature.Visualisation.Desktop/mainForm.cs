@@ -20,7 +20,7 @@ namespace AlgoNature.Visualisation.Desktop
 {
     public partial class mainForm : Form
     {
-        const int PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE = 387;
+        const int PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE = 291; //387;
         const int SCROLLBAR_SIZE = 20;
         //const string TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION = "mainForm.Translation";
 
@@ -95,9 +95,12 @@ namespace AlgoNature.Visualisation.Desktop
             return result.ToArray();
         }
 
+        bool _userMovedGridsSplitter = false;
+
         bool initializedResizeHandler = false;
         private void ReinitializeControl()
         {
+            _userMovedGridsSplitter = false;
             manuallyResized = false;
             initializeExportabilityAndIGrowability();
 
@@ -144,7 +147,7 @@ namespace AlgoNature.Visualisation.Desktop
             //Determining whether to show IGrowable properties Grid
             if (showIGrowableSettings)
             {
-                this.propertiesSplitContainer.SplitterDistance = PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE;
+                this.propertiesSplitContainer.SplitterDistance = this.propertiesSplitContainer.Height - PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE;
             }
             else
             {
@@ -344,7 +347,11 @@ namespace AlgoNature.Visualisation.Desktop
             {
                 this.splitViewPanel.Size = this.Size - new Size(41, 90);
                 _lastWindowState = this.WindowState;
-                this.ResumeLayout();
+                if (showIGrowableSettings && !_userMovedGridsSplitter)
+                {
+                    this.propertiesSplitContainer.SplitterDistance = this.propertiesSplitContainer.Height - PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE;
+                }
+                //this.ResumeLayout();
                 dockComponent();
                 ((UserControl)drawnUserControl).Size = ((UserControl)drawnUserControl).Size;
             }
@@ -406,6 +413,10 @@ namespace AlgoNature.Visualisation.Desktop
             //Console.WriteLine("ResizeEnd");
             Size diff = this.Size - tempResizeSize;
             splitViewPanel.Size += diff;
+            if (showIGrowableSettings && !_userMovedGridsSplitter)
+            {
+                this.propertiesSplitContainer.SplitterDistance = this.propertiesSplitContainer.Height - PROPERTIES_SPLITCONTAINER_SPLITTER_DISTANCE_WHEN_IGROWABLE;
+            }
             //this.ResumeLayout();
             dockComponent();
         }
@@ -413,6 +424,11 @@ namespace AlgoNature.Visualisation.Desktop
         private void resetWithoutLosingSettingsButton_Click(object sender, EventArgs e)
         {
             assemblyControls[selectedAssemblyControlIndex].GetMethod("ResetGraphicalAppearanceWithoutLosingSettings").Invoke(drawnUserControl, null);
+        }
+
+        private void propertiesSplitContainer_SplitterMoving(object sender, SplitterCancelEventArgs e)
+        {
+            _userMovedGridsSplitter = true;
         }
     }
 }

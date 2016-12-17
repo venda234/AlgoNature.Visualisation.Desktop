@@ -59,6 +59,7 @@
             // propertiesSplitContainer.Panel2
             // 
             resources.ApplyResources(this.propertiesSplitContainer.Panel2, "propertiesSplitContainer.Panel2");
+            this.propertiesSplitContainer.SplitterMoving += new System.Windows.Forms.SplitterCancelEventHandler(this.propertiesSplitContainer_SplitterMoving);
             // 
             // splitViewPanel
             // 

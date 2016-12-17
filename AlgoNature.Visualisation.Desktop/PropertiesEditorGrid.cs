@@ -273,7 +273,7 @@ namespace AlgoNature.Visualisation.Desktop
                     {
                         if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
                         {
-                            this[0, rowIndex].Selected = true;
+                            this[0, e.RowIndex].Selected = true;
                         }
                     };
                     
@@ -499,6 +499,7 @@ namespace AlgoNature.Visualisation.Desktop
                             if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
                             {
                                 _properties[rowIndex].SetValue(_editedObject, Enum.Parse(type, this[1, rowIndex].Value.ToString()));
+                                //this[0, e.RowIndex].Selected = true;
                                 AnythingChanged = true;
                             }
                         };
@@ -588,6 +589,7 @@ namespace AlgoNature.Visualisation.Desktop
                         if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
+                            this[0, e.RowIndex].Selected = true;
                             AnythingChanged = true;
                         }
                     };
