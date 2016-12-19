@@ -430,5 +430,30 @@ namespace AlgoNature.Visualisation.Desktop
         {
             _userMovedGridsSplitter = true;
         }
+
+        private void mainSplitContainer_Panel2_Scroll(object sender, ScrollEventArgs e)
+        {
+            int oldval;
+            int diff = e.NewValue - e.OldValue;
+            if (diff > 0)
+                try
+                {
+                    oldval = assemblyControls[selectedAssemblyControlIndex].GetProperty("OneLengthPixels").GetValue(drawnUserControl);
+                    assemblyControls[selectedAssemblyControlIndex].GetProperty("OneLengthPixels").SetValue(drawnUserControl, ((float)oldval * (float)diff) / 2F);
+                }
+                catch { }
+            else if (diff < 0)
+                try
+                {
+                    oldval = assemblyControls[selectedAssemblyControlIndex].GetProperty("OneLengthPixels").GetValue(drawnUserControl);
+                    assemblyControls[selectedAssemblyControlIndex].GetProperty("OneLengthPixels").SetValue(drawnUserControl, - ((float)oldval / (float)diff) * 2F);
+                }
+                catch { }
+        }
+
+        private void mainForm_Scroll(object sender, ScrollEventArgs e)
+        {
+            mainSplitContainer_Panel2_Scroll(sender, e);
+        }
     }
 }

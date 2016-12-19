@@ -82,6 +82,7 @@
             // 
             this.mainSplitContainer.Panel2.BackColor = System.Drawing.Color.White;
             this.mainSplitContainer.Panel2.Cursor = System.Windows.Forms.Cursors.Cross;
+            this.mainSplitContainer.Panel2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.mainSplitContainer_Panel2_Scroll);
             this.mainSplitContainer.SplitterMoving += new System.Windows.Forms.SplitterCancelEventHandler(this.mainSplitContainer_SplitterMoving);
             this.mainSplitContainer.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.mainSplitContainer_SplitterMoved);
             // 
@@ -169,6 +170,7 @@
             this.Name = "mainForm";
             this.ResizeBegin += new System.EventHandler(this.mainForm_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.mainForm_ResizeEnd);
+            this.Scroll += new System.Windows.Forms.ScrollEventHandler(this.mainForm_Scroll);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.mainForm_Paint);
             this.Resize += new System.EventHandler(this.mainForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.propertiesSplitContainer)).EndInit();

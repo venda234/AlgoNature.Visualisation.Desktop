@@ -89,6 +89,19 @@ namespace AlgoNature.Visualisation.Desktop
                 }
                 this.RowCount = (_properties.Length > 0) ? _properties.Length : 1; // Again if any property was omitted
             }
+            _editingCells = new bool[this.RowCount];
+
+            this.CellBeginEdit +=
+                    (sender, e) =>
+                    {
+                        _editingCells[e.RowIndex] = true;
+                    };
+            this.CellContentClick +=
+                    (sender, e) =>
+                    {
+                        _editingCells[e.RowIndex] = true;
+                    };
+
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout();
             //allRowsInitialized = true;
@@ -173,6 +186,7 @@ namespace AlgoNature.Visualisation.Desktop
             }
         }
 
+        bool[] _editingCells;
         /// <summary>
         /// A method for initializing a cell by its row index a value of which is directly editable
         /// </summary>
@@ -193,7 +207,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             try
                             {
@@ -208,7 +222,8 @@ namespace AlgoNature.Visualisation.Desktop
                                 else showPropertyUnableToBeSetMessage(_properties[propertiesIndex].Name);
                             }
 
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = false;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -230,10 +245,10 @@ namespace AlgoNature.Visualisation.Desktop
             this.CellEndEdit +=
                 (sender, e) =>
                 {
-                    if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                    if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                     {
                         arr[arrayIndex] = this[1, rowIndex].Value;
-                        AnythingChanged = true;
+                        _editingCells[rowIndex] = !(AnythingChanged = true);
                     }
                 };
         }
@@ -272,7 +287,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             _previouslyReloadedValue = false;
                             this[0, e.RowIndex].Selected = true;
@@ -282,7 +297,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellValueChanged +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             if (!_previouslyReloadedValue)
                             {
@@ -299,7 +314,7 @@ namespace AlgoNature.Visualisation.Desktop
                                     else showPropertyUnableToBeSetMessage(_properties[rowIndex].Name);
                                 }
 
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                         }
                     };
@@ -314,7 +329,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -324,7 +339,7 @@ namespace AlgoNature.Visualisation.Desktop
                                 _properties[propertiesIndex].SetValue(_editedObject, colDialog.Color);
                                 this[1, rowIndex].Value = colDialog.Color;
                                 ((DataGridViewButtonCell)this[1, e.RowIndex]).Style.BackColor = colDialog.Color;
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                             // TODO zjistit jiné výsledky dialogResult
                         }
@@ -340,7 +355,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -364,7 +379,7 @@ namespace AlgoNature.Visualisation.Desktop
                                 
                                 this[1, rowIndex].Value = colDialog.Color;
                                 ((DataGridViewButtonCell)this[1, e.RowIndex]).Style.BackColor = colDialog.Color;
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                                 // TODO zjistit jiné výsledky dialogResult
                         }
@@ -386,7 +401,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             /*ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -407,7 +422,7 @@ namespace AlgoNature.Visualisation.Desktop
 
                                 this[1, rowIndex].Value = colDialog.Color;
                                 ((DataGridViewButtonCell)this[1, e.RowIndex]).Style.BackColor = colDialog.Color;
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }*/
                             object prop = _properties[propertiesIndex].GetValue(_editedObject);
                             PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
@@ -421,7 +436,7 @@ namespace AlgoNature.Visualisation.Desktop
                                         _properties[propertiesIndex].SetValue(_editedObject, editedObject);
                                         ((DataGridViewButtonCell)this[1, e.RowIndex]).Style.BackColor = ((Pen)editedObject).Color;
                                         ((DataGridViewButtonCell)this[1, e.RowIndex]).Value = ((Pen)editedObject).Width;
-                                        AnythingChanged = true;
+                                        _editingCells[rowIndex] = !(AnythingChanged = true);
                                     }
                                     // TODO zjistit jiné výsledky dialogResult
                                     flyout.Dispose();
@@ -439,10 +454,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             _properties[propertiesIndex].SetValue(_editedObject, DateTime.Parse(this[1, rowIndex].Value.ToString()));
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -454,10 +469,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             _properties[propertiesIndex].SetValue(_editedObject, TimeSpan.Parse(this[1, rowIndex].Value.ToString()));
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -468,10 +483,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             _properties[propertiesIndex].SetValue(_editedObject, ((string)this[1, rowIndex].Value).ToPoint());
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -482,10 +497,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             _properties[propertiesIndex].SetValue(_editedObject, ((string)this[1, rowIndex].Value).ToPointF());
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -501,11 +516,11 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellValueChanged +=
                         (sender, e) =>
                         {
-                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                             {
                                 _properties[propertiesIndex].SetValue(_editedObject, Enum.Parse(type, this[1, rowIndex].Value.ToString()));
                                 //this[0, e.RowIndex].Selected = true;
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                         };
                 }
@@ -518,11 +533,11 @@ namespace AlgoNature.Visualisation.Desktop
                     this[1, rowIndex] = new DataGridViewButtonCell();
                     ((DataGridViewButtonCell)this[1, rowIndex]).Value = value;
 
-                    this.CellClick +=
+                    this.CellContentClick +=
                         (sender, e) =>
                         {
                             if (e.RowIndex >= 0)
-                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                                 {
                                     object prop = _properties[propertiesIndex].GetValue(_editedObject);
 
@@ -534,7 +549,7 @@ namespace AlgoNature.Visualisation.Desktop
                                             if (result != DialogResult.Cancel && editedObjectChanged)
                                             {
                                                 _properties[propertiesIndex].SetValue(_editedObject, editedObject);
-                                                AnythingChanged = true;
+                                                _editingCells[rowIndex] = !(AnythingChanged = true);
                                             }
                                             // TODO zjistit jiné výsledky dialogResult
                                             flyout.Dispose();
@@ -549,11 +564,11 @@ namespace AlgoNature.Visualisation.Desktop
                     this[1, rowIndex] = new DataGridViewButtonCell();
                     ((DataGridViewButtonCell)this[1, rowIndex]).Value = value;
 
-                    this.CellClick +=
+                    this.CellContentClick +=
                         (sender, e) =>
                         {
                             if (e.RowIndex >= 0)
-                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                                 {
                                     object prop = _properties[propertiesIndex].GetValue(_editedObject);
 
@@ -565,7 +580,7 @@ namespace AlgoNature.Visualisation.Desktop
                                             if (result != DialogResult.Cancel && editedObjectChanged)
                                             {
                                                 _properties[propertiesIndex].SetValue(_editedObject, editedObject);
-                                                AnythingChanged = true;
+                                                _editingCells[rowIndex] = !(AnythingChanged = true);
                                             }
                                             // TODO zjistit jiné výsledky dialogResult
                                             flyout.Dispose();
@@ -593,13 +608,13 @@ namespace AlgoNature.Visualisation.Desktop
                 /*this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             if (!_previouslyReloadedValue)
                             {
                                 array[arrayIndex] = this[1, e.RowIndex].Value;
                                 this[0, e.RowIndex].Selected = true;
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                             else _previouslyReloadedValue = false;
                         }
@@ -608,7 +623,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             _previouslyReloadedValue = false;
                             this[0, e.RowIndex].Selected = true;
@@ -618,7 +633,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellValueChanged +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             if (!_previouslyReloadedValue)
                             {
@@ -631,7 +646,7 @@ namespace AlgoNature.Visualisation.Desktop
                                     showPropertyUnableToBeSetMessage("[" + arrayIndex + "]");
                                 }
 
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                         }
                     };
@@ -645,7 +660,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -655,7 +670,7 @@ namespace AlgoNature.Visualisation.Desktop
                                 array[arrayIndex] = colDialog.Color;
                                 this[1, rowIndex].Value = colDialog.Color;
                                 ((DataGridViewButtonCell)this[1, e.RowIndex]).Style.BackColor = colDialog.Color;
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                             // TODO zjistit jiné výsledky dialogResult
                         }
@@ -671,7 +686,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -683,7 +698,7 @@ namespace AlgoNature.Visualisation.Desktop
                                 array[arrayIndex] = proprt;
                                 this[1, rowIndex].Value = colDialog.Color;
                                 ((DataGridViewButtonCell)this[1, e.RowIndex]).Style.BackColor = colDialog.Color;
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                             // TODO zjistit jiné výsledky dialogResult
                         }
@@ -705,7 +720,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             object prop = array[arrayIndex];
                             PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
@@ -720,7 +735,7 @@ namespace AlgoNature.Visualisation.Desktop
                                         array[arrayIndex] = editedObject;
                                         ((DataGridViewButtonCell)this[1, e.RowIndex]).Style.BackColor = ((Pen)editedObject).Color;
                                         ((DataGridViewButtonCell)this[1, e.RowIndex]).Value = ((Pen)editedObject).Width;
-                                        AnythingChanged = true;
+                                        _editingCells[rowIndex] = !(AnythingChanged = true);
                                     }
                                     // TODO zjistit jiné výsledky dialogResult
                                     flyout.Dispose();
@@ -738,10 +753,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             array[arrayIndex] = DateTime.Parse(this[1, rowIndex].Value.ToString());
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -753,10 +768,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             array[arrayIndex] =  TimeSpan.Parse(this[1, rowIndex].Value.ToString());
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -767,10 +782,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -781,10 +796,10 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellEndEdit +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             array[arrayIndex] = this[1, rowIndex].Value;
-                            AnythingChanged = true;
+                            _editingCells[rowIndex] = !(AnythingChanged = true);
                         }
                     };
             }
@@ -800,10 +815,10 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellValueChanged +=
                         (sender, e) =>
                         {
-                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                             {
                                 array[arrayIndex] = Enum.Parse(type, this[1, rowIndex].Value.ToString());
-                                AnythingChanged = true;
+                                _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                         };
                 }
@@ -816,11 +831,11 @@ namespace AlgoNature.Visualisation.Desktop
                     this[1, rowIndex] = new DataGridViewButtonCell();
                     ((DataGridViewButtonCell)this[1, rowIndex]).Value = value;
 
-                    this.CellClick +=
+                    this.CellContentClick +=
                         (sender, e) =>
                         {
                             if (e.RowIndex >= 0)
-                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                                 {
                                     object prop = array[arrayIndex];
 
@@ -832,7 +847,7 @@ namespace AlgoNature.Visualisation.Desktop
                                             if (result != DialogResult.Cancel && editedObjectChanged)
                                             {
                                                 array[arrayIndex] = editedObject;
-                                                AnythingChanged = true;
+                                                _editingCells[rowIndex] = !(AnythingChanged = true);
                                             }
                                             // TODO zjistit jiné výsledky dialogResult
                                             flyout.Dispose();
@@ -847,11 +862,11 @@ namespace AlgoNature.Visualisation.Desktop
                     this[1, rowIndex] = new DataGridViewButtonCell();
                     ((DataGridViewButtonCell)this[1, rowIndex]).Value = value;
 
-                    this.CellClick +=
+                    this.CellContentClick +=
                         (sender, e) =>
                         {
                             if (e.RowIndex >= 0)
-                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                                 {
                                     object prop = array[arrayIndex];
                                     PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
@@ -863,7 +878,7 @@ namespace AlgoNature.Visualisation.Desktop
                                             if (result != DialogResult.Cancel && editedObjectChanged)
                                             {
                                                 array[arrayIndex] = editedObject;
-                                                AnythingChanged = true;
+                                                _editingCells[rowIndex] = !(AnythingChanged = true);
                                             }
                                             // TODO zjistit jiné výsledky dialogResult
                                             flyout.Dispose();
