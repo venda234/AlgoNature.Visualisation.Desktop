@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows;
 using System.Reflection;
 using System.Resources;
+using System.Globalization;
 
 namespace AlgoNature.Visualisation.Desktop
 {
@@ -937,6 +938,35 @@ namespace AlgoNature.Visualisation.Desktop
                 {
                     initializeEditedObjectPropertyRow(e.RowIndex, Convert.ToInt32(this[2, e.RowIndex].Value));
                 }
+            }
+        }
+
+        // Vypsání přeložených vlastností
+        private void PropertiesEditorGrid_Sorted(object sender, EventArgs e)
+        {
+            string cz, bre, ame, propertyName;
+            System.IO.StreamWriter sw;
+            if (typeof(AlgoNature.Components.IGrowableGraphicChild).GetProperties().Contains(_properties[0]))
+                sw = new System.IO.StreamWriter(new System.IO.FileStream(typeof(AlgoNature.Components.IGrowableGraphicChild).FullName + "translated properties.txt", System.IO.FileMode.Create));
+            else
+                sw = new System.IO.StreamWriter(new System.IO.FileStream(_editedObject.GetType().FullName + "translated properties.txt", System.IO.FileMode.Create));
+
+            for (int i = 0; i < this.RowCount; i++)
+            {
+                propertyName = _properties[Convert.ToInt32(this[2, i].Value)].Name;
+                if (_editedObject.GetType().ImplementsInterface(typeof(AlgoNature.Components.ITranslatable)))
+                {
+                    cz = ((AlgoNature.Components.ITranslatable)_editedObject).TryTranslate(propertyName, CultureInfo.GetCultureInfo("cs-CZ"));
+                    ame = ((AlgoNature.Components.ITranslatable)_editedObject).TryTranslate(propertyName, CultureInfo.GetCultureInfo("en-US"));
+                    bre = ((AlgoNature.Components.ITranslatable)_editedObject).TryTranslate(propertyName, CultureInfo.GetCultureInfo("en-GB"));
+
+                    if (ame != bre)
+                    {
+                        sw.WriteLine("{0} [{1} / {2})]", cz, ame, bre);
+                    }
+                    sw.WriteLine("{0} [{1}]", cz, ame);
+                }
+                else sw.WriteLine(propertyName);
             }
         }
     }

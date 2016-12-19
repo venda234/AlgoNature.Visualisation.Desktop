@@ -82,6 +82,7 @@
             this.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.Size = new System.Drawing.Size(216, 409);
             this.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.PropertiesEditorGrid_CellMouseDown);
+            this.Sorted += new System.EventHandler(this.PropertiesEditorGrid_Sorted);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PropertiesEditorGrid_Paint);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
