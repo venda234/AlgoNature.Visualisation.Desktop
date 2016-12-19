@@ -521,26 +521,27 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellClick +=
                         (sender, e) =>
                         {
-                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
-                            {
-                                object prop = _properties[propertiesIndex].GetValue(_editedObject);
+                            if (e.RowIndex >= 0)
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                                {
+                                    object prop = _properties[propertiesIndex].GetValue(_editedObject);
 
-                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, props, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
+                                    PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, props, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
 
-                                flyout.EditingFinished +=
-                                    (result, editedObjectChanged, editedObject) =>
-                                    {
-                                        if (result != DialogResult.Cancel && editedObjectChanged)
+                                    flyout.EditingFinished +=
+                                        (result, editedObjectChanged, editedObject) =>
                                         {
-                                            _properties[propertiesIndex].SetValue(_editedObject, editedObject);
-                                            AnythingChanged = true;
-                                        }
-                                        // TODO zjistit jiné výsledky dialogResult
-                                        flyout.Dispose();
-                                    };
+                                            if (result != DialogResult.Cancel && editedObjectChanged)
+                                            {
+                                                _properties[propertiesIndex].SetValue(_editedObject, editedObject);
+                                                AnythingChanged = true;
+                                            }
+                                            // TODO zjistit jiné výsledky dialogResult
+                                            flyout.Dispose();
+                                        };
 
-                                flyout.Show();
-                            }
+                                    flyout.Show();
+                                }
                         };
                 }
                 else
@@ -551,26 +552,27 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellClick +=
                         (sender, e) =>
                         {
-                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
-                            {
-                                object prop = _properties[propertiesIndex].GetValue(_editedObject);
+                            if (e.RowIndex >= 0)
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                                {
+                                    object prop = _properties[propertiesIndex].GetValue(_editedObject);
 
-                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
+                                    PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
 
-                                flyout.EditingFinished +=
-                                    (result, editedObjectChanged, editedObject) =>
-                                    {
-                                        if (result != DialogResult.Cancel && editedObjectChanged)
+                                    flyout.EditingFinished +=
+                                        (result, editedObjectChanged, editedObject) =>
                                         {
-                                            _properties[propertiesIndex].SetValue(_editedObject, editedObject);
-                                            AnythingChanged = true;
-                                        }
-                                        // TODO zjistit jiné výsledky dialogResult
-                                        flyout.Dispose();
-                                    };
+                                            if (result != DialogResult.Cancel && editedObjectChanged)
+                                            {
+                                                _properties[propertiesIndex].SetValue(_editedObject, editedObject);
+                                                AnythingChanged = true;
+                                            }
+                                            // TODO zjistit jiné výsledky dialogResult
+                                            flyout.Dispose();
+                                        };
 
-                                flyout.Show();
-                            }
+                                    flyout.Show();
+                                }
                         };
                 }
             }
@@ -640,7 +642,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this[1, rowIndex].Value = value;
                 ((DataGridViewButtonCell)this[1, rowIndex]).Style.BackColor = (Color)value;
 
-                this.CellClick +=
+                this.CellContentClick +=
                     (sender, e) =>
                     {
                         if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
@@ -817,26 +819,27 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellClick +=
                         (sender, e) =>
                         {
-                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
-                            {
-                                object prop = array[arrayIndex];
+                            if (e.RowIndex >= 0)
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                                {
+                                    object prop = array[arrayIndex];
 
-                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, props, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
+                                    PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, props, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
 
-                                flyout.EditingFinished +=
-                                    (result, editedObjectChanged, editedObject) =>
-                                    {
-                                        if (result != DialogResult.Cancel && editedObjectChanged)
+                                    flyout.EditingFinished +=
+                                        (result, editedObjectChanged, editedObject) =>
                                         {
-                                            array[arrayIndex] = editedObject;
-                                            AnythingChanged = true;
-                                        }
-                                        // TODO zjistit jiné výsledky dialogResult
-                                        flyout.Dispose();
-                                    };
+                                            if (result != DialogResult.Cancel && editedObjectChanged)
+                                            {
+                                                array[arrayIndex] = editedObject;
+                                                AnythingChanged = true;
+                                            }
+                                            // TODO zjistit jiné výsledky dialogResult
+                                            flyout.Dispose();
+                                        };
 
-                                flyout.Show();
-                            }
+                                    flyout.Show();
+                                }
                         };
                 }
                 else
@@ -847,26 +850,27 @@ namespace AlgoNature.Visualisation.Desktop
                     this.CellClick +=
                         (sender, e) =>
                         {
-                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
-                            {
-                                object prop = array[arrayIndex];
-                                PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
-                                //propertiesFlyOuts.Add(rowIndex, (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop));
+                            if (e.RowIndex >= 0)
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0)
+                                {
+                                    object prop = array[arrayIndex];
+                                    PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
+                                    //propertiesFlyOuts.Add(rowIndex, (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop));
 
-                                flyout.EditingFinished +=
-                                    (result, editedObjectChanged, editedObject) =>
-                                    {
-                                        if (result != DialogResult.Cancel && editedObjectChanged)
+                                    flyout.EditingFinished +=
+                                        (result, editedObjectChanged, editedObject) =>
                                         {
-                                            array[arrayIndex] = editedObject;
-                                            AnythingChanged = true;
-                                        }
-                                        // TODO zjistit jiné výsledky dialogResult
-                                        flyout.Dispose();
-                                    };
+                                            if (result != DialogResult.Cancel && editedObjectChanged)
+                                            {
+                                                array[arrayIndex] = editedObject;
+                                                AnythingChanged = true;
+                                            }
+                                            // TODO zjistit jiné výsledky dialogResult
+                                            flyout.Dispose();
+                                        };
 
-                                flyout.Show();
-                            }
+                                    flyout.Show();
+                                }
                         };
                 }
             }
