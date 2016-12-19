@@ -135,12 +135,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PropertiesEditorGridAndFlyOut.Translation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Resources\mainForm.Translation.en-US.txt" />
-    <None Include="Resources\mainForm.Translation.cs-CZ.txt" />
-    <None Include="Resources\PropertiesEditorGridAndFlyOut.Translation.en-US.txt" />
-    <None Include="Resources\PropertiesEditorGridAndFlyOut.Translation.cs-CZ.txt">
-      <Generator>ResXFileCodeGenerator</Generator>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

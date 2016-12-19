@@ -79,6 +79,15 @@ namespace AlgoNature.Visualisation.Desktop {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export.
+        /// </summary>
+        internal static string exportImageDialogTitle {
+            get {
+                return ResourceManager.GetString("exportImageDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AlgoNature Visualisation.
         /// </summary>
         internal static string mainFormText {

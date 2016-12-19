@@ -280,7 +280,7 @@
     <value>Portable Network Graphics|*.png|Bitmap|*.bmp|JPEG Image|*.jpg</value>
   </data>
   <data name="exportImageDialog.Title" xml:space="preserve">
-    <value>exportFileDialogTitle</value>
+    <value>exportImageDialogTitle</value>
   </data>
   <data name="resetToDefaultButton.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>

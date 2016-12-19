@@ -123,6 +123,9 @@
   <data name="export" xml:space="preserve">
     <value>Export</value>
   </data>
+  <data name="exportImageDialogTitle" xml:space="preserve">
+    <value>Export</value>
+  </data>
   <data name="mainFormText" xml:space="preserve">
     <value>AlgoNature Visualisation</value>
   </data>

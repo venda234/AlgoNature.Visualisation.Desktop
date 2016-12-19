@@ -272,14 +272,15 @@ namespace AlgoNature.Visualisation.Desktop
         private void doFormTranslation()
         {
             System.Resources.ResourceManager RM = AlgoNature.Visualisation.Desktop.mainForm_Translation.ResourceManager;
-            
+
+            this.Text = RM.TryTranslate(this.Text);
             resetWithoutLosingSettingsButton.Text = RM.TryTranslate(resetWithoutLosingSettingsButton.Text);
             resetToDefaultButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ resetToDefaultButton.Text);
             exportButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ exportButton.Text);
             startGrowingButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ startGrowingButton.Text);
             stopGrowingButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ stopGrowingButton.Text);
             dieButton.Text = RM.TryTranslate(/*translationValues, TRANSLATION_RESOURCEFILENAME_WITHOUT_EXTENSION,*/ dieButton.Text);
-            this.Text = RM.TryTranslate(this.Text);
+            exportImageDialog.Title = RM.TryTranslate(exportImageDialog.Title);
         }
         
 
