@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoNature.Visualisation.De
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AlgoNature.Visualisation.Desktop.SetupWizard", "AlgoNature.Visualisation.Desktop.SetupWizard\AlgoNature.Visualisation.Desktop.SetupWizard.vdproj", "{681866F3-CF7C-40ED-8371-71B6A545DB11}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D3B6BDB3-B2E1-4BE4-B49B-F32948F03DF4}"
+	ProjectSection(SolutionItems) = preProject
+		Icon_mainApp.ico = Icon_mainApp.ico
+		Icon_window.ico = Icon_window.ico
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
