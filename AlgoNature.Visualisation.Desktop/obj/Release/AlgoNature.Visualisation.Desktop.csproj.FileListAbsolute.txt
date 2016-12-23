@@ -19,7 +19,6 @@ C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Deskt
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Release\cs-CZ\Algonature.Components.resources.dll
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Release\en-GB\Algonature.Components.resources.dll
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\bin\Release\en-US\Algonature.Components.resources.dll
-C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.csprojResolveAssemblyReference.cache
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.mainForm.resources
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.PropertiesEditFlyOut.resources
 C:\Users\Vacla\Documents\Visual Studio 2015\Repos\AlgoNature.Visualisation.Desktop\AlgoNature.Visualisation.Desktop\obj\Release\AlgoNature.Visualisation.Desktop.PropertiesEditorGrid.resources
