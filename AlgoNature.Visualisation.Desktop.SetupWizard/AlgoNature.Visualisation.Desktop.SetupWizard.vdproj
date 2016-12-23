@@ -21,7 +21,25 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_26654F67FB87468C9C636BB56AE19B77"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5955A42A480946DD84E004DB37712A9B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A0FAB190EDEB41A0BB440AA0F7AB4DF1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A66995C5F91343BFB4383732653D29A8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -35,6 +53,24 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_E97A04A9C390FF7CD2D6EC2624F881DE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_A66995C5F91343BFB4383732653D29A8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_5955A42A480946DD84E004DB37712A9B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_26654F67FB87468C9C636BB56AE19B77"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -143,6 +179,99 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_26654F67FB87468C9C636BB56AE19B77"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AlgoNature.Components.resources, Version=1.1.6197.19634, Culture=en-GB, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_26654F67FB87468C9C636BB56AE19B77"
+                    {
+                    "Name" = "8:Algonature.Components.resources.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\..\\AlgoNature.Components\\AlgoNature.Components\\bin\\Release\\en-GB\\Algonature.Components.resources.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_405CBFD096C84E80A61876EAC70AD024"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5955A42A480946DD84E004DB37712A9B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AlgoNature.Components.resources, Version=1.1.6197.19634, Culture=cs-CZ, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5955A42A480946DD84E004DB37712A9B"
+                    {
+                    "Name" = "8:Algonature.Components.resources.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\..\\AlgoNature.Components\\AlgoNature.Components\\bin\\Release\\cs-CZ\\Algonature.Components.resources.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2F4C50DAB0D04D69848EEFF8941D93CE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:TRUE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A66995C5F91343BFB4383732653D29A8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AlgoNature.Components.resources, Version=1.1.6197.19634, Culture=en-US, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A66995C5F91343BFB4383732653D29A8"
+                    {
+                    "Name" = "8:AlgoNature.Components.resources.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\..\\AlgoNature.Components\\AlgoNature.Components\\bin\\Release\\en-US\\AlgoNature.Components.resources.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_368AF1F3466648219B8855E720CEC600"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E97A04A9C390FF7CD2D6EC2624F881DE"
             {
             "AssemblyRegister" = "3:1"
@@ -223,6 +352,39 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_2F4C50DAB0D04D69848EEFF8941D93CE"
+                    {
+                    "Name" = "8:cs-CZ"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_8274C0F3C057472F9508AD94C063F9F7"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_368AF1F3466648219B8855E720CEC600"
+                    {
+                    "Name" = "8:en-US"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_51750C18C96843D090143F6D7264B8D6"
+                        "Folders"
+                        {
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_405CBFD096C84E80A61876EAC70AD024"
+                    {
+                    "Name" = "8:en-GB"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_16BB9058CE364063B3D7A7E59F7B6C7E"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -242,11 +404,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Vizualizace AlgoNature"
         "ProductCode" = "8:{350C72FA-4C67-40B8-A3E6-A7D977C8F4AD}"
-        "PackageCode" = "8:{DEE5269B-D641-44C1-A800-227577B358DE}"
+        "PackageCode" = "8:{4C05105D-C8F9-434B-A35D-5FA37B6761BB}"
         "UpgradeCode" = "8:{9200E8D7-D6EB-4B1C-B3BC-7438B59C4D2C}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.1.0"
