@@ -55,6 +55,7 @@
             this.propertiesDataGridViewValueColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             this.propertiesDataGridViewValueColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            this.propertiesDataGridViewValueColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.propertiesDataGridViewValueColumn.HeaderText = "valueColumnHeader";
             this.propertiesDataGridViewValueColumn.Name = "propertiesDataGridViewValueColumn";
             // 

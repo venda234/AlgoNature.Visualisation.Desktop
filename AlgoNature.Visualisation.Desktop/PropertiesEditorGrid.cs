@@ -94,12 +94,12 @@ namespace AlgoNature.Visualisation.Desktop
             this.CellBeginEdit +=
                     (sender, e) =>
                     {
-                        _editingCells[e.RowIndex] = true;
+                        _editingCells[Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value)] = true;
                     };
             this.CellContentClick +=
                     (sender, e) =>
                     {
-                        _editingCells[e.RowIndex] = true;
+                        if (e.RowIndex >= 0) _editingCells[Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value)] = true;
                     };
 
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
@@ -287,6 +287,7 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
+                        if (e.RowIndex >= 0)
                         if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             _previouslyReloadedValue = false;
@@ -329,7 +330,8 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                        if (e.RowIndex >= 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -355,7 +357,8 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                        if (e.RowIndex >= 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -401,7 +404,8 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                        if (e.RowIndex >= 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                         {
                             /*ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -518,7 +522,7 @@ namespace AlgoNature.Visualisation.Desktop
                         {
                             if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                             {
-                                _properties[propertiesIndex].SetValue(_editedObject, Enum.Parse(type, this[1, rowIndex].Value.ToString()));
+                                _properties[propertiesIndex].SetValue(_editedObject, Enum.Parse(type, this[1, e.RowIndex].Value.ToString()));
                                 //this[0, e.RowIndex].Selected = true;
                                 _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
@@ -537,7 +541,7 @@ namespace AlgoNature.Visualisation.Desktop
                         (sender, e) =>
                         {
                             if (e.RowIndex >= 0)
-                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                                 {
                                     object prop = _properties[propertiesIndex].GetValue(_editedObject);
 
@@ -568,7 +572,7 @@ namespace AlgoNature.Visualisation.Desktop
                         (sender, e) =>
                         {
                             if (e.RowIndex >= 0)
-                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                                 {
                                     object prop = _properties[propertiesIndex].GetValue(_editedObject);
 
@@ -623,7 +627,8 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                        if (e.RowIndex >= 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                         {
                             _previouslyReloadedValue = false;
                             this[0, e.RowIndex].Selected = true;
@@ -660,7 +665,8 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                        if (e.RowIndex >= 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -686,7 +692,8 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                        if (e.RowIndex >= 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                         {
                             ColorDialog colDialog = new ColorDialog();
                             DialogResult result = colDialog.ShowDialog();
@@ -720,7 +727,8 @@ namespace AlgoNature.Visualisation.Desktop
                 this.CellContentClick +=
                     (sender, e) =>
                     {
-                        if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                        if (e.RowIndex >= 0)
+                            if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                         {
                             object prop = array[arrayIndex];
                             PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, propsToDisplay, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
@@ -817,7 +825,7 @@ namespace AlgoNature.Visualisation.Desktop
                         {
                             if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
                             {
-                                array[arrayIndex] = Enum.Parse(type, this[1, rowIndex].Value.ToString());
+                                array[arrayIndex] = Enum.Parse(type, this[1, e.RowIndex].Value.ToString());
                                 _editingCells[rowIndex] = !(AnythingChanged = true);
                             }
                         };
@@ -835,7 +843,7 @@ namespace AlgoNature.Visualisation.Desktop
                         (sender, e) =>
                         {
                             if (e.RowIndex >= 0)
-                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                                 {
                                     object prop = array[arrayIndex];
 
@@ -866,7 +874,7 @@ namespace AlgoNature.Visualisation.Desktop
                         (sender, e) =>
                         {
                             if (e.RowIndex >= 0)
-                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 && _editingCells[rowIndex])
+                                if (Convert.ToInt32(((DataGridViewTextBoxCell)this[2, e.RowIndex]).Value) == rowIndex && e.ColumnIndex != 0 /*&& _editingCells[rowIndex]*/)
                                 {
                                     object prop = array[arrayIndex];
                                     PropertiesEditFlyOut flyout = (PropertiesEditFlyOut)Activator.CreateInstance(typeof(PropertiesEditFlyOut), prop, ((DataGridViewTextBoxCell)this[0, rowIndex]).Value);
